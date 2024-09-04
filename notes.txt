@@ -1,0 +1,166 @@
+# Got these based from doing some tricky stuff on https://www.ssa.gov/benefits/retirement/planner/AnypiaApplet.html
+
+# Assumes I start withdrawing at 68.
+
+# This is just for one person.
+
+social_security_income_by_retirement_age = [
+    [range(40, 45), 26808.0],
+    [range(45, 50), 30840.0],
+    [range(50, 55), 35088.0],
+    [range(55, 60), 38448.0],
+    [range(60, 68), 41316.0],
+    [range(68, 100), 46308.0],
+]
+
+# REAL UNDERLYING DATA
+
+# stocks = InvestmentVehicle(name="s&p", aagr=0.0655, dynamic_mean=0.077, dynamic_std_dev=0.175)
+
+# bonds = InvestmentVehicle(name="bond", aagr=0.0352, dynamic_mean=0.039, dynamic_std_dev=0.0855)
+
+# fidelity_investment_distributions = [
+
+# InvestmentDistribution(list(range(2024, 2031)), investment_proportions=[InvestmentProportion(stocks, 0.9), InvestmentProportion(bonds, 0.1)]),
+
+# InvestmentDistribution(list(range(2031, 2037)), investment_proportions=[InvestmentProportion(stocks, 0.8), InvestmentProportion(bonds, 0.2)]),
+
+# InvestmentDistribution(list(range(2037, 2043)), investment_proportions=[InvestmentProportion(stocks, 0.7), InvestmentProportion(bonds, 0.3)]),
+
+# InvestmentDistribution(list(range(2043, 2049)), investment_proportions=[InvestmentProportion(stocks, 0.6), InvestmentProportion(bonds, 0.4)]),
+
+# InvestmentDistribution(list(range(2049, last_year)), investment_proportions=[InvestmentProportion(stocks, 0.5), InvestmentProportion(bonds, 0.5)])
+
+# ]
+
+# nysaves_investment_distributions = [
+
+# InvestmentDistribution(list(range(2024, 2027)), investment_proportions=[InvestmentProportion(stocks, 0.9), InvestmentProportion(bonds, 0.1)]),
+
+# InvestmentDistribution(list(range(2027, 2030)), investment_proportions=[InvestmentProportion(stocks, 0.8), InvestmentProportion(bonds, 0.2)]),
+
+# InvestmentDistribution(list(range(2030, 2033)), investment_proportions=[InvestmentProportion(stocks, 0.7), InvestmentProportion(bonds, 0.3)]),
+
+# InvestmentDistribution(list(range(2033, 2037)), investment_proportions=[InvestmentProportion(stocks, 0.6), InvestmentProportion(bonds, 0.4)]),
+
+# InvestmentDistribution(list(range(2037, last_year)), investment_proportions=[InvestmentProportion(stocks, 0.5), InvestmentProportion(bonds, 0.5)])
+
+# ]
+
+# vanguard_investment_distributions = [
+
+# InvestmentDistribution(list(range(2024, 2049)), investment_proportions=[InvestmentProportion(stocks, 0.9), InvestmentProportion(bonds, 0.1)]),
+
+# InvestmentDistribution(list(range(2049, last_year)), investment_proportions=[InvestmentProportion(stocks, 0.5), InvestmentProportion(bonds, 0.5)])
+
+# ]
+
+# boa_investment_distributions = []
+
+# boa = Account("bank of america", AccountType.BANK, 30000.0, boa_investment_distributions)
+
+# vanguard = Account("vanguard", AccountType.INVESTMENT, 150000.0, vanguard_investment_distributions)
+
+# fidelity = Account("fidelity", AccountType.RETIREMENT, 730000.0, fidelity_investment_distributions, earliest_withdrawal_year=2039)
+
+# nysaves = Account("nysaves", AccountType.FIVE_TWO_NINE, 85000.0, nysaves_investment_distributions)
+
+# accounts = [boa, vanguard, fidelity, nysaves]
+
+# expenses = []
+
+# for y in [2027, 2037, 2047, 2057, 2067]:
+
+# expenses.append(Expense("new car", 40000, y))
+
+# for y in [2024, 2025, 2026]:
+
+# expenses.append(Expense("zach daycare", 15000, y))
+
+# for y in list(range(2024, 2044)):
+
+# expenses.append(Expense("copake payment", 12000, y))
+
+# for y in [2037, 2038, 2039, 2040]:
+
+# expenses.append(Expense("sloane college", 50000, y, five_two_nine_eligible=True))
+
+# for y in [2040, 2041, 2042, 2043]:
+
+# expenses.append(Expense("zach college", 50000, y, five_two_nine_eligible=True))
+
+# for y in range(2024, last_year):
+
+# expenses.append(Expense("every day spending", 101500, y))
+
+# incomes = []
+
+# for y in range(2052, last_year):
+
+# incomes.append(Income("david social security", 35000, y, deposit_in=boa, payroll_tax=False))
+
+# for y in range(2024, 2039):
+
+# incomes.append(Income("david full-time work", 130000, y, deposit_in=boa))
+
+# for y in range(2024, 2039):
+
+# incomes.append(Income("claire full-time work", 120000, y, deposit_in=boa))
+
+# for y in range(2039, 2049):
+
+# incomes.append(Income("david part-time work", 70000, y, deposit_in=boa))
+
+# for y in range(2039, 2049):
+
+# incomes.append(Income("claire part-time work", 80000, y, deposit_in=boa))
+
+# for y in range(2052, last_year):
+
+# incomes.append(Income("claire social security", 35000, y, deposit_in=boa, payroll_tax=False))
+
+# transfers = []
+
+# gifts = []
+
+# for y in range(2024, 2037):
+
+# gifts.append(Gift("dad 529 contribution", 8000, y, nysaves))
+
+# assets = []
+
+# debts = []
+
+# ### RENTAL SCENARIO
+
+# for y in range(2024, last_year):
+
+# # expenses.append(Expense("rent", 31500, y)) # Current rent
+
+# expenses.append(Expense("rent", 48000, y)) # More rent
+
+# for y in range(2024, 2039):
+
+# transfers.append(Transfer(AccountType.RETIREMENT, 45000, y, transfer_from=boa, transfer_to=fidelity))
+
+# for y in range(2024, 2037):
+
+# transfers.append(Transfer(AccountType.FIVE_TWO_NINE, 1200, y, transfer_from=boa, transfer_to=nysaves))
+
+# ### HOME PURCHASE SCENARIO
+
+# # house_asset, house_debt, house_expenses, house_transfers = HousePurchase(800000, 0.07, 2024, last_year, down_payment_acct_src=boa, mortgage_acct_src=boa, down_payment_proportion=0.1).execute()
+
+# # assets.append(house_asset)
+
+# # debts.append(house_debt)
+
+# # expenses.extend(house_expenses)
+
+# # transfers.extend(house_transfers)
+
+# # gifts.append(Gift("down payment help", 100000, 2024, boa))
+
+# FORM DATA
+
+# data = {'debts': [{'name': 'some random debt', 'amount': 1000.0, 'aagr': 0.03}], 'accounts': [{'name': 'vanguard', 'account_type': 'investments', 'starting_balance': 150000.0, 'earliest_withdrawal_year': 2024, 'investment_distributions': [{'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.9}, {'investment_vehicle': 'bonds', 'proportion': 0.1}]}, {'years': [2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.9}, {'investment_vehicle': 'bonds', 'proportion': 0.1}]}]}, {'name': 'fidelity', 'account_type': 'retirement', 'starting_balance': 730000.0, 'earliest_withdrawal_year': 2039, 'investment_distributions': [{'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.9}, {'investment_vehicle': 'bonds', 'proportion': 0.1}]}, {'years': [2031, 2032, 2033, 2034, 2035, 2036], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.8}, {'investment_vehicle': 'bonds', 'proportion': 0.2}]}, {'years': [2037, 2038, 2039, 2040, 2041, 2042], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.7}, {'investment_vehicle': 'bonds', 'proportion': 0.3}]}, {'years': [2043, 2044, 2045, 2046, 2047, 2048], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.6}, {'investment_vehicle': 'bonds', 'proportion': 0.4}]}, {'years': [2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.5}, {'investment_vehicle': 'bonds', 'proportion': 0.5}]}]}, {'name': 'boa', 'account_type': 'bank', 'starting_balance': 30000.0, 'earliest_withdrawal_year': 2024, 'investment_distributions': []}, {'name': 'nysaves', 'account_type': '529', 'starting_balance': 85000.0, 'earliest_withdrawal_year': 2024, 'investment_distributions': [{'years': [2024, 2025, 2026], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.9}, {'investment_vehicle': 'bonds', 'proportion': 0.1}]}, {'years': [2027, 2028, 2029], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.8}, {'investment_vehicle': 'bonds', 'proportion': 0.2}]}, {'years': [2030, 2031, 2032], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.7}, {'investment_vehicle': 'bonds', 'proportion': 0.3}]}, {'years': [2033, 2034, 2035, 2036], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.6}, {'investment_vehicle': 'bonds', 'proportion': 0.4}]}, {'years': [2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070], 'investment_proportions': [{'investment_vehicle': 'stocks', 'proportion': 0.5}, {'investment_vehicle': 'bonds', 'proportion': 0.5}]}]}], 'incomes': [{'name': 'david full-time', 'amount': 130000.0, 'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039], 'deposit_in': 'boa', 'federal_income_tax': True, 'payroll_tax': True, 'ny_income_tax': True, 'nyc_income_tax': True}, {'name': 'claire full-time', 'amount': 120000.0, 'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039], 'deposit_in': 'boa', 'federal_income_tax': True, 'payroll_tax': True, 'ny_income_tax': True, 'nyc_income_tax': True}, {'name': 'david part-time', 'amount': 70000.0, 'years': [2040, 2041, 2042, 2043, 2044], 'deposit_in': 'boa', 'federal_income_tax': True, 'payroll_tax': True, 'ny_income_tax': True, 'nyc_income_tax': True}, {'name': 'claire part-time', 'amount': 80000.0, 'years': [2040, 2041, 2042, 2043, 2044], 'deposit_in': 'boa', 'federal_income_tax': True, 'payroll_tax': True, 'ny_income_tax': True, 'nyc_income_tax': True}], 'expenses': [{'name': 'car', 'amount': 40000.0, 'years': [2027, 2037, 2047, 2057, 2067], 'five_two_nine_eligible': False}, {'name': 'zach college', 'amount': 50000.0, 'years': [2039, 2040, 2041, 2042], 'five_two_nine_eligible': True}, {'name': 'sloane college', 'amount': 50000.0, 'years': [2037, 2038, 2039, 2040], 'five_two_nine_eligible': True}, {'name': 'copake', 'amount': 12000.0, 'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044], 'five_two_nine_eligible': False}, {'name': 'every day expenses', 'amount': 101500.0, 'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070], 'five_two_nine_eligible': False}, {'name': 'zach daycare', 'amount': 20000.0, 'years': [2024, 2025, 2026], 'five_two_nine_eligible': False}], 'gifts': [{'name': 'dad 529', 'amount': 8000.0, 'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037], 'account': 'nysaves'}], 'transfers': [{'name': 'retirement contribution', 'amount': 45000.0, 'years': [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039], 'transfer_from': 'boa', 'transfer_to': 'fidelity', 'required': False}], 'investment_vehicles': [{'name': 'stocks', 'aagr': 0.0655, 'dynamic_mean': 0.077, 'dynamic_std_dev': 0.1175}, {'name': 'bonds', 'aagr': 0.0352, 'dynamic_mean': 0.039, 'dynamic_std_dev': 0.0855}]}
