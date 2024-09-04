@@ -1,7 +1,7 @@
 from ipywidgets import widgets, VBox, HBox
 from model.account_type import AccountType
-from helpers import Helpers
-from investment_distribution_input import InvestmentDistributionInput
+from form.helpers import Helpers
+from form.investment_distribution_input import InvestmentDistributionInput
 
 
 class AccountInput:
