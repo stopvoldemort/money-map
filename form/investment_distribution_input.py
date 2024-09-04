@@ -1,6 +1,6 @@
 from ipywidgets import VBox, Text, Button
-from investment_proportion_input import InvestmentProportionInput
-from helpers import Helpers
+from form.investment_proportion_input import InvestmentProportionInput
+from form.helpers import Helpers
 
 
 class InvestmentDistributionInput:

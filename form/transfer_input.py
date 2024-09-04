@@ -1,5 +1,5 @@
 from ipywidgets import widgets, HBox
-from helpers import Helpers
+from form.helpers import Helpers
 
 
 class TransferInput:

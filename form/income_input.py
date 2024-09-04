@@ -1,5 +1,5 @@
 import ipywidgets as widgets
-from helpers import Helpers
+from form.helpers import Helpers
 
 
 class IncomeInput:

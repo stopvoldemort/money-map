@@ -3,14 +3,14 @@ from ipywidgets import widgets
 from results.results_displayer import ResultsDisplayer
 from model.simulations import Simulations
 from model.account_type import AccountType
-from debt_input import DebtInput
-from account_input import AccountInput
-from income_input import IncomeInput
-from expense_input import ExpenseInput
-from gift_input import GiftInput
-from transfer_input import TransferInput
-from investment_vehicle_input import InvestmentVehicleInput
-from helpers import Helpers
+from form.debt_input import DebtInput
+from form.account_input import AccountInput
+from form.income_input import IncomeInput
+from form.expense_input import ExpenseInput
+from form.gift_input import GiftInput
+from form.transfer_input import TransferInput
+from form.investment_vehicle_input import InvestmentVehicleInput
+from form.helpers import Helpers
 
 
 class Form:
