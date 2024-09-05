@@ -131,11 +131,11 @@ class Form:
 
     #####  INVESTMENT VEHICLES  #####
     def add_investment_vehicle_input(
-        self, b=None, name="", aagr=0.0, dynamic_mean=0.0, dynamic_std_dev=0.0
+        self, investment_vehicle_input: InvestmentVehicleInput = None
     ):
-        investment_vehicle_input = InvestmentVehicleInput(
-            self, name, aagr, dynamic_mean, dynamic_std_dev
-        )
+        if investment_vehicle_input is None:
+            investment_vehicle_input = InvestmentVehicleInput(self)
+
         self.investment_vehicle_inputs.append(investment_vehicle_input)
         self.update_display()
 
@@ -238,10 +238,18 @@ class Form:
 
     def display(self):
         self.add_investment_vehicle_input(
-            self, name="s&p", aagr=0.0655, dynamic_mean=0.077, dynamic_std_dev=0.175
+            InvestmentVehicleInput(
+                self, name="s&p", aagr=0.0655, dynamic_mean=0.077, dynamic_std_dev=0.175
+            ),
         )
         self.add_investment_vehicle_input(
-            self, name="bonds", aagr=0.0352, dynamic_mean=0.039, dynamic_std_dev=0.0855
+            InvestmentVehicleInput(
+                self,
+                name="bonds",
+                aagr=0.0352,
+                dynamic_mean=0.039,
+                dynamic_std_dev=0.0855,
+            )
         )
         self.add_account_input(
             self, name="bank of america", account_type="bank", starting_balance=30000.0
@@ -255,21 +263,21 @@ class Form:
         )
         self.add_income_input(
             self,
-            name="spouse 1 income",
+            name="john job",
             amount="100000.0",
             deposit_in="bank of america",
             years="2024-2048",
         )
         self.add_income_input(
             self,
-            name="spouse 2 income",
+            name="jane job",
             amount="100000.0",
             deposit_in="bank of america",
             years="2024-2048",
         )
         self.add_income_input(
             self,
-            name="spouse 1 social security",
+            name="john social security",
             amount="35000.0",
             deposit_in="bank of america",
             years="2049-2070",
@@ -277,7 +285,7 @@ class Form:
         )
         self.add_income_input(
             self,
-            name="spouse 2 social security",
+            name="jane social security",
             amount="35000.0",
             deposit_in="bank of america",
             years="2049-2070",
