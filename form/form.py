@@ -44,17 +44,13 @@ class Form:
         self.update_display()
 
     #####  ACCOUNTS  #####
-    def add_account_input(
-        self,
-        b=None,
-        name="",
-        account_type=AccountType.BANK,
-        starting_balance=0.0,
-        earliest_withdrawal_year=2024,
-    ):
-        account_input = AccountInput(
-            self, name, account_type, starting_balance, earliest_withdrawal_year
-        )
+    def add_account_input(self, param: widgets.Button | AccountInput):
+        account_input = None
+        if isinstance(param, AccountInput):
+            account_input = param
+        else:
+            account_input = AccountInput(self)
+
         self.account_inputs.append(account_input)
         self.update_display()
 
@@ -131,9 +127,12 @@ class Form:
 
     #####  INVESTMENT VEHICLES  #####
     def add_investment_vehicle_input(
-        self, investment_vehicle_input: InvestmentVehicleInput = None
+        self, param: widgets.Button | InvestmentVehicleInput
     ):
-        if investment_vehicle_input is None:
+        investment_vehicle_input = None
+        if isinstance(param, InvestmentVehicleInput):
+            investment_vehicle_input = param
+        else:
             investment_vehicle_input = InvestmentVehicleInput(self)
 
         self.investment_vehicle_inputs.append(investment_vehicle_input)
@@ -252,14 +251,22 @@ class Form:
             )
         )
         self.add_account_input(
-            self, name="bank of america", account_type="bank", starting_balance=30000.0
+            AccountInput(
+                self,
+                name="bank of america",
+                account_type="bank",
+                starting_balance=30000.0,
+                earliest_withdrawal_year=2024,
+            ),
         )
         self.add_account_input(
-            self,
-            name="fidelity",
-            account_type="retirement",
-            starting_balance=500000.0,
-            earliest_withdrawal_year=2039,
+            AccountInput(
+                self,
+                name="fidelity",
+                account_type="retirement",
+                starting_balance=500000.0,
+                earliest_withdrawal_year=2039,
+            )
         )
         self.add_income_input(
             self,
