@@ -1,5 +1,6 @@
 from model.account import Account
 from model.debt import Debt
+from model.asset import Asset
 from model.expense import Expense
 from model.income import Income
 from model.investment_distribution import InvestmentDistribution
@@ -23,6 +24,9 @@ class FormDataParser:
 
         for debt_input in self.data["debts"]:
             self.debts.append(Debt(**debt_input))
+
+        for asset_input in self.data["assets"]:
+            self.assets.append(Asset(**asset_input))
 
         for investment_vehicle_input in self.data["investment_vehicles"]:
             self.investment_vehicles.append(

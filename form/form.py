@@ -1,8 +1,8 @@
 from IPython.display import display, clear_output
 from ipywidgets import widgets
 
-from model.account_type import AccountType
 from form.debt_input import DebtInput
+from form.asset_input import AssetInput
 from form.account_input import AccountInput
 from form.income_input import IncomeInput
 from form.expense_input import ExpenseInput
@@ -19,6 +19,7 @@ class Form:
             []
         )  # List to store instances of InvestmentVehicle
         self.debt_inputs = []  # List to store instances of DebtInput
+        self.asset_inputs = []  # List to store instances of AssetInput
         self.account_inputs = []  # List to store instances of AccountInput
         self.income_inputs = []  # List to store instances of IncomeInput
         self.expense_inputs = []  # List to store instances of ExpenseInput
@@ -44,6 +45,19 @@ class Form:
     def delete_debt_input(self, debt_input):
         if debt_input in self.debt_inputs:
             self.debt_inputs.remove(debt_input)
+
+    #####  ASSETS  #####
+    def add_asset_input(self, data: dict = {}):
+        asset_input = AssetInput(self, **data)
+        self.asset_inputs.append(asset_input)
+        self.update_display()
+
+    def handle_add_asset_input_click(self, b=None):
+        self.add_asset_input()
+
+    def delete_asset_input(self, asset_input):
+        if asset_input in self.asset_inputs:
+            self.asset_inputs.remove(asset_input)
         self.update_display()
 
     #####  ACCOUNTS  #####
@@ -181,6 +195,9 @@ class Form:
             add_debt_btn = Helpers.add_input_button("Add Debt")
             add_debt_btn.on_click(self.handle_add_debt_input_click)
 
+            add_asset_btn = Helpers.add_input_button("Add Asset")
+            add_asset_btn.on_click(self.handle_add_asset_input_click)
+
             add_income_btn = Helpers.add_input_button("Add Income")
             add_income_btn.on_click(self.handle_add_income_input_click)
 
@@ -218,6 +235,16 @@ class Form:
                             ),
                             add_debt_btn,
                             is_empty=(len(self.debt_inputs) == 0),
+                        ),
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Asset",
+                            Helpers.simple_grid(
+                                self.asset_inputs,
+                                DebtInput.column_labels,
+                            ),
+                            add_asset_btn,
+                            is_empty=(len(self.asset_inputs) == 0),
                         ),
                         Helpers.inputs_group_v2(
                             "h2",
@@ -265,17 +292,20 @@ class Form:
             )
 
     def initialize(self):
-        for iv in self.preload_data["investment_vehicles"]:
-            self.add_investment_vehicle_input(iv)
+        for vehicle in self.preload_data["investment_vehicles"]:
+            self.add_investment_vehicle_input(vehicle)
 
         for acct in self.preload_data["accounts"]:
             self.add_account_input(acct)
 
-        for inc in self.preload_data["incomes"]:
-            self.add_income_input(inc)
+        for income in self.preload_data["incomes"]:
+            self.add_income_input(income)
 
         for debt in self.preload_data["debts"]:
             self.add_debt_input(debt)
+
+        for asset in self.preload_data["assets"]:
+            self.add_asset_input(asset)
 
         for exp in self.preload_data["expenses"]:
             self.add_expense_input(exp)
@@ -299,6 +329,7 @@ class Form:
     def get_all_data(self):
         return {
             "debts": self.get_all_inputs_data(self.debt_inputs),
+            "assets": self.get_all_inputs_data(self.asset_inputs),
             "accounts": self.get_all_inputs_data(self.account_inputs),
             "incomes": self.get_all_inputs_data(self.income_inputs),
             "expenses": self.get_all_inputs_data(self.expense_inputs),
