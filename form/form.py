@@ -178,22 +178,22 @@ class Form:
                 self.handle_add_investment_vehicle_input_click
             )
 
-            add_account_btn = widgets.Button(description="Add Account")
+            add_account_btn = Helpers.add_input_button("Add Account")
             add_account_btn.on_click(self.handle_add_account_input_click)
 
-            add_debt_btn = widgets.Button(description="Add Debt")
+            add_debt_btn = Helpers.add_input_button("Add Debt")
             add_debt_btn.on_click(self.handle_add_debt_input_click)
 
-            add_income_btn = widgets.Button(description="Add Income")
+            add_income_btn = Helpers.add_input_button("Add Income")
             add_income_btn.on_click(self.handle_add_income_input_click)
 
-            add_expense_btn = widgets.Button(description="Add Expense")
+            add_expense_btn = Helpers.add_input_button("Add Expense")
             add_expense_btn.on_click(self.add_expense_input)
 
-            add_gift_btn = widgets.Button(description="Add Gift")
+            add_gift_btn = Helpers.add_input_button("Add Gift")
             add_gift_btn.on_click(self.add_gift_input)
 
-            add_transfer_btn = widgets.Button(description="Add Transfer")
+            add_transfer_btn = Helpers.add_input_button("Add Transfer")
             add_transfer_btn.on_click(self.add_transfer_input)
 
             display(
@@ -211,14 +211,20 @@ class Form:
                         Helpers.inputs_group_v2(
                             "h2",
                             "Debt",
-                            DebtInput.grid(self.debt_inputs),
+                            Helpers.simple_grid(
+                                self.debt_inputs,
+                                DebtInput.column_labels,
+                            ),
                             add_debt_btn,
                             is_empty=(len(self.debt_inputs) == 0),
                         ),
                         Helpers.inputs_group_v2(
                             "h2",
                             "Income",
-                            IncomeInput.grid(self.income_inputs),
+                            Helpers.simple_grid(
+                                self.income_inputs,
+                                IncomeInput.column_labels,
+                            ),
                             add_income_btn,
                             is_empty=(len(self.income_inputs) == 0),
                         ),

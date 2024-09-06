@@ -73,10 +73,48 @@ class Helpers:
             layout=cls.inputs_layout(),
         )
 
+    # This should be applied to all widgets that are in a grid -- otherwise, grid will not display properly
+    @staticmethod
+    def basic_layout():
+        return widgets.Layout(width="auto")
+
+    @staticmethod
+    def simple_grid(inputs, label_text):
+        grid_elements = []
+        labels = [
+            widgets.Label(
+                value=l,
+                layout=widgets.Layout(
+                    overflow="visible",
+                    word_wrap="break-word",
+                    white_space="normal",
+                    align_self="center",
+                    text_align="center",
+                ),
+            )
+            for l in label_text
+        ]
+
+        grid_elements.extend(labels)
+
+        for input in inputs:
+            grid_elements.extend(input.widgets_row)
+
+        return widgets.GridBox(
+            children=grid_elements,
+            layout=widgets.Layout(
+                width="100%",
+                grid_template_columns=f"repeat({len(label_text)}, minmax(150px, 1fr))",
+                grid_gap="10px 10px",
+                overflow="auto",
+            ),
+        )
+
     @staticmethod
     def add_input_button(text):
         return widgets.Button(
-            description=text, layout=widgets.Layout(width="fit-content", margin="4px")
+            description=text,
+            layout=widgets.Layout(width="fit-content", margin="4px 0"),
         )
 
     @staticmethod
