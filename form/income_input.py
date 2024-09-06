@@ -11,6 +11,9 @@ class IncomeInput:
         years: str = "2024-2070",
         deposit_in=None,
         payroll_tax=True,
+        federal_income_tax=True,
+        ny_income_tax=True,
+        nyc_income_tax=True,
     ):
         self.form = form  # Reference to the form instance
 
@@ -20,9 +23,9 @@ class IncomeInput:
         self.account_dropdown = widgets.Dropdown(
             options=self.form.get_account_options(), value=deposit_in
         )
-        self.federal_income_tax_widget = widgets.Checkbox(value=True)
-        self.ny_income_tax_widget = widgets.Checkbox(value=True)
-        self.nyc_income_tax_widget = widgets.Checkbox(value=True)
+        self.federal_income_tax_widget = widgets.Checkbox(value=federal_income_tax)
+        self.ny_income_tax_widget = widgets.Checkbox(value=ny_income_tax)
+        self.nyc_income_tax_widget = widgets.Checkbox(value=nyc_income_tax)
         self.payroll_tax_widget = widgets.Checkbox(value=payroll_tax)
         self.delete_btn = Helpers.delete_income_button()
 

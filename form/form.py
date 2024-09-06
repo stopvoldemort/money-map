@@ -11,6 +11,7 @@ from form.gift_input import GiftInput
 from form.transfer_input import TransferInput
 from form.investment_vehicle_input import InvestmentVehicleInput
 from form.helpers import Helpers
+from form.preloads import preload_data
 
 
 class Form:
@@ -44,15 +45,13 @@ class Form:
         self.update_display()
 
     #####  ACCOUNTS  #####
-    def add_account_input(self, param: widgets.Button | AccountInput):
-        account_input = None
-        if isinstance(param, AccountInput):
-            account_input = param
-        else:
-            account_input = AccountInput(self)
-
+    def add_account_input(self, data: dict = {}):
+        account_input = AccountInput(self, **data)
         self.account_inputs.append(account_input)
         self.update_display()
+
+    def handle_add_account_input_click(self, b=None):
+        self.add_account_input()
 
     def delete_account_input(self, account_input):
         if account_input in self.account_inputs:
@@ -73,19 +72,13 @@ class Form:
         return [account["name"] for account in all_data["accounts"]]
 
     #####  INCOMES  #####
-    def add_income_input(
-        self, b=None, name="", amount=0.0, deposit_in=None, years="", payroll_tax=True
-    ):
-        income_input = IncomeInput(
-            self,
-            name=name,
-            amount=amount,
-            deposit_in=deposit_in,
-            years=years,
-            payroll_tax=payroll_tax,
-        )
+    def add_income_input(self, data={}):
+        income_input = IncomeInput(self, **data)
         self.income_inputs.append(income_input)
         self.update_display()
+
+    def handle_add_income_input_click(self, b=None):
+        self.add_income_input()
 
     def delete_income_input(self, income_input):
         if income_input in self.income_inputs:
@@ -126,17 +119,13 @@ class Form:
         self.update_display()
 
     #####  INVESTMENT VEHICLES  #####
-    def add_investment_vehicle_input(
-        self, param: widgets.Button | InvestmentVehicleInput
-    ):
-        investment_vehicle_input = None
-        if isinstance(param, InvestmentVehicleInput):
-            investment_vehicle_input = param
-        else:
-            investment_vehicle_input = InvestmentVehicleInput(self)
-
-        self.investment_vehicle_inputs.append(investment_vehicle_input)
+    def add_investment_vehicle_input(self, data: dict = {}):
+        input = InvestmentVehicleInput(self, **data)
+        self.investment_vehicle_inputs.append(input)
         self.update_display()
+
+    def handle_add_investment_vehicle_input_click(self, b=None):
+        self.add_investment_vehicle_input()
 
     def delete_investment_vehicle_input(self, investment_vehicle_input):
         if investment_vehicle_input in self.investment_vehicle_inputs:
@@ -183,16 +172,18 @@ class Form:
             add_investment_vehicle_btn = Helpers.add_input_button(
                 "Add Investment Vehicle"
             )
-            add_investment_vehicle_btn.on_click(self.add_investment_vehicle_input)
+            add_investment_vehicle_btn.on_click(
+                self.handle_add_investment_vehicle_input_click
+            )
 
             add_account_btn = widgets.Button(description="Add Account")
-            add_account_btn.on_click(self.add_account_input)
+            add_account_btn.on_click(self.handle_add_account_input_click)
 
             add_debt_btn = widgets.Button(description="Add Debt")
             add_debt_btn.on_click(self.add_debt_input)
 
             add_income_btn = widgets.Button(description="Add Income")
-            add_income_btn.on_click(self.add_income_input)
+            add_income_btn.on_click(self.handle_add_income_input_click)
 
             add_expense_btn = widgets.Button(description="Add Expense")
             add_expense_btn.on_click(self.add_expense_input)
@@ -236,68 +227,15 @@ class Form:
             )
 
     def display(self):
-        self.add_investment_vehicle_input(
-            InvestmentVehicleInput(
-                self, name="s&p", aagr=0.0655, dynamic_mean=0.077, dynamic_std_dev=0.175
-            ),
-        )
-        self.add_investment_vehicle_input(
-            InvestmentVehicleInput(
-                self,
-                name="bonds",
-                aagr=0.0352,
-                dynamic_mean=0.039,
-                dynamic_std_dev=0.0855,
-            )
-        )
-        self.add_account_input(
-            AccountInput(
-                self,
-                name="bank of america",
-                account_type="bank",
-                starting_balance=30000.0,
-                earliest_withdrawal_year=2024,
-            ),
-        )
-        self.add_account_input(
-            AccountInput(
-                self,
-                name="fidelity",
-                account_type="retirement",
-                starting_balance=500000.0,
-                earliest_withdrawal_year=2039,
-            )
-        )
-        self.add_income_input(
-            self,
-            name="john job",
-            amount="100000.0",
-            deposit_in="bank of america",
-            years="2024-2048",
-        )
-        self.add_income_input(
-            self,
-            name="jane job",
-            amount="100000.0",
-            deposit_in="bank of america",
-            years="2024-2048",
-        )
-        self.add_income_input(
-            self,
-            name="john social security",
-            amount="35000.0",
-            deposit_in="bank of america",
-            years="2049-2070",
-            payroll_tax=False,
-        )
-        self.add_income_input(
-            self,
-            name="jane social security",
-            amount="35000.0",
-            deposit_in="bank of america",
-            years="2049-2070",
-            payroll_tax=False,
-        )
+        for iv in preload_data["investment_vehicles"]:
+            self.add_investment_vehicle_input(iv)
+
+        for acct in preload_data["accounts"]:
+            self.add_account_input(acct)
+
+        for inc in preload_data["incomes"]:
+            self.add_income_input(inc)
+
         display(self.display_area)
         self.update_display()
 

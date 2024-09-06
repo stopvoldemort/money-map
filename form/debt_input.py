@@ -8,7 +8,7 @@ class DebtInput:
 
         self.name_widget = widgets.Text(description="Name:")
         self.amount_widget = widgets.FloatText(description="Amount", value=0.0)
-        self.aagr_widget = widgets.FloatSlider(
+        self.aagr_widget = widgets.BoundedFloatText(
             description="AAGR",
             min=0.0,
             max=1.0,

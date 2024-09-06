@@ -44,17 +44,6 @@ class Helpers:
         )
 
     @classmethod
-    def inputs_group(cls, h_size, title, input_widgets, add_btn):
-        return VBox(
-            [
-                HBox([Label(value=title)], layout=cls.input_layout()),
-                HBox(input_widgets, layout=cls.inputs_layout()),
-                HBox([add_btn], layout=cls.input_layout()),
-            ],
-            layout=cls.inputs_layout(),
-        )
-
-    @classmethod
     def inputsGroup(cls, h_size, title, input_widgets, add_btn):
         inputs = [widgets.HTML(value="<p>None</p>")]
         if len(input_widgets) > 0:
@@ -71,12 +60,16 @@ class Helpers:
 
     @classmethod
     def inputs_group_v2(cls, h_size, title, grid, add_btn, is_empty=False):
-        body = grid
-        if is_empty:
-            body = widgets.HTML(value="<p>None</p>")
+        body = widgets.HTML(value="<p>None</p>")
+        if not is_empty:
+            body = grid
 
         return VBox(
-            [widgets.HTML(value=f"<{h_size}>{title}</{h_size}>"), body, add_btn],
+            [
+                widgets.HTML(value=f"<{h_size}>{title}</{h_size}>"),
+                body,
+                add_btn,
+            ],
             layout=cls.inputs_layout(),
         )
 
