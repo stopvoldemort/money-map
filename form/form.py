@@ -1,7 +1,6 @@
 from IPython.display import display, clear_output
 from ipywidgets import widgets
-from results.results_displayer import ResultsDisplayer
-from model.simulations import Simulations
+
 from model.account_type import AccountType
 from form.debt_input import DebtInput
 from form.account_input import AccountInput
@@ -25,13 +24,12 @@ class Form:
         self.expense_inputs = []  # List to store instances of ExpenseInput
         self.gift_inputs = []  # List to store instances of GiftInput
         self.transfer_inputs = []  # List to store instances of TransferInput
-        self.display_area = widgets.Output()  # Output widget to manage in-place updates
 
         # Create the submit button once
-        self.submit_btn = widgets.Button(description="Submit", button_style="info")
+        self.submit_btn = widgets.Button(
+            description="Print params", button_style="info"
+        )
         self.submit_btn.on_click(self.handle_submit)
-
-        self.results_displayer = ResultsDisplayer()
 
     #####  DEBTS  #####
     def add_debt_input(self, data: dict = {}):
@@ -314,23 +312,6 @@ class Form:
             ],
         }
 
-    def handle_submit(self, b):
+    def handle_submit(self, b: widgets.Button = None):
         data = self.get_all_data()
-        first_year = 2024
-        last_year = 2070
-        dynamic = False
-        debug = False
-        results_data = Simulations(
-            data,
-            first_year=first_year,
-            last_year=last_year,
-            dynamic=dynamic,
-            debug=dynamic,
-        ).execute()
-        self.results_displayer.display(
-            first_year=first_year,
-            last_year=last_year,
-            aggregator=results_data,
-            dynamic=dynamic,
-            debug=debug,
-        )
+        print(data)
