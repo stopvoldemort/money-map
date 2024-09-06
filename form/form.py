@@ -157,9 +157,6 @@ class Form:
         with self.display_area:
             clear_output(wait=True)
 
-            investment_vehicle_widgets = [
-                input.container for input in self.investment_vehicle_inputs
-            ]
             account_widgets = [
                 account_input.container for account_input in self.account_inputs
             ]
@@ -199,11 +196,15 @@ class Form:
             display(
                 widgets.VBox(
                     [
-                        Helpers.inputsGroup(
+                        Helpers.inputs_group_v2(
                             "h2",
                             "Investment Vehicles",
-                            investment_vehicle_widgets,
+                            Helpers.simple_grid(
+                                self.investment_vehicle_inputs,
+                                InvestmentVehicleInput.column_labels,
+                            ),
                             add_investment_vehicle_btn,
+                            is_empty=(len(self.investment_vehicle_inputs) == 0),
                         ),
                         Helpers.inputsGroup(
                             "h2", "Accounts", account_widgets, add_account_btn
