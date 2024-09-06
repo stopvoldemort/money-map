@@ -89,10 +89,13 @@ class Form:
         self.update_display()
 
     #####  EXPENSES  #####
-    def add_expense_input(self, b=None):
-        expense_input = ExpenseInput(self)
+    def add_expense_input(self, data: dict = {}):
+        expense_input = ExpenseInput(self, **data)
         self.expense_inputs.append(expense_input)
         self.update_display()
+
+    def handle_add_expense_input_click(self, b=None):
+        self.add_expense_input()
 
     def delete_expense_input(self, expense_input):
         if expense_input in self.expense_inputs:
@@ -183,7 +186,7 @@ class Form:
             add_income_btn.on_click(self.handle_add_income_input_click)
 
             add_expense_btn = Helpers.add_input_button("Add Expense")
-            add_expense_btn.on_click(self.add_expense_input)
+            add_expense_btn.on_click(self.handle_add_expense_input_click)
 
             add_gift_btn = Helpers.add_input_button("Add Gift")
             add_gift_btn.on_click(self.add_gift_input)
@@ -258,6 +261,9 @@ class Form:
 
         for debt in preload_data["debts"]:
             self.add_debt_input(debt)
+
+        for exp in preload_data["expenses"]:
+            self.add_expense_input(exp)
 
         display(self.display_area)
         self.update_display()
