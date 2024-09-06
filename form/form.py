@@ -117,10 +117,13 @@ class Form:
         self.update_display()
 
     #####  TRANSFERS  #####
-    def add_transfer_input(self, b=None):
-        transfer_input = TransferInput(self)
+    def add_transfer_input(self, data: dict = {}):
+        transfer_input = TransferInput(self, **data)
         self.transfer_inputs.append(transfer_input)
         self.update_display()
+
+    def handle_add_transfer_input_click(self, b=None):
+        self.add_transfer_input()
 
     def delete_transfer_input(self, transfer_input):
         if transfer_input in self.transfer_inputs:
@@ -167,10 +170,6 @@ class Form:
                 account_input.container for account_input in self.account_inputs
             ]
 
-            transfer_widgets = [
-                transfer_input.container for transfer_input in self.transfer_inputs
-            ]
-
             add_investment_vehicle_btn = Helpers.add_input_button(
                 "Add Investment Vehicle"
             )
@@ -194,7 +193,7 @@ class Form:
             add_gift_btn.on_click(self.handle_add_gift_input_click)
 
             add_transfer_btn = Helpers.add_input_button("Add Transfer")
-            add_transfer_btn.on_click(self.add_transfer_input)
+            add_transfer_btn.on_click(self.handle_add_transfer_input_click)
 
             display(
                 widgets.VBox(
@@ -252,8 +251,15 @@ class Form:
                             add_gift_btn,
                             is_empty=(len(self.gift_inputs) == 0),
                         ),
-                        Helpers.inputsGroup(
-                            "h2", "Transfers", transfer_widgets, add_transfer_btn
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Transfers",
+                            Helpers.simple_grid(
+                                self.transfer_inputs,
+                                TransferInput.column_labels,
+                            ),
+                            add_transfer_btn,
+                            is_empty=(len(self.transfer_inputs) == 0),
                         ),
                         self.submit_btn,
                     ]
@@ -278,6 +284,9 @@ class Form:
 
         for gift in preload_data["gifts"]:
             self.add_gift_input(gift)
+
+        for transfer in preload_data["transfers"]:
+            self.add_transfer_input(transfer)
 
         display(self.display_area)
         self.update_display()
