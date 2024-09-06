@@ -103,10 +103,13 @@ class Form:
         self.update_display()
 
     #####  GIFTS  #####
-    def add_gift_input(self, b=None):
-        gift_input = GiftInput(self)
+    def add_gift_input(self, data: dict = {}):
+        gift_input = GiftInput(self, **data)
         self.gift_inputs.append(gift_input)
         self.update_display()
+
+    def handle_add_gift_input_click(self, b=None):
+        self.add_gift_input()
 
     def delete_gift_input(self, gift_input):
         if gift_input in self.gift_inputs:
@@ -164,7 +167,6 @@ class Form:
                 account_input.container for account_input in self.account_inputs
             ]
 
-            gift_widgets = [gift_input.container for gift_input in self.gift_inputs]
             transfer_widgets = [
                 transfer_input.container for transfer_input in self.transfer_inputs
             ]
@@ -189,7 +191,7 @@ class Form:
             add_expense_btn.on_click(self.handle_add_expense_input_click)
 
             add_gift_btn = Helpers.add_input_button("Add Gift")
-            add_gift_btn.on_click(self.add_gift_input)
+            add_gift_btn.on_click(self.handle_add_gift_input_click)
 
             add_transfer_btn = Helpers.add_input_button("Add Transfer")
             add_transfer_btn.on_click(self.add_transfer_input)
@@ -240,7 +242,16 @@ class Form:
                             add_expense_btn,
                             is_empty=(len(self.expense_inputs) == 0),
                         ),
-                        Helpers.inputsGroup("h2", "Gifts", gift_widgets, add_gift_btn),
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Gifts",
+                            Helpers.simple_grid(
+                                self.gift_inputs,
+                                GiftInput.column_labels,
+                            ),
+                            add_gift_btn,
+                            is_empty=(len(self.gift_inputs) == 0),
+                        ),
                         Helpers.inputsGroup(
                             "h2", "Transfers", transfer_widgets, add_transfer_btn
                         ),
@@ -264,6 +275,9 @@ class Form:
 
         for exp in preload_data["expenses"]:
             self.add_expense_input(exp)
+
+        for gift in preload_data["gifts"]:
+            self.add_gift_input(gift)
 
         display(self.display_area)
         self.update_display()
