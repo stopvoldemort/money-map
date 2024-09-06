@@ -4,6 +4,7 @@ class Expense:
     ):
         self.name = name
         self.amount = amount
+        self.starting_amount = amount
         self.year = year
         self.five_two_nine_eligible = five_two_nine_eligible
 

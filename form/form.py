@@ -1,7 +1,6 @@
 from IPython.display import display, clear_output
 from ipywidgets import widgets
-from results.results_displayer import ResultsDisplayer
-from model.simulations import Simulations
+
 from model.account_type import AccountType
 from form.debt_input import DebtInput
 from form.account_input import AccountInput
@@ -11,11 +10,11 @@ from form.gift_input import GiftInput
 from form.transfer_input import TransferInput
 from form.investment_vehicle_input import InvestmentVehicleInput
 from form.helpers import Helpers
-from form.preloads import preload_data
 
 
 class Form:
-    def __init__(self):
+    def __init__(self, preload_data: dict = {}):
+        self.preload_data = preload_data
         self.investment_vehicle_inputs = (
             []
         )  # List to store instances of InvestmentVehicle
@@ -25,13 +24,13 @@ class Form:
         self.expense_inputs = []  # List to store instances of ExpenseInput
         self.gift_inputs = []  # List to store instances of GiftInput
         self.transfer_inputs = []  # List to store instances of TransferInput
-        self.display_area = widgets.Output()  # Output widget to manage in-place updates
 
-        # Create the submit button once
-        self.submit_btn = widgets.Button(description="Submit", button_style="info")
+        self.display_area = widgets.Output()
+
+        self.submit_btn = widgets.Button(
+            description="Print params", button_style="info"
+        )
         self.submit_btn.on_click(self.handle_submit)
-
-        self.results_displayer = ResultsDisplayer()
 
     #####  DEBTS  #####
     def add_debt_input(self, data: dict = {}):
@@ -71,8 +70,7 @@ class Form:
             income_input.update_account_dropdown()
 
     def get_account_options(self):
-        all_data = self.get_all_data()
-        return [account["name"] for account in all_data["accounts"]]
+        return [account.get_data()["name"] for account in self.account_inputs]
 
     #####  INCOMES  #####
     def add_income_input(self, data={}):
@@ -161,7 +159,7 @@ class Form:
                         self.get_investment_vehicle_options()
                     )
 
-    #####  DISPLAY  #####
+    #####  PRINT  #####
     def update_display(self):
         with self.display_area:
             clear_output(wait=True)
@@ -266,68 +264,51 @@ class Form:
                 )
             )
 
-    def display(self):
-        for iv in preload_data["investment_vehicles"]:
+    def initialize(self):
+        for iv in self.preload_data["investment_vehicles"]:
             self.add_investment_vehicle_input(iv)
 
-        for acct in preload_data["accounts"]:
+        for acct in self.preload_data["accounts"]:
             self.add_account_input(acct)
 
-        for inc in preload_data["incomes"]:
+        for inc in self.preload_data["incomes"]:
             self.add_income_input(inc)
 
-        for debt in preload_data["debts"]:
+        for debt in self.preload_data["debts"]:
             self.add_debt_input(debt)
 
-        for exp in preload_data["expenses"]:
+        for exp in self.preload_data["expenses"]:
             self.add_expense_input(exp)
 
-        for gift in preload_data["gifts"]:
+        for gift in self.preload_data["gifts"]:
             self.add_gift_input(gift)
 
-        for transfer in preload_data["transfers"]:
+        for transfer in self.preload_data["transfers"]:
             self.add_transfer_input(transfer)
+
+    def display(self):
+        self.initialize()
 
         display(self.display_area)
         self.update_display()
 
+    @staticmethod
+    def get_all_inputs_data(inputs):
+        return [input.get_data() for input in inputs]
+
     def get_all_data(self):
         return {
-            "debts": [debt_input.get_data() for debt_input in self.debt_inputs],
-            "accounts": [
-                account_input.get_data() for account_input in self.account_inputs
-            ],
-            "incomes": [income_input.get_data() for income_input in self.income_inputs],
-            "expenses": [
-                expense_input.get_data() for expense_input in self.expense_inputs
-            ],
-            "gifts": [gift_input.get_data() for gift_input in self.gift_inputs],
-            "transfers": [
-                transfer_input.get_data() for transfer_input in self.transfer_inputs
-            ],
-            "investment_vehicles": [
-                investment_vehicle_input.get_data()
-                for investment_vehicle_input in self.investment_vehicle_inputs
-            ],
+            "debts": self.get_all_inputs_data(self.debt_inputs),
+            "accounts": self.get_all_inputs_data(self.account_inputs),
+            "incomes": self.get_all_inputs_data(self.income_inputs),
+            "expenses": self.get_all_inputs_data(self.expense_inputs),
+            "gifts": self.get_all_inputs_data(self.gift_inputs),
+            "transfers": self.get_all_inputs_data(self.transfer_inputs),
+            "investment_vehicles": self.get_all_inputs_data(
+                self.investment_vehicle_inputs
+            ),
         }
 
-    def handle_submit(self, b):
+    def handle_submit(self, b: widgets.Button = None):
         data = self.get_all_data()
-        first_year = 2024
-        last_year = 2070
-        dynamic = False
-        debug = False
-        results_data = Simulations(
-            data,
-            first_year=first_year,
-            last_year=last_year,
-            dynamic=dynamic,
-            debug=dynamic,
-        ).execute()
-        self.results_displayer.display(
-            first_year=first_year,
-            last_year=last_year,
-            aggregator=results_data,
-            dynamic=dynamic,
-            debug=debug,
-        )
+        print(data)

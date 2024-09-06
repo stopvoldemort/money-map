@@ -67,11 +67,10 @@ class TransferInput:
         self.transfer_to_widget.options = self.form.get_account_options()
 
     def get_data(self):
-        years_list = Helpers.parse_years(self.years_widget.value)
         return {
             "name": self.name_widget.value,
             "amount": self.amount_widget.value,
-            "years": years_list,
+            "years": self.years_widget.value,
             "transfer_from": self.transfer_from_widget.value,
             "transfer_to": self.transfer_to_widget.value,
             "required": self.required_widget.value,

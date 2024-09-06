@@ -4,31 +4,6 @@ from ipywidgets import HBox, VBox, Label
 
 class Helpers:
     @staticmethod
-    def parse_years(input_string):
-        years = set()
-        input_string = input_string.replace(" ", "")  # Remove any spaces
-        parts = input_string.split(",")
-
-        for part in parts:
-            if "-" in part:
-                try:
-                    start, end = part.split("-")
-                    start, end = int(start), int(end)
-                    if start > end:
-                        start, end = end, start
-                    years.update(range(start, end + 1))
-                except ValueError:
-                    continue  # Skip invalid ranges
-            else:
-                try:
-                    year = int(part)
-                    years.add(year)
-                except ValueError:
-                    continue  # Skip invalid years
-
-        return sorted(years)
-
-    @staticmethod
     def input_layout():
         return widgets.Layout(
             border="solid 0.5px gray", padding="10px", margin="10px", width="auto"

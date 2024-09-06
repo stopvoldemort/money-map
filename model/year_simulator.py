@@ -65,7 +65,7 @@ class YearSimulator:
                 print(f"[{year}] [income] {i.name}: {i.amount}")
             for e in expenses:
                 if e.year == year:
-                    print(f"[{year}] [expense] {e.name}: {e.amount}")
+                    print(f"[{year}] [expense] {e.name}: {e.starting_amount}")
 
         # DEPOSIT INCOME
         for income in annual_incomes:
@@ -148,7 +148,8 @@ class YearSimulator:
 
         unpaid_expenses = sum(expense.amount for expense in annual_expenses)
         # TODO: The aagr of unpaid expenses should live somewhere rather than be hardcoded here
-        debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, 0.10))
+        if unpaid_expenses > 0:
+            debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, 0.10))
 
         #####   PAY UNSCHEDULED DEBT  ######
         unscheduled_debts = [
@@ -209,7 +210,7 @@ class YearSimulator:
                 print(f"[{year}] [income] {i.name}: {i.amount}")
             for e in expenses:
                 if e.year == year:
-                    print(f"[{year}] [expense] {e.name}: {e.amount}")
+                    print(f"[{year}] [expense] {e.name}: {e.starting_amount}")
 
         # APPLY ANNUAL GROWTH
         for account in accounts:
