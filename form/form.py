@@ -11,11 +11,11 @@ from form.gift_input import GiftInput
 from form.transfer_input import TransferInput
 from form.investment_vehicle_input import InvestmentVehicleInput
 from form.helpers import Helpers
-from form.preloads import preload_data
 
 
 class Form:
-    def __init__(self):
+    def __init__(self, preload_data: dict = {}):
+        self.preload_data = preload_data
         self.investment_vehicle_inputs = (
             []
         )  # List to store instances of InvestmentVehicle
@@ -266,27 +266,30 @@ class Form:
                 )
             )
 
-    def display(self):
-        for iv in preload_data["investment_vehicles"]:
+    def initialize(self):
+        for iv in self.preload_data["investment_vehicles"]:
             self.add_investment_vehicle_input(iv)
 
-        for acct in preload_data["accounts"]:
+        for acct in self.preload_data["accounts"]:
             self.add_account_input(acct)
 
-        for inc in preload_data["incomes"]:
+        for inc in self.preload_data["incomes"]:
             self.add_income_input(inc)
 
-        for debt in preload_data["debts"]:
+        for debt in self.preload_data["debts"]:
             self.add_debt_input(debt)
 
-        for exp in preload_data["expenses"]:
+        for exp in self.preload_data["expenses"]:
             self.add_expense_input(exp)
 
-        for gift in preload_data["gifts"]:
+        for gift in self.preload_data["gifts"]:
             self.add_gift_input(gift)
 
-        for transfer in preload_data["transfers"]:
+        for transfer in self.preload_data["transfers"]:
             self.add_transfer_input(transfer)
+
+    def display(self):
+        self.initialize()
 
         display(self.display_area)
         self.update_display()
