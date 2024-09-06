@@ -3,28 +3,44 @@ from form.helpers import Helpers
 
 
 class ExpenseInput:
-    def __init__(self, form):
+    column_labels = [
+        "Name",
+        "Amount",
+        "Years",
+        "529 Eligible",
+        "",
+    ]
+
+    def __init__(
+        self,
+        form,
+        name: str = "",
+        amount: float = 0.0,
+        years: str = "2024-2070",
+        five_two_nine_eligible: bool = False,
+    ):
         self.form = form  # Reference to the form instance
 
-        self.name_widget = widgets.Text(description="Name:", continuous_update=False)
-        self.amount_widget = widgets.FloatText(description="Amount", value=0.0)
-        self.years_widget = widgets.Text(description="Years:", value="")
+        self.name_widget = widgets.Text(
+            value=name, continuous_update=False, layout=Helpers.basic_layout()
+        )
+        self.amount_widget = widgets.FloatText(
+            value=amount, layout=Helpers.basic_layout()
+        )
+        self.years_widget = widgets.Text(value=years, layout=Helpers.basic_layout())
         self.five_two_nine_eligible_widget = widgets.Checkbox(
-            description="529 Eligible", value=False
+            value=five_two_nine_eligible, layout=Helpers.basic_layout()
         )
         self.delete_btn = widgets.Button(description="Delete", button_style="danger")
-
-        self.container = HBox(
-            [
-                self.name_widget,
-                self.amount_widget,
-                self.years_widget,
-                self.five_two_nine_eligible_widget,
-                self.delete_btn,
-            ]
-        )
-
         self.delete_btn.on_click(self._on_delete)
+
+        self.widgets_row = [
+            self.name_widget,
+            self.amount_widget,
+            self.years_widget,
+            self.five_two_nine_eligible_widget,
+            self.delete_btn,
+        ]
 
     def _on_delete(self, b):
         self.form.delete_expense_input(self)

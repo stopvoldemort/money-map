@@ -11,6 +11,7 @@ from form.gift_input import GiftInput
 from form.transfer_input import TransferInput
 from form.investment_vehicle_input import InvestmentVehicleInput
 from form.helpers import Helpers
+from form.preloads import preload_data
 
 
 class Form:
@@ -33,10 +34,13 @@ class Form:
         self.results_displayer = ResultsDisplayer()
 
     #####  DEBTS  #####
-    def add_debt_input(self, b=None):
-        debt_input = DebtInput(self)
+    def add_debt_input(self, data: dict = {}):
+        debt_input = DebtInput(self, **data)
         self.debt_inputs.append(debt_input)
         self.update_display()
+
+    def handle_add_debt_input_click(self, b=None):
+        self.add_debt_input()
 
     def delete_debt_input(self, debt_input):
         if debt_input in self.debt_inputs:
@@ -44,19 +48,13 @@ class Form:
         self.update_display()
 
     #####  ACCOUNTS  #####
-    def add_account_input(
-        self,
-        b=None,
-        name="",
-        account_type=AccountType.BANK,
-        starting_balance=0.0,
-        earliest_withdrawal_year=2024,
-    ):
-        account_input = AccountInput(
-            self, name, account_type, starting_balance, earliest_withdrawal_year
-        )
+    def add_account_input(self, data: dict = {}):
+        account_input = AccountInput(self, **data)
         self.account_inputs.append(account_input)
         self.update_display()
+
+    def handle_add_account_input_click(self, b=None):
+        self.add_account_input()
 
     def delete_account_input(self, account_input):
         if account_input in self.account_inputs:
@@ -77,19 +75,13 @@ class Form:
         return [account["name"] for account in all_data["accounts"]]
 
     #####  INCOMES  #####
-    def add_income_input(
-        self, b=None, name="", amount=0.0, deposit_in=None, years="", payroll_tax=True
-    ):
-        income_input = IncomeInput(
-            self,
-            name=name,
-            amount=amount,
-            deposit_in=deposit_in,
-            years=years,
-            payroll_tax=payroll_tax,
-        )
+    def add_income_input(self, data={}):
+        income_input = IncomeInput(self, **data)
         self.income_inputs.append(income_input)
         self.update_display()
+
+    def handle_add_income_input_click(self, b=None):
+        self.add_income_input()
 
     def delete_income_input(self, income_input):
         if income_input in self.income_inputs:
@@ -97,10 +89,13 @@ class Form:
         self.update_display()
 
     #####  EXPENSES  #####
-    def add_expense_input(self, b=None):
-        expense_input = ExpenseInput(self)
+    def add_expense_input(self, data: dict = {}):
+        expense_input = ExpenseInput(self, **data)
         self.expense_inputs.append(expense_input)
         self.update_display()
+
+    def handle_add_expense_input_click(self, b=None):
+        self.add_expense_input()
 
     def delete_expense_input(self, expense_input):
         if expense_input in self.expense_inputs:
@@ -108,10 +103,13 @@ class Form:
         self.update_display()
 
     #####  GIFTS  #####
-    def add_gift_input(self, b=None):
-        gift_input = GiftInput(self)
+    def add_gift_input(self, data: dict = {}):
+        gift_input = GiftInput(self, **data)
         self.gift_inputs.append(gift_input)
         self.update_display()
+
+    def handle_add_gift_input_click(self, b=None):
+        self.add_gift_input()
 
     def delete_gift_input(self, gift_input):
         if gift_input in self.gift_inputs:
@@ -119,10 +117,13 @@ class Form:
         self.update_display()
 
     #####  TRANSFERS  #####
-    def add_transfer_input(self, b=None):
-        transfer_input = TransferInput(self)
+    def add_transfer_input(self, data: dict = {}):
+        transfer_input = TransferInput(self, **data)
         self.transfer_inputs.append(transfer_input)
         self.update_display()
+
+    def handle_add_transfer_input_click(self, b=None):
+        self.add_transfer_input()
 
     def delete_transfer_input(self, transfer_input):
         if transfer_input in self.transfer_inputs:
@@ -130,14 +131,13 @@ class Form:
         self.update_display()
 
     #####  INVESTMENT VEHICLES  #####
-    def add_investment_vehicle_input(
-        self, b=None, name="", aagr=0.0, dynamic_mean=0.0, dynamic_std_dev=0.0
-    ):
-        investment_vehicle_input = InvestmentVehicleInput(
-            self, name, aagr, dynamic_mean, dynamic_std_dev
-        )
-        self.investment_vehicle_inputs.append(investment_vehicle_input)
+    def add_investment_vehicle_input(self, data: dict = {}):
+        input = InvestmentVehicleInput(self, **data)
+        self.investment_vehicle_inputs.append(input)
         self.update_display()
+
+    def handle_add_investment_vehicle_input_click(self, b=None):
+        self.add_investment_vehicle_input()
 
     def delete_investment_vehicle_input(self, investment_vehicle_input):
         if investment_vehicle_input in self.investment_vehicle_inputs:
@@ -166,70 +166,100 @@ class Form:
         with self.display_area:
             clear_output(wait=True)
 
-            investment_vehicle_widgets = [
-                input.container for input in self.investment_vehicle_inputs
-            ]
             account_widgets = [
                 account_input.container for account_input in self.account_inputs
-            ]
-            debt_widgets = [debt_input.container for debt_input in self.debt_inputs]
-            expense_widgets = [
-                expense_input.container for expense_input in self.expense_inputs
-            ]
-            gift_widgets = [gift_input.container for gift_input in self.gift_inputs]
-            transfer_widgets = [
-                transfer_input.container for transfer_input in self.transfer_inputs
             ]
 
             add_investment_vehicle_btn = Helpers.add_input_button(
                 "Add Investment Vehicle"
             )
-            add_investment_vehicle_btn.on_click(self.add_investment_vehicle_input)
+            add_investment_vehicle_btn.on_click(
+                self.handle_add_investment_vehicle_input_click
+            )
 
-            add_account_btn = widgets.Button(description="Add Account")
-            add_account_btn.on_click(self.add_account_input)
+            add_account_btn = Helpers.add_input_button("Add Account")
+            add_account_btn.on_click(self.handle_add_account_input_click)
 
-            add_debt_btn = widgets.Button(description="Add Debt")
-            add_debt_btn.on_click(self.add_debt_input)
+            add_debt_btn = Helpers.add_input_button("Add Debt")
+            add_debt_btn.on_click(self.handle_add_debt_input_click)
 
-            add_income_btn = widgets.Button(description="Add Income")
-            add_income_btn.on_click(self.add_income_input)
+            add_income_btn = Helpers.add_input_button("Add Income")
+            add_income_btn.on_click(self.handle_add_income_input_click)
 
-            add_expense_btn = widgets.Button(description="Add Expense")
-            add_expense_btn.on_click(self.add_expense_input)
+            add_expense_btn = Helpers.add_input_button("Add Expense")
+            add_expense_btn.on_click(self.handle_add_expense_input_click)
 
-            add_gift_btn = widgets.Button(description="Add Gift")
-            add_gift_btn.on_click(self.add_gift_input)
+            add_gift_btn = Helpers.add_input_button("Add Gift")
+            add_gift_btn.on_click(self.handle_add_gift_input_click)
 
-            add_transfer_btn = widgets.Button(description="Add Transfer")
-            add_transfer_btn.on_click(self.add_transfer_input)
+            add_transfer_btn = Helpers.add_input_button("Add Transfer")
+            add_transfer_btn.on_click(self.handle_add_transfer_input_click)
 
             display(
                 widgets.VBox(
                     [
-                        Helpers.inputsGroup(
+                        Helpers.inputs_group_v2(
                             "h2",
                             "Investment Vehicles",
-                            investment_vehicle_widgets,
+                            Helpers.simple_grid(
+                                self.investment_vehicle_inputs,
+                                InvestmentVehicleInput.column_labels,
+                            ),
                             add_investment_vehicle_btn,
+                            is_empty=(len(self.investment_vehicle_inputs) == 0),
                         ),
                         Helpers.inputsGroup(
                             "h2", "Accounts", account_widgets, add_account_btn
                         ),
-                        Helpers.inputsGroup("h2", "Debt", debt_widgets, add_debt_btn),
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Debt",
+                            Helpers.simple_grid(
+                                self.debt_inputs,
+                                DebtInput.column_labels,
+                            ),
+                            add_debt_btn,
+                            is_empty=(len(self.debt_inputs) == 0),
+                        ),
                         Helpers.inputs_group_v2(
                             "h2",
                             "Income",
-                            IncomeInput.grid(self.income_inputs),
+                            Helpers.simple_grid(
+                                self.income_inputs,
+                                IncomeInput.column_labels,
+                            ),
                             add_income_btn,
                             is_empty=(len(self.income_inputs) == 0),
                         ),
-                        Helpers.inputsGroup(
-                            "h2", "Expenses", expense_widgets, add_expense_btn
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Expenses",
+                            Helpers.simple_grid(
+                                self.expense_inputs,
+                                ExpenseInput.column_labels,
+                            ),
+                            add_expense_btn,
+                            is_empty=(len(self.expense_inputs) == 0),
                         ),
-                        Helpers.inputsGroup("h2", "Gifts", gift_widgets, add_gift_btn),
-                        Helpers.inputsGroup(
-                            "h2", "Transfers", transfer_widgets, add_transfer_btn
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Gifts",
+                            Helpers.simple_grid(
+                                self.gift_inputs,
+                                GiftInput.column_labels,
+                            ),
+                            add_gift_btn,
+                            is_empty=(len(self.gift_inputs) == 0),
+                        ),
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Transfers",
+                            Helpers.simple_grid(
+                                self.transfer_inputs,
+                                TransferInput.column_labels,
+                            ),
+                            add_transfer_btn,
+                            is_empty=(len(self.transfer_inputs) == 0),
                         ),
                         self.submit_btn,
                     ]
@@ -237,52 +267,27 @@ class Form:
             )
 
     def display(self):
-        self.add_investment_vehicle_input(
-            self, name="s&p", aagr=0.0655, dynamic_mean=0.077, dynamic_std_dev=0.175
-        )
-        self.add_investment_vehicle_input(
-            self, name="bonds", aagr=0.0352, dynamic_mean=0.039, dynamic_std_dev=0.0855
-        )
-        self.add_account_input(
-            self, name="bank of america", account_type="bank", starting_balance=30000.0
-        )
-        self.add_account_input(
-            self,
-            name="fidelity",
-            account_type="retirement",
-            starting_balance=500000.0,
-            earliest_withdrawal_year=2039,
-        )
-        self.add_income_input(
-            self,
-            name="spouse 1 income",
-            amount="100000.0",
-            deposit_in="bank of america",
-            years="2024-2048",
-        )
-        self.add_income_input(
-            self,
-            name="spouse 2 income",
-            amount="100000.0",
-            deposit_in="bank of america",
-            years="2024-2048",
-        )
-        self.add_income_input(
-            self,
-            name="spouse 1 social security",
-            amount="35000.0",
-            deposit_in="bank of america",
-            years="2049-2070",
-            payroll_tax=False,
-        )
-        self.add_income_input(
-            self,
-            name="spouse 2 social security",
-            amount="35000.0",
-            deposit_in="bank of america",
-            years="2049-2070",
-            payroll_tax=False,
-        )
+        for iv in preload_data["investment_vehicles"]:
+            self.add_investment_vehicle_input(iv)
+
+        for acct in preload_data["accounts"]:
+            self.add_account_input(acct)
+
+        for inc in preload_data["incomes"]:
+            self.add_income_input(inc)
+
+        for debt in preload_data["debts"]:
+            self.add_debt_input(debt)
+
+        for exp in preload_data["expenses"]:
+            self.add_expense_input(exp)
+
+        for gift in preload_data["gifts"]:
+            self.add_gift_input(gift)
+
+        for transfer in preload_data["transfers"]:
+            self.add_transfer_input(transfer)
+
         display(self.display_area)
         self.update_display()
 

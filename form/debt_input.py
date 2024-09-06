@@ -3,27 +3,33 @@ from form.helpers import Helpers
 
 
 class DebtInput:
-    def __init__(self, form):
-        self.form = form  # Reference to the form instance
+    column_labels = [
+        "Name",
+        "Amount",
+        "AAGR",
+        "",
+    ]
 
-        self.name_widget = widgets.Text(description="Name:")
-        self.amount_widget = widgets.FloatText(description="Amount", value=0.0)
-        self.aagr_widget = widgets.FloatSlider(
-            description="AAGR",
-            min=0.0,
-            max=1.0,
-            step=0.001,
-            value=0.0,
-            continuous_update=True,
+    def __init__(self, form, name: str = "", amount: float = 0.0, aagr: float = 0.0):
+        self.form = form
+
+        self.name_widget = widgets.Text(value=name, layout=Helpers.basic_layout())
+        self.amount_widget = widgets.FloatText(
+            value=amount, layout=Helpers.basic_layout()
+        )
+        self.aagr_widget = widgets.BoundedFloatText(
+            min=0.0, max=1.0, step=0.001, value=aagr, layout=Helpers.basic_layout()
         )
         self.delete_btn = widgets.Button(description="Delete", button_style="danger")
 
         self.delete_btn.on_click(self._on_delete)
 
-        self.container = HBox(
-            [self.name_widget, self.amount_widget, self.aagr_widget, self.delete_btn],
-            layout=Helpers.input_layout(),
-        )
+        self.widgets_row = [
+            self.name_widget,
+            self.amount_widget,
+            self.aagr_widget,
+            self.delete_btn,
+        ]
 
     def _on_delete(self, b):
         self.form.delete_debt_input(self)

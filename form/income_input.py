@@ -3,6 +3,18 @@ from form.helpers import Helpers
 
 
 class IncomeInput:
+    column_labels = [
+        "Name",
+        "Amount",
+        "Years",
+        "Deposit In",
+        "Federal Income Tax",
+        "NY Income Tax",
+        "NYC Income Tax",
+        "Payroll Tax",
+        "",
+    ]
+
     def __init__(
         self,
         form,
@@ -11,37 +23,38 @@ class IncomeInput:
         years: str = "2024-2070",
         deposit_in=None,
         payroll_tax=True,
+        federal_income_tax=True,
+        ny_income_tax=True,
+        nyc_income_tax=True,
     ):
-        self.form = form  # Reference to the form instance
+        self.form = form
 
-        self.name_widget = widgets.Text(value=name, continuous_update=False)
-        self.amount_widget = widgets.FloatText(value=amount)
-        self.years_widget = widgets.Text(value=years)
-        self.account_dropdown = widgets.Dropdown(
-            options=self.form.get_account_options(), value=deposit_in
+        self.name_widget = widgets.Text(
+            value=name, continuous_update=False, layout=Helpers.basic_layout()
         )
-        self.federal_income_tax_widget = widgets.Checkbox(value=True)
-        self.ny_income_tax_widget = widgets.Checkbox(value=True)
-        self.nyc_income_tax_widget = widgets.Checkbox(value=True)
-        self.payroll_tax_widget = widgets.Checkbox(value=payroll_tax)
+        self.amount_widget = widgets.FloatText(
+            value=amount, layout=Helpers.basic_layout()
+        )
+        self.years_widget = widgets.Text(value=years, layout=Helpers.basic_layout())
+        self.account_dropdown = widgets.Dropdown(
+            options=self.form.get_account_options(),
+            value=deposit_in,
+            layout=Helpers.basic_layout(),
+        )
+        self.federal_income_tax_widget = widgets.Checkbox(
+            value=federal_income_tax, layout=Helpers.basic_layout()
+        )
+        self.ny_income_tax_widget = widgets.Checkbox(
+            value=ny_income_tax, layout=Helpers.basic_layout()
+        )
+        self.nyc_income_tax_widget = widgets.Checkbox(
+            value=nyc_income_tax, layout=Helpers.basic_layout()
+        )
+        self.payroll_tax_widget = widgets.Checkbox(
+            value=payroll_tax, layout=Helpers.basic_layout()
+        )
         self.delete_btn = Helpers.delete_income_button()
 
-        # self.container = widgets.VBox([
-        #     HBox([
-        #         self.name_widget,
-        #         self.amount_widget,
-        #         self.years_widget,
-        #         self.account_dropdown,
-        #         self.federal_income_tax_widget,
-        #         self.ny_income_tax_widget,
-        #         self.nyc_income_tax_widget,
-        #         self.payroll_tax_widget,
-        #         self.delete_btn
-        #         ], layout=widgets.Layout(width="100%")
-        #     )
-        # ], layout=input_layout)
-
-        # Grid layout for this IncomeInput
         self.widgets_row = [
             self.name_widget,
             self.amount_widget,
@@ -56,52 +69,6 @@ class IncomeInput:
 
         self.delete_btn.on_click(self._on_delete)
         self.name_widget.observe(self._on_name_change, names="value")
-
-    @classmethod
-    def labels(cls):
-        labels = [
-            "Name",
-            "Amount",
-            "Years",
-            "Deposit In",
-            "Federal Income Tax",
-            "NY Income Tax",
-            "NYC Income Tax",
-            "Payroll Tax",
-            "",
-        ]
-        return [
-            widgets.Label(
-                value=l,
-                layout=widgets.Layout(
-                    overflow="visible", word_wrap="break-word", white_space="normal"
-                ),
-            )
-            for l in labels
-        ]
-
-    @classmethod
-    def grid(cls, income_inputs):
-        # Create a list to hold the grid elements
-        income_grid_elements = []
-
-        # Add the labels to the grid
-        income_grid_elements.extend(cls.labels())
-
-        # Add each IncomeInput to the grid
-        for input_ in income_inputs:
-            income_grid_elements.extend(input_.widgets_row)
-
-        # Create the GridBox
-        return widgets.GridBox(
-            children=income_grid_elements,
-            layout=widgets.Layout(
-                width="100%",  # Limit the width of the entire grid to fit the screen
-                grid_template_columns="repeat(9, minmax(100px, 1fr))",  # Adjust columns as needed
-                grid_gap="10px 10px",  # Spacing between rows and columns
-                overflow="auto",  # Allow horizontal scrolling if necessary
-            ),
-        )
 
     def _on_delete(self, b):
         self.form.delete_income_input(self)

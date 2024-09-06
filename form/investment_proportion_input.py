@@ -2,15 +2,20 @@ from ipywidgets import widgets, HBox
 
 
 class InvestmentProportionInput:
-    def __init__(self, form, parent_distribution_input):
+    def __init__(
+        self, form, parent_distribution_input, investment_vehicle=None, proportion=0.0
+    ):
         self.form = form
         self.parent_distribution_input = parent_distribution_input  # Reference to the parent InvestmentDistributionInput
 
         self.investment_widget = widgets.Dropdown(
             options=self.form.get_investment_vehicle_options(),
-            description="Investment:",
+            description="Vehicle:",
+            value=investment_vehicle,
         )
-        self.proportion_widget = widgets.FloatText(description="Proportion:", value=0.0)
+        self.proportion_widget = widgets.FloatText(
+            description="Proportion:", value=proportion
+        )
         self.delete_btn = widgets.Button(description="Delete", button_style="danger")
 
         self.container = HBox(
