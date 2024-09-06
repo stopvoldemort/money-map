@@ -37,6 +37,9 @@ class FormDataParser:
 
             for investment_distribution_input in investment_distributions_input:
                 investment_proportions = []
+                parsed_years = self.parse_years(
+                    investment_distribution_input.pop("years")
+                )
                 investment_proportions_input = investment_distribution_input.pop(
                     "investment_proportions", []
                 )
@@ -56,6 +59,7 @@ class FormDataParser:
                 investment_distributions.append(
                     InvestmentDistribution(
                         **investment_distribution_input,
+                        years=parsed_years,
                         investment_proportions=investment_proportions,
                     )
                 )
@@ -70,12 +74,12 @@ class FormDataParser:
             account = self.find_object_by_name(
                 self.accounts, gift_input.pop("account", None)
             )
-            years = gift_input.pop("years", [])
+            years = self.parse_years(gift_input.pop("years", []))
             for year in years:
                 self.gifts.append(Gift(**gift_input, account=account, year=year))
 
         for expense_input in self.data["expenses"]:
-            years = expense_input.pop("years", [])
+            years = self.parse_years(expense_input.pop("years", []))
             for year in years:
                 self.expenses.append(Expense(**expense_input, year=year))
 
@@ -83,7 +87,7 @@ class FormDataParser:
             deposit_in = self.find_object_by_name(
                 self.accounts, income_input.pop("deposit_in", None)
             )
-            years = income_input.pop("years", [])
+            years = self.parse_years(income_input.pop("years", []))
             for year in years:
                 self.incomes.append(
                     Income(**income_input, year=year, deposit_in=deposit_in)
@@ -96,7 +100,7 @@ class FormDataParser:
             transfer_to = self.find_object_by_name(
                 self.accounts, transfer_input.pop("transfer_to", None)
             )
-            years = transfer_input.pop("years", [])
+            years = self.parse_years(transfer_input.pop("years", []))
             for year in years:
                 self.transfers.append(
                     Transfer(
@@ -114,3 +118,28 @@ class FormDataParser:
         raise ValueError(
             f"can't find object with name {target_name}"
         )  # Raise if no match is found
+
+    @staticmethod
+    def parse_years(input_string):
+        years = set()
+        input_string = input_string.replace(" ", "")  # Remove any spaces
+        parts = input_string.split(",")
+
+        for part in parts:
+            if "-" in part:
+                try:
+                    start, end = part.split("-")
+                    start, end = int(start), int(end)
+                    if start > end:
+                        start, end = end, start
+                    years.update(range(start, end + 1))
+                except ValueError:
+                    continue  # Skip invalid ranges
+            else:
+                try:
+                    year = int(part)
+                    years.add(year)
+                except ValueError:
+                    continue  # Skip invalid years
+
+        return sorted(years)

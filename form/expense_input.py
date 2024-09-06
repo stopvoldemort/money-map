@@ -46,10 +46,9 @@ class ExpenseInput:
         self.form.delete_expense_input(self)
 
     def get_data(self):
-        years_list = Helpers.parse_years(self.years_widget.value)
         return {
             "name": self.name_widget.value,
             "amount": self.amount_widget.value,
-            "years": years_list,
+            "years": self.years_widget.value,
             "five_two_nine_eligible": self.five_two_nine_eligible_widget.value,
         }

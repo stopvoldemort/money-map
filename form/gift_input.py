@@ -52,10 +52,9 @@ class GiftInput:
         self.account_dropdown.options = self.form.get_account_options()
 
     def get_data(self):
-        years_list = Helpers.parse_years(self.years_widget.value)
         return {
             "name": self.name_widget.value,
             "amount": self.amount_widget.value,
-            "years": years_list,
+            "years": self.years_widget.value,
             "account": self.account_dropdown.value,
         }

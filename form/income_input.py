@@ -80,11 +80,10 @@ class IncomeInput:
         self.account_dropdown.options = self.form.get_account_options()
 
     def get_data(self):
-        years_list = Helpers.parse_years(self.years_widget.value)
         return {
             "name": self.name_widget.value,
             "amount": self.amount_widget.value,
-            "years": years_list,
+            "years": self.years_widget.value,
             "deposit_in": self.account_dropdown.value,
             "federal_income_tax": self.federal_income_tax_widget.value,
             "payroll_tax": self.payroll_tax_widget.value,

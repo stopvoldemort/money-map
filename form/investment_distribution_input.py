@@ -61,11 +61,10 @@ class InvestmentDistributionInput:
             ]
 
     def get_data(self):
-        years = Helpers.parse_years(self.years_widget.value)
         investment_proportions = [
             input.get_data() for input in self.investment_proportion_inputs
         ]
         return {
-            "years": years,
+            "years": self.years_widget.value,
             "investment_proportions": investment_proportions,
         }
