@@ -25,7 +25,8 @@ class Form:
         self.gift_inputs = []  # List to store instances of GiftInput
         self.transfer_inputs = []  # List to store instances of TransferInput
 
-        # Create the submit button once
+        self.display_area = widgets.Output()
+
         self.submit_btn = widgets.Button(
             description="Print params", button_style="info"
         )
@@ -69,8 +70,7 @@ class Form:
             income_input.update_account_dropdown()
 
     def get_account_options(self):
-        all_data = self.get_all_data()
-        return [account["name"] for account in all_data["accounts"]]
+        return [account.get_data()["name"] for account in self.account_inputs]
 
     #####  INCOMES  #####
     def add_income_input(self, data={}):
@@ -159,7 +159,7 @@ class Form:
                         self.get_investment_vehicle_options()
                     )
 
-    #####  DISPLAY  #####
+    #####  PRINT  #####
     def update_display(self):
         with self.display_area:
             clear_output(wait=True)
@@ -292,24 +292,21 @@ class Form:
         display(self.display_area)
         self.update_display()
 
+    @staticmethod
+    def get_all_inputs_data(inputs):
+        return [input.get_data() for input in inputs]
+
     def get_all_data(self):
         return {
-            "debts": [debt_input.get_data() for debt_input in self.debt_inputs],
-            "accounts": [
-                account_input.get_data() for account_input in self.account_inputs
-            ],
-            "incomes": [income_input.get_data() for income_input in self.income_inputs],
-            "expenses": [
-                expense_input.get_data() for expense_input in self.expense_inputs
-            ],
-            "gifts": [gift_input.get_data() for gift_input in self.gift_inputs],
-            "transfers": [
-                transfer_input.get_data() for transfer_input in self.transfer_inputs
-            ],
-            "investment_vehicles": [
-                investment_vehicle_input.get_data()
-                for investment_vehicle_input in self.investment_vehicle_inputs
-            ],
+            "debts": self.get_all_inputs_data(self.debt_inputs),
+            "accounts": self.get_all_inputs_data(self.account_inputs),
+            "incomes": self.get_all_inputs_data(self.income_inputs),
+            "expenses": self.get_all_inputs_data(self.expense_inputs),
+            "gifts": self.get_all_inputs_data(self.gift_inputs),
+            "transfers": self.get_all_inputs_data(self.transfer_inputs),
+            "investment_vehicles": self.get_all_inputs_data(
+                self.investment_vehicle_inputs
+            ),
         }
 
     def handle_submit(self, b: widgets.Button = None):

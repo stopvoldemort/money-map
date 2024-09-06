@@ -23,6 +23,10 @@ class Simulations:
         dynamic: bool = False,
         debug: bool = False,
     ):
+        if debug and dynamic:
+            print("Dynamic simulations are not supported in debug mode.")
+            dynamic = False
+
         self.data = data
         self.first_year = first_year
         self.last_year = last_year
@@ -41,7 +45,7 @@ class Simulations:
         assets: List[Asset],
         gifts: List[Gift],
         debug: bool = False,
-        dynamic: bool = True,
+        dynamic: bool = False,
     ) -> Aggregator:
         aggregator = Aggregator()
         for year in years:
