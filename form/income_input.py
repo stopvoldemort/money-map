@@ -60,9 +60,11 @@ class IncomeInput:
         self.delete_btn.on_click(self._on_delete)
         self.name_widget.observe(self._on_name_change, names="value")
 
-    @classmethod
-    def labels(cls):
-        labels = [
+    @staticmethod
+    def grid(income_inputs):
+        income_grid_elements = []
+
+        label_text = [
             "Name",
             "Amount",
             "Years",
@@ -73,25 +75,18 @@ class IncomeInput:
             "Payroll Tax",
             "",
         ]
-        return [
+        labels = [
             widgets.Label(
                 value=l,
                 layout=widgets.Layout(
                     overflow="visible", word_wrap="break-word", white_space="normal"
                 ),
             )
-            for l in labels
+            for l in label_text
         ]
 
-    @classmethod
-    def grid(cls, income_inputs):
-        # Create a list to hold the grid elements
-        income_grid_elements = []
+        income_grid_elements.extend(labels)
 
-        # Add the labels to the grid
-        income_grid_elements.extend(cls.labels())
-
-        # Add each IncomeInput to the grid
         for input_ in income_inputs:
             income_grid_elements.extend(input_.widgets_row)
 
@@ -100,7 +95,7 @@ class IncomeInput:
             children=income_grid_elements,
             layout=widgets.Layout(
                 width="100%",  # Limit the width of the entire grid to fit the screen
-                grid_template_columns="repeat(9, minmax(100px, 1fr))",  # Adjust columns as needed
+                grid_template_columns="repeat(9, minmax(100px, 200px))",  # Adjust columns as needed
                 grid_gap="10px 10px",  # Spacing between rows and columns
                 overflow="auto",  # Allow horizontal scrolling if necessary
             ),

@@ -34,10 +34,13 @@ class Form:
         self.results_displayer = ResultsDisplayer()
 
     #####  DEBTS  #####
-    def add_debt_input(self, b=None):
-        debt_input = DebtInput(self)
+    def add_debt_input(self, data: dict = {}):
+        debt_input = DebtInput(self, **data)
         self.debt_inputs.append(debt_input)
         self.update_display()
+
+    def handle_add_debt_input_click(self, b=None):
+        self.add_debt_input()
 
     def delete_debt_input(self, debt_input):
         if debt_input in self.debt_inputs:
@@ -160,7 +163,6 @@ class Form:
             account_widgets = [
                 account_input.container for account_input in self.account_inputs
             ]
-            debt_widgets = [debt_input.container for debt_input in self.debt_inputs]
             expense_widgets = [
                 expense_input.container for expense_input in self.expense_inputs
             ]
@@ -180,7 +182,7 @@ class Form:
             add_account_btn.on_click(self.handle_add_account_input_click)
 
             add_debt_btn = widgets.Button(description="Add Debt")
-            add_debt_btn.on_click(self.add_debt_input)
+            add_debt_btn.on_click(self.handle_add_debt_input_click)
 
             add_income_btn = widgets.Button(description="Add Income")
             add_income_btn.on_click(self.handle_add_income_input_click)
@@ -206,7 +208,13 @@ class Form:
                         Helpers.inputsGroup(
                             "h2", "Accounts", account_widgets, add_account_btn
                         ),
-                        Helpers.inputsGroup("h2", "Debt", debt_widgets, add_debt_btn),
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Debt",
+                            DebtInput.grid(self.debt_inputs),
+                            add_debt_btn,
+                            is_empty=(len(self.debt_inputs) == 0),
+                        ),
                         Helpers.inputs_group_v2(
                             "h2",
                             "Income",
@@ -235,6 +243,9 @@ class Form:
 
         for inc in preload_data["incomes"]:
             self.add_income_input(inc)
+
+        for debt in preload_data["debts"]:
+            self.add_debt_input(debt)
 
         display(self.display_area)
         self.update_display()
