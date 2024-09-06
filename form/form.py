@@ -160,9 +160,7 @@ class Form:
             account_widgets = [
                 account_input.container for account_input in self.account_inputs
             ]
-            expense_widgets = [
-                expense_input.container for expense_input in self.expense_inputs
-            ]
+
             gift_widgets = [gift_input.container for gift_input in self.gift_inputs]
             transfer_widgets = [
                 transfer_input.container for transfer_input in self.transfer_inputs
@@ -229,8 +227,15 @@ class Form:
                             add_income_btn,
                             is_empty=(len(self.income_inputs) == 0),
                         ),
-                        Helpers.inputsGroup(
-                            "h2", "Expenses", expense_widgets, add_expense_btn
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "Expenses",
+                            Helpers.simple_grid(
+                                self.expense_inputs,
+                                ExpenseInput.column_labels,
+                            ),
+                            add_expense_btn,
+                            is_empty=(len(self.expense_inputs) == 0),
                         ),
                         Helpers.inputsGroup("h2", "Gifts", gift_widgets, add_gift_btn),
                         Helpers.inputsGroup(
