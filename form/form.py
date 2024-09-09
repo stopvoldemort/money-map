@@ -241,7 +241,7 @@ class Form:
                             "Asset",
                             Helpers.simple_grid(
                                 self.asset_inputs,
-                                DebtInput.column_labels,
+                                AssetInput.column_labels,
                             ),
                             add_asset_btn,
                             is_empty=(len(self.asset_inputs) == 0),

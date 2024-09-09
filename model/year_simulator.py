@@ -129,13 +129,18 @@ class YearSimulator:
             nyc_tax_eligible_income
         )
 
+        asset_taxes = 0.0
+        for asset in assets:
+            asset_taxes += asset.annual_tax_bill()
+
         expenses.append(
             Expense(
                 f"taxes for {year}",
                 payroll_taxes
                 + federal_income_taxes
                 + ny_income_taxes
-                + nyc_income_taxes,
+                + nyc_income_taxes
+                + asset_taxes,
                 year,
             )
         )
