@@ -21,6 +21,8 @@ class AccountInput:
         self.name_widget = widgets.Text(
             description="Name:", value=name, continuous_update=False
         )
+        self.name_widget.observe(self._on_name_change, names="value")
+
         self.account_type_widget = widgets.Dropdown(
             options=AccountType.ALL, description="Type:", value=account_type
         )
@@ -46,7 +48,8 @@ class AccountInput:
             self.handle_add_investment_distribution_input
         )
 
-        self.delete_btn = widgets.Button(description="Delete", button_style="danger")
+        self.delete_btn = Helpers.delete_button()
+        self.delete_btn.on_click(self._on_delete)
 
         self.container = VBox(
             [
@@ -65,9 +68,6 @@ class AccountInput:
             ],
             layout=Helpers.input_layout(),
         )
-
-        self.delete_btn.on_click(self._on_delete)
-        self.name_widget.observe(self._on_name_change, names="value")
 
         for data in investment_distributions:
             self.add_investment_distribution_input(data)

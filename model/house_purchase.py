@@ -12,21 +12,23 @@ class HousePurchase:
         self,
         home_price: int,
         annual_interest_rate: float,
-        year: int,
+        first_year: int,
+        loan_term_years: int,
         last_year: int,
-        down_payment_acct_src: Account,
         mortgage_acct_src: Account,
-        down_payment_proportion: float = 0.2,
+        down_payment_acct_src: Account,
+        down_payment_proportion: float,
+        property_tax_rate: float,
     ):
         self.home_price = home_price
         self.annual_interest_rate = annual_interest_rate
-        self.year = year
+        self.first_year = first_year
+        self.loan_term_years = loan_term_years
         self.last_year = last_year
         self.down_payment_acct_src = down_payment_acct_src
         self.mortgage_acct_src = mortgage_acct_src
-        self.loan_term_years = 30
         self.down_payment_proportion = down_payment_proportion
-        self.tax_rate = 0.0071
+        self.property_tax_rate = property_tax_rate
 
     # Return values:
     # - Assets
@@ -41,24 +43,19 @@ class HousePurchase:
     # - Debts:
     #   - The house price
     def execute(self) -> Tuple[Asset, Debt, List[Expense], List[Transfer]]:
-        house = Asset("house", self.home_price, 0.01)
+        house = Asset("house", self.home_price, 0.01, self.property_tax_rate)
         debt = Debt("mortgage", self.home_price, 0.0, scheduled=True)
 
         expenses = []
         transfers = []
 
-        # Expenses
-        for y in range(self.year, self.last_year):
-            expenses.append(
-                Expense("property taxes", self.home_price * self.tax_rate, y)
-            )
-
+        # EXPENSES
         # Values based mainly on NYTIMES buy vs rent calculator
         expenses.append(
-            Expense("house closing costs", self.home_price * 0.04, self.year)
+            Expense("house closing costs", self.home_price * 0.04, self.first_year)
         )
 
-        for y in range(self.year, self.last_year):
+        for y in range(self.first_year, self.last_year + 1):
             expenses.append(
                 Expense(
                     f"maintenance, insurance, extra utilities {y}",
@@ -70,38 +67,43 @@ class HousePurchase:
         down_payment = Transfer(
             "down payment",
             self.home_price * self.down_payment_proportion,
-            self.year,
+            self.first_year,
             transfer_from=self.down_payment_acct_src,
             transfer_to=debt,
             required=True,
         )
         transfers.append(down_payment)
 
-        annual_breakdowns = self.calculate_annual_interest_and_principal(
-            self.home_price - down_payment.amount
-        )
-        for i, (interest_paid, principal_paid) in enumerate(annual_breakdowns):
-            y = self.year + i
-            expenses.append(Expense(f"mortgage interest paid {y}", interest_paid, y))
-            transfers.append(
-                Transfer(
-                    f"mortgage principal paid {y}",
-                    principal_paid,
-                    y,
-                    transfer_from=self.mortgage_acct_src,
-                    transfer_to=debt,
-                    required=True,
-                )
+        mortgage_transfers, mortgage_expenses = (
+            self.calculate_annual_interest_and_principal(
+                debt=debt,
+                loan_amount=self.home_price - down_payment.amount,
+                annual_interest_rate=self.annual_interest_rate,
+                first_year_of_loan=self.first_year,
+                loan_term_years=self.loan_term_years,
+                pay_from_account=self.mortgage_acct_src,
             )
+        )
+
+        transfers.extend(mortgage_transfers)
+        expenses.extend(mortgage_expenses)
 
         return house, debt, expenses, transfers
 
-    # Returns a list of [[interest_paid, principal_paid], [...], ...] for each year.
-    def calculate_annual_interest_and_principal(self, loan_amount) -> List[List[float]]:
-        monthly_interest_rate = self.annual_interest_rate / 12
+    # Returns two lists of expenses and transfers.
+    def calculate_annual_interest_and_principal(
+        self,
+        debt,
+        loan_amount,
+        annual_interest_rate,
+        first_year_of_loan,
+        loan_term_years,
+        pay_from_account,
+    ) -> Tuple[List[Transfer], List[Expense]]:
+        monthly_interest_rate = annual_interest_rate / 12
 
         # Total number of monthly payments
-        total_payments = self.loan_term_years * 12
+        total_payments = loan_term_years * 12
 
         # Monthly mortgage payment
         if monthly_interest_rate > 0:
@@ -113,9 +115,10 @@ class HousePurchase:
 
         # Initialize balance
         balance = loan_amount
-        annual_breakdowns = []
+        principal_payments = []
+        interest_payments = []
 
-        for i in range(0, self.loan_term_years):
+        for year in range(first_year_of_loan, first_year_of_loan + loan_term_years):
             interest_paid = 0
             principal_paid = 0
 
@@ -127,6 +130,18 @@ class HousePurchase:
                 interest_paid += interest_payment
                 principal_paid += principal_payment
 
-            annual_breakdowns.append([interest_paid, principal_paid])
+            interest_payments.append(
+                Expense(f"mortgage interest paid {year}", interest_paid, year)
+            )
+            principal_payments.append(
+                Transfer(
+                    f"mortgage principal paid {year}",
+                    principal_paid,
+                    year,
+                    transfer_from=pay_from_account,
+                    transfer_to=debt,
+                    required=True,
+                )
+            )
 
-        return annual_breakdowns
+        return principal_payments, interest_payments

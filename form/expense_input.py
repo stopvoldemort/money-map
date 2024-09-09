@@ -31,7 +31,7 @@ class ExpenseInput:
         self.five_two_nine_eligible_widget = widgets.Checkbox(
             value=five_two_nine_eligible, layout=Helpers.basic_layout()
         )
-        self.delete_btn = widgets.Button(description="Delete", button_style="danger")
+        self.delete_btn = Helpers.delete_button()
         self.delete_btn.on_click(self._on_delete)
 
         self.widgets_row = [
