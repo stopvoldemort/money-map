@@ -40,7 +40,7 @@ class ResultsDisplayer:
                     years, df.iloc[i], linewidth=1, color="gray", alpha=0.5
                 )  # alpha controls transparency
 
-            if debug:
+            if not dynamic:
                 # Components
                 retirement_df = pd.DataFrame(aggregator.retirement, columns=years)
                 plt.plot(

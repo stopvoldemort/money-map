@@ -8,6 +8,7 @@ from model.investment_proportion import InvestmentProportion
 from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
 from model.gift import Gift
+from model.house_purchase import HousePurchase
 
 
 class FormDataParser:
@@ -21,6 +22,7 @@ class FormDataParser:
         self.debts = []
         self.assets = []
         self.gifts = []
+        self.house_purchases = []
 
         for debt_input in self.data["debts"]:
             self.debts.append(Debt(**debt_input))
@@ -114,6 +116,23 @@ class FormDataParser:
                         transfer_to=transfer_to,
                     )
                 )
+
+        for house_purchase_input in self.data["house_purchases"]:
+            mortgage_acct_src = self.find_object_by_name(
+                self.accounts, house_purchase_input.pop("mortgage_acct_src", None)
+            )
+            down_payment_acct_src = self.find_object_by_name(
+                self.accounts, house_purchase_input.pop("down_payment_acct_src", None)
+            )
+            house_asset, house_debt, house_expenses, house_transfers = HousePurchase(
+                **house_purchase_input,
+                mortgage_acct_src=mortgage_acct_src,
+                down_payment_acct_src=down_payment_acct_src,
+            ).execute()
+            self.assets.append(house_asset)
+            self.debts.append(house_debt)
+            self.expenses.extend(house_expenses)
+            self.transfers.extend(house_transfers)
 
     def find_object_by_name(self, objects, target_name):
         for obj in objects:
