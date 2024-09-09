@@ -93,12 +93,8 @@ class Helpers:
         )
 
     @staticmethod
-    def delete_income_button():
-        return widgets.Button(
-            description="Delete",
-            button_style="danger",
-            layout=widgets.Layout(width="auto", overflow="visible", margin="4px 8px"),
-        )
+    def delete_button():
+        return widgets.Button(description="Delete", button_style="danger")
 
     @staticmethod
     def field(label, widget):

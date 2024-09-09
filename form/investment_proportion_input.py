@@ -1,4 +1,5 @@
 from ipywidgets import widgets, HBox
+from form.helpers import Helpers
 
 
 class InvestmentProportionInput:
@@ -16,7 +17,7 @@ class InvestmentProportionInput:
         self.proportion_widget = widgets.FloatText(
             description="Proportion:", value=proportion
         )
-        self.delete_btn = widgets.Button(description="Delete", button_style="danger")
+        self.delete_btn = Helpers.delete_button()
 
         self.container = HBox(
             [

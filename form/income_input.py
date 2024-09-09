@@ -53,7 +53,7 @@ class IncomeInput:
         self.payroll_tax_widget = widgets.Checkbox(
             value=payroll_tax, layout=Helpers.basic_layout()
         )
-        self.delete_btn = Helpers.delete_income_button()
+        self.delete_btn = Helpers.delete_button()
 
         self.widgets_row = [
             self.name_widget,

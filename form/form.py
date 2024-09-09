@@ -8,6 +8,7 @@ from form.income_input import IncomeInput
 from form.expense_input import ExpenseInput
 from form.gift_input import GiftInput
 from form.transfer_input import TransferInput
+from form.house_purchase_input import HousePurchaseInput
 from form.investment_vehicle_input import InvestmentVehicleInput
 from form.helpers import Helpers
 
@@ -25,6 +26,7 @@ class Form:
         self.expense_inputs = []  # List to store instances of ExpenseInput
         self.gift_inputs = []  # List to store instances of GiftInput
         self.transfer_inputs = []  # List to store instances of TransferInput
+        self.house_purchase_inputs = []  # List to store instances of HousePurchaseInput
 
         self.display_area = widgets.Output()
 
@@ -173,6 +175,20 @@ class Form:
                         self.get_investment_vehicle_options()
                     )
 
+    #####  HOUSE PURCHASE  #####
+    def add_house_purchase_input(self, data: dict = {}):
+        house_purchase_input = HousePurchaseInput(self, **data)
+        self.house_purchase_inputs.append(house_purchase_input)
+        self.update_display()
+
+    def handle_add_house_purchase_input_click(self, b=None):
+        self.add_house_purchase_input()
+
+    def delete_house_purchase_input(self, house_purchase_input):
+        if house_purchase_input in self.house_purchase_inputs:
+            self.house_purchase_inputs.remove(house_purchase_input)
+        self.update_display()
+
     #####  PRINT  #####
     def update_display(self):
         with self.display_area:
@@ -209,6 +225,9 @@ class Form:
 
             add_transfer_btn = Helpers.add_input_button("Add Transfer")
             add_transfer_btn.on_click(self.handle_add_transfer_input_click)
+
+            add_house_purchase_btn = Helpers.add_input_button("Add House Purchase")
+            add_house_purchase_btn.on_click(self.handle_add_house_purchase_input_click)
 
             display(
                 widgets.VBox(
@@ -286,6 +305,16 @@ class Form:
                             add_transfer_btn,
                             is_empty=(len(self.transfer_inputs) == 0),
                         ),
+                        Helpers.inputs_group_v2(
+                            "h2",
+                            "House Purchases",
+                            Helpers.simple_grid(
+                                self.house_purchase_inputs,
+                                HousePurchaseInput.column_labels,
+                            ),
+                            add_house_purchase_btn,
+                            is_empty=(len(self.house_purchase_inputs) == 0),
+                        ),
                         self.submit_btn,
                     ]
                 )
@@ -316,6 +345,9 @@ class Form:
         for transfer in self.preload_data["transfers"]:
             self.add_transfer_input(transfer)
 
+        for house_purchase in self.preload_data["house_purchases"]:
+            self.add_house_purchase_input(house_purchase)
+
     def display(self):
         self.initialize()
 
@@ -338,6 +370,7 @@ class Form:
             "investment_vehicles": self.get_all_inputs_data(
                 self.investment_vehicle_inputs
             ),
+            "house_purchases": self.get_all_inputs_data(self.house_purchase_inputs),
         }
 
     def handle_submit(self, b: widgets.Button = None):

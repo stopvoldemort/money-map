@@ -31,7 +31,7 @@ class AssetInput:
         self.tax_rate_widget = widgets.BoundedFloatText(
             min=0.0, max=1.0, step=0.0001, value=tax_rate, layout=Helpers.basic_layout()
         )
-        self.delete_btn = widgets.Button(description="Delete", button_style="danger")
+        self.delete_btn = Helpers.delete_button()
 
         self.delete_btn.on_click(self._on_delete)
 

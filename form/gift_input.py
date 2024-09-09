@@ -33,7 +33,7 @@ class GiftInput:
             value=account,
             layout=Helpers.basic_layout(),
         )
-        self.delete_btn = widgets.Button(description="Delete", button_style="danger")
+        self.delete_btn = Helpers.delete_button()
 
         self.widgets_row = [
             self.name_widget,
