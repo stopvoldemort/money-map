@@ -79,12 +79,15 @@ class Form:
         self.update_display()
 
     def update_account_dropdowns(self):
+        account_options = self.get_account_options()
         for gift_input in self.gift_inputs:
-            gift_input.update_account_dropdown()
+            gift_input.update_account_dropdown(account_options)
         for transfer_input in self.transfer_inputs:
-            transfer_input.update_account_dropdown()
+            transfer_input.update_account_dropdown(account_options)
         for income_input in self.income_inputs:
-            income_input.update_account_dropdown()
+            income_input.update_account_dropdown(account_options)
+        for house_purchase_input in self.house_purchase_inputs:
+            house_purchase_input.update_account_dropdown(account_options)
 
     def get_account_options(self):
         return [account.get_data()["name"] for account in self.account_inputs]
@@ -195,10 +198,6 @@ class Form:
         with self.display_area:
             clear_output(wait=True)
 
-            account_widgets = [
-                account_input.container for account_input in self.account_inputs
-            ]
-
             add_investment_vehicle_btn = Helpers.add_input_button(
                 "Add Investment Vehicle"
             )
@@ -233,8 +232,7 @@ class Form:
             display(
                 widgets.VBox(
                     [
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Investment Vehicles",
                             Helpers.simple_grid(
                                 self.investment_vehicle_inputs,
@@ -243,11 +241,13 @@ class Form:
                             add_investment_vehicle_btn,
                             is_empty=(len(self.investment_vehicle_inputs) == 0),
                         ),
-                        Helpers.inputsGroup(
-                            "h2", "Accounts", account_widgets, add_account_btn
+                        Helpers.account_inputs_group(
+                            "Accounts",
+                            self.account_inputs,
+                            add_account_btn,
+                            is_empty=len(self.account_inputs) == 0,
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Debt",
                             Helpers.simple_grid(
                                 self.debt_inputs,
@@ -256,8 +256,7 @@ class Form:
                             add_debt_btn,
                             is_empty=(len(self.debt_inputs) == 0),
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Asset",
                             Helpers.simple_grid(
                                 self.asset_inputs,
@@ -266,8 +265,7 @@ class Form:
                             add_asset_btn,
                             is_empty=(len(self.asset_inputs) == 0),
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Income",
                             Helpers.simple_grid(
                                 self.income_inputs,
@@ -276,8 +274,7 @@ class Form:
                             add_income_btn,
                             is_empty=(len(self.income_inputs) == 0),
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Expenses",
                             Helpers.simple_grid(
                                 self.expense_inputs,
@@ -286,8 +283,7 @@ class Form:
                             add_expense_btn,
                             is_empty=(len(self.expense_inputs) == 0),
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Gifts",
                             Helpers.simple_grid(
                                 self.gift_inputs,
@@ -296,8 +292,7 @@ class Form:
                             add_gift_btn,
                             is_empty=(len(self.gift_inputs) == 0),
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "Transfers",
                             Helpers.simple_grid(
                                 self.transfer_inputs,
@@ -306,8 +301,7 @@ class Form:
                             add_transfer_btn,
                             is_empty=(len(self.transfer_inputs) == 0),
                         ),
-                        Helpers.inputs_group_v2(
-                            "h2",
+                        Helpers.inputs_group(
                             "House Purchases",
                             Helpers.simple_grid(
                                 self.house_purchase_inputs,

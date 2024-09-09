@@ -76,8 +76,8 @@ class IncomeInput:
     def _on_name_change(self, change):
         self.form.update_account_dropdowns()
 
-    def update_account_dropdown(self):
-        self.account_dropdown.options = self.form.get_account_options()
+    def update_account_dropdown(self, account_options):
+        self.account_dropdown.options = account_options
 
     def get_data(self):
         return {

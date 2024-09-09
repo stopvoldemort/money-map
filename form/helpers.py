@@ -10,42 +10,43 @@ class Helpers:
         )
 
     @staticmethod
-    def inputs_layout():
-        return widgets.Layout(
-            border="solid 2px black",
-            padding="0 10px 10px 10px",
-            margin="0 10px 10px 10px",
-            width="auto",
-        )
-
-    @classmethod
-    def inputsGroup(cls, h_size, title, input_widgets, add_btn):
-        inputs = [widgets.HTML(value="<p>None</p>")]
-        if len(input_widgets) > 0:
-            inputs = input_widgets
-
-        return VBox(
-            [
-                widgets.HTML(value=f"<{h_size}>{title}</{h_size}>"),
-                *inputs,
-                add_btn,
-            ],
-            layout=cls.inputs_layout(),
-        )
-
-    @classmethod
-    def inputs_group_v2(cls, h_size, title, grid, add_btn, is_empty=False):
+    def inputs_group(title, input_widgets, add_btn, is_empty=False):
         body = widgets.HTML(value="<p>None</p>")
         if not is_empty:
-            body = grid
+            body = input_widgets
 
         return VBox(
             [
-                widgets.HTML(value=f"<{h_size}>{title}</{h_size}>"),
+                widgets.HTML(value=f"<h2>{title}</h2>"),
                 body,
                 add_btn,
             ],
-            layout=cls.inputs_layout(),
+            layout=widgets.Layout(
+                border="solid 2px black",
+                padding="0 10px 10px 10px",
+                margin="0 10px 10px 10px",
+                width="auto",
+            ),
+        )
+
+    @staticmethod
+    def account_inputs_group(title, account_inputs, add_btn, is_empty=False):
+        body = widgets.HTML(value="<p>None</p>")
+        if not is_empty:
+            body = [account_input.container for account_input in account_inputs]
+
+        return VBox(
+            [
+                widgets.HTML(value=f"<h2>{title}</h2>"),
+                *body,
+                add_btn,
+            ],
+            layout=widgets.Layout(
+                border="solid 2px black",
+                padding="0 10px 10px 10px",
+                margin="0 10px 10px 10px",
+                width="auto",
+            ),
         )
 
     # This should be applied to all widgets that are in a grid -- otherwise, grid will not display properly

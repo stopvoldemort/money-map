@@ -240,7 +240,7 @@ default_data = {
     ],
     "gifts": [
         {
-            "name": "dad college contribution",
+            "name": "grandpa college contribution",
             "amount": 2000.0,
             "years": "2024-2037",
             "account": "nysaves (college fund)",

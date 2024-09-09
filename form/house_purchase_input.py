@@ -92,6 +92,10 @@ class HousePurchaseInput:
             self.delete_btn,
         ]
 
+    def update_account_dropdown(self, account_options):
+        self.mortgage_acct_src_widget.options = account_options
+        self.down_payment_acct_src_widget.options = account_options
+
     def _on_delete(self, b):
         self.form.delete_house_purchase_input(self)
 
