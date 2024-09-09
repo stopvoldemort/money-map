@@ -11,10 +11,11 @@ from form.transfer_input import TransferInput
 from form.house_purchase_input import HousePurchaseInput
 from form.investment_vehicle_input import InvestmentVehicleInput
 from form.helpers import Helpers
+from examples.empty_form import empty_form
 
 
 class Form:
-    def __init__(self, preload_data: dict = {}):
+    def __init__(self, preload_data: dict = empty_form):
         self.preload_data = preload_data
         self.investment_vehicle_inputs = (
             []
