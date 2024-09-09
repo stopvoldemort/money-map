@@ -11,7 +11,7 @@ class Account:
         name: str,
         account_type: AccountType,
         starting_balance: float,
-        investment_distributions: List[InvestmentDistribution],
+        investment_distributions: List[InvestmentDistribution] = [],
         earliest_withdrawal_year: int = 0,
     ):
         self.name = name
