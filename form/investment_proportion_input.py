@@ -29,6 +29,14 @@ class InvestmentProportionInput:
 
         self.delete_btn.on_click(self._on_delete)
 
+    def update_investment_vehicle_dropdown(self, investment_vehicle_options):
+        Helpers.update_dropdown_fields(
+            self.investment_widget, investment_vehicle_options
+        )
+        # if not self.investment_widget.value in investment_vehicle_options:
+        #     self.investment_widget.value = None
+        # self.investment_widget.options = investment_vehicle_options
+
     def _on_delete(self, b):
         self.parent_distribution_input.delete_investment_proportion_input(self)
 

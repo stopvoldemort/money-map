@@ -87,19 +87,9 @@ class AccountInput:
     def delete_investment_distribution_input(self, investment_distribution_input):
         if investment_distribution_input in self.investment_distribution_inputs:
             self.investment_distribution_inputs.remove(investment_distribution_input)
-            # Update the widget display after deletion
             self.investment_distributions_widget.children = [
                 input.container for input in self.investment_distribution_inputs
             ]
-
-    def update_investment_vehicle_dropdowns(self):
-        for investment_distribution_input in self.investment_distribution_inputs:
-            for (
-                investment_proportion_input
-            ) in investment_distribution_input.investment_proportions_widget.children:
-                investment_proportion_input.investment_widget.options = (
-                    self.form.get_investment_vehicle_options()
-                )
 
     def _on_delete(self, b):
         self.form.delete_account_input(self)

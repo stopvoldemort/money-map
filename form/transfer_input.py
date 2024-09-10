@@ -62,9 +62,9 @@ class TransferInput:
     def _on_delete(self, b):
         self.form.delete_transfer_input(self)
 
-    def update_account_dropdown(self):
-        self.transfer_from_widget.options = self.form.get_account_options()
-        self.transfer_to_widget.options = self.form.get_account_options()
+    def update_account_dropdown(self, account_options):
+        Helpers.update_dropdown_fields(self.transfer_from_widget, account_options)
+        Helpers.update_dropdown_fields(self.transfer_to_widget, account_options)
 
     def get_data(self):
         return {
