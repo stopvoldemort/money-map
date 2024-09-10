@@ -14,8 +14,12 @@ class InvestmentProportionInput:
             description="Vehicle:",
             value=investment_vehicle,
         )
-        self.proportion_widget = widgets.FloatText(
-            description="Proportion:", value=proportion
+        self.proportion_widget = widgets.BoundedFloatText(
+            description="Proportion:",
+            value=proportion,
+            min=0.0,
+            max=1.0,
+            step=0.01,
         )
         self.delete_btn = Helpers.delete_button()
 

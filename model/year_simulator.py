@@ -41,7 +41,6 @@ class YearSimulator:
     ]:
         # SETUP
         withdrawals = []
-        starting_tax_liability = 0.0
         extra_taxes = 0.0
         tax_calculator = TaxCalculator()
         for iv in investment_vehicles:
@@ -50,22 +49,6 @@ class YearSimulator:
         annual_incomes = [income for income in incomes if income.year == year]
         annual_gifts = [gift for gift in gifts if gift.year == year]
         annual_transfers = [transfer for transfer in transfers if transfer.year == year]
-
-        if debug:
-            print(f"*** START OF {year} ***")
-            for a in accounts:
-                print(f"[{year}] [account] {a.name}: {a.balance()}")
-            for d in debts:
-                print(f"[{year}] [debt] {d.name}: {d.amount} ({d.scheduled})")
-            for t in annual_transfers:
-                print(f"[{year}] [transfer] {t.name}: {t.amount}")
-            for g in annual_gifts:
-                print(f"[{year}] [gift] {g.name}: {g.amount}")
-            for i in annual_incomes:
-                print(f"[{year}] [income] {i.name}: {i.amount}")
-            for e in expenses:
-                if e.year == year:
-                    print(f"[{year}] [expense] {e.name}: {e.starting_amount}")
 
         # DEPOSIT INCOME
         for income in annual_incomes:
@@ -163,14 +146,8 @@ class YearSimulator:
         w = Payer.attempt_to_pay_payables(year, unscheduled_debts, accounts)
         withdrawals.extend(w)
 
-        if debug:
-            for w in withdrawals:
-                print(
-                    f"[{year}] [withdrawal] {w.amount}, {w.account_type}, (capital gains {w.capital_gains})"
-                )
-
         #####   NEXT YEAR'S TAXES  ######
-        extra_taxes = 0.0
+        extra_income_taxes = 0.0
         extra_income = 0.0
         capital_gains = 0.0
         for withdrawal in withdrawals:
@@ -179,27 +156,35 @@ class YearSimulator:
             elif withdrawal.tax_type() == WithdrawalTaxType.CAPITAL_GAINS:
                 capital_gains += withdrawal.capital_gains
 
-        extra_taxes += (
+        extra_income_taxes += (
             tax_calculator.calculate_federal_income_tax(
                 federal_tax_eligible_income + extra_income
             )
             - federal_income_taxes
         )
-        extra_taxes += (
+        extra_income_taxes += (
             tax_calculator.calculate_ny_income_tax(
                 ny_tax_eligible_income + extra_income
             )
             - ny_income_taxes
         )
-        extra_taxes += (
+        extra_income_taxes += (
             tax_calculator.calculate_nyc_income_tax(
                 nyc_tax_eligible_income + extra_income
             )
             - nyc_income_taxes
         )
-        extra_taxes += capital_gains * tax_calculator.capital_gains_tax_rate()
 
-        expenses.append(Expense(f"extra taxes for {year}", extra_taxes, year + 1))
+        if capital_gains > 0:
+            capital_gains_tax = capital_gains * tax_calculator.capital_gains_tax_rate()
+            expenses.append(
+                Expense(f"capital gains tax for {year}", capital_gains_tax, year + 1)
+            )
+
+        if extra_income_taxes > 0:
+            expenses.append(
+                Expense(f"extra income taxes for {year}", extra_taxes, year + 1)
+            )
 
         if debug:
             print(f"*** END OF {year} ***")
@@ -216,6 +201,8 @@ class YearSimulator:
             for e in expenses:
                 if e.year == year:
                     print(f"[{year}] [expense] {e.name}: {e.starting_amount}")
+            for w in withdrawals:
+                print(f"[{year}] [withdrawal] {w.amount}, {w.account_type}")
 
         # APPLY ANNUAL GROWTH
         for account in accounts:

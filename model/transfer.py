@@ -22,10 +22,15 @@ class Transfer:
         self.transfer_to = transfer_to
         self.required = required
 
-    # If there is not enough in the transfer_from account and the full amount is required, returns an expense to
+    # If there is not enough in the transfer_from account and the full amount is required, returns an
+    # expense to cover the difference
     def execute(self) -> Tuple[Withdrawal, Optional[Expense]]:
         expense = None
         withdrawal = None
+
+        # This is just to make sure that we don't pay more than the debt balance
+        if self.is_debt_transfer() and self.amount > self.transfer_to.amount:
+            self.amount = self.transfer_to.amount
 
         if self.transfer_from.balance() < self.amount and self.required:
             withdrawal_amount = self.transfer_from.balance()
@@ -44,9 +49,10 @@ class Transfer:
         return withdrawal, expense
 
     def execute_transfer_to(self, amount):
-        if isinstance(self.transfer_to, Account):
-            self.transfer_to.deposit(amount)
-        elif isinstance(self.transfer_to, Debt):
+        if self.is_debt_transfer():
             self.transfer_to.pay(amount)
         else:
-            raise TypeError("Variable must be an instance of Account or Debt")
+            self.transfer_to.deposit(amount)
+
+    def is_debt_transfer(self):
+        return isinstance(self.transfer_to, Debt)

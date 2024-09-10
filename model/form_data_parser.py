@@ -8,6 +8,7 @@ from model.investment_proportion import InvestmentProportion
 from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
 from model.gift import Gift
+from model.scheduled_debt import ScheduledDebt
 from model.house_purchase import HousePurchase
 
 
@@ -23,12 +24,6 @@ class FormDataParser:
         self.assets = []
         self.gifts = []
         self.house_purchases = []
-
-        for debt_input in self.data["debts"]:
-            self.debts.append(Debt(**debt_input))
-
-        for asset_input in self.data["assets"]:
-            self.assets.append(Asset(**asset_input))
 
         for investment_vehicle_input in self.data["investment_vehicles"]:
             self.investment_vehicles.append(
@@ -75,6 +70,30 @@ class FormDataParser:
                     **account_input, investment_distributions=investment_distributions
                 )
             )
+
+        for debt_input in self.data["debts"]:
+            self.debts.append(Debt(**debt_input))
+
+        for scheduled_debt_input in self.data["scheduled_debts"]:
+            pay_from_account = self.find_object_by_name(
+                self.accounts, scheduled_debt_input.pop("pay_from_account", None)
+            )
+            first_year_of_loan = 2024
+            loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
+            debt = Debt(**scheduled_debt_input, scheduled=True)
+            transfers = ScheduledDebt.calculate_annual_interest_and_principal(
+                debt=debt,
+                loan_amount=debt.amount,
+                annual_interest_rate=debt.aagr,
+                first_year_of_loan=first_year_of_loan,
+                loan_term_years=loan_term_years,
+                pay_from_account=pay_from_account,
+            )
+            self.debts.append(debt)
+            self.transfers.extend(transfers)
+
+        for asset_input in self.data["assets"]:
+            self.assets.append(Asset(**asset_input))
 
         for gift_input in self.data["gifts"]:
             account = self.find_object_by_name(
