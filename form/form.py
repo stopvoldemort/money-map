@@ -16,6 +16,9 @@ from examples.empty_form import empty_form
 
 
 class Form:
+    def __init__(self, basic=False):
+        self.basic = basic
+
     #####  DEBTS  #####
     def add_debt_input(self, data: dict = {}, update_display=True):
         debt_input = DebtInput(self, **data)
@@ -236,8 +239,9 @@ class Form:
             )
 
     def display_investment_vehicles(self):
-        display(self.investment_vehicle_display_area)
-        self.update_investment_vehicle_display()
+        if not self.basic:
+            display(self.investment_vehicle_display_area)
+            self.update_investment_vehicle_display()
 
     def update_account_display(self):
         with self.account_display_area:

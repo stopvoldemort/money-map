@@ -19,12 +19,18 @@ class AccountInput:
         self.investment_distribution_inputs = []
 
         self.name_widget = widgets.Text(
-            value=name, continuous_update=False, layout=Helpers.basic_layout()
+            value=name,
+            continuous_update=False,
+            layout=Helpers.basic_layout(),
+            disabled=self.form.basic,
         )
         self.name_widget.observe(self._on_name_change, names="value")
 
         self.account_type_widget = widgets.Dropdown(
-            options=AccountType.ALL, value=account_type, layout=Helpers.basic_layout()
+            options=AccountType.ALL,
+            value=account_type,
+            layout=Helpers.basic_layout(),
+            disabled=self.form.basic,
         )
         self.account_type_widget.observe(
             lambda change: self.earliest_withdrawal_year_widget.set_trait(
@@ -55,7 +61,7 @@ class AccountInput:
             self.handle_add_investment_distribution_input
         )
 
-        self.delete_btn = Helpers.delete_button()
+        self.delete_btn = Helpers.delete_button(disabled=self.form.basic)
         self.delete_btn.on_click(self._on_delete)
 
         self.widgets_row = [
@@ -65,6 +71,14 @@ class AccountInput:
             self.earliest_withdrawal_year_widget,
             self.delete_btn,
         ]
+
+        self.investment_distributions_form = []
+        if not self.form.basic:
+            self.investment_distributions_form = [
+                widgets.HTML(value="<h3>Investment Plan (if applicable)</h3>"),
+                self.investment_distributions_widget,
+                self.add_investment_distribution_btn,
+            ]
 
         self.container = VBox(
             [
@@ -78,9 +92,7 @@ class AccountInput:
                         "",
                     ],
                 ),
-                widgets.HTML(value="<h3>Investment Plan (if applicable)</h3>"),
-                self.investment_distributions_widget,
-                self.add_investment_distribution_btn,
+                *self.investment_distributions_form,
             ],
             layout=Helpers.input_layout(),
         )

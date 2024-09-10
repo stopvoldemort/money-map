@@ -44,7 +44,7 @@ class AssetInput:
         ]
 
     def _on_delete(self, b):
-        self.form.delete_debt_input(self)
+        self.form.delete_asset_input(self)
 
     def get_data(self):
         return {

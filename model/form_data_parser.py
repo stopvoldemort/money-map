@@ -153,12 +153,22 @@ class FormDataParser:
             self.expenses.extend(house_expenses)
             self.transfers.extend(house_transfers)
 
-    def find_object_by_name(self, objects, target_name):
+    @staticmethod
+    def find_object_by_name(objects, target_name):
         for obj in objects:
             if obj.name == target_name:
                 return obj
         raise ValueError(
             f"can't find object with name {target_name}"
+        )  # Raise if no match is found
+
+    @staticmethod
+    def find_object_by_type(objects, object_type):
+        for obj in objects:
+            if obj.type == object_type:
+                return obj
+        raise ValueError(
+            f"can't find object with name {object_type}"
         )  # Raise if no match is found
 
     @staticmethod

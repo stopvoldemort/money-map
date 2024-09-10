@@ -39,6 +39,7 @@ class ScheduledDebtInput:
             options=self.form.get_account_options(),
             value=pay_from_account,
             layout=Helpers.basic_layout(),
+            disabled=self.form.basic,
         )
 
         self.delete_btn = Helpers.delete_button()
@@ -55,7 +56,7 @@ class ScheduledDebtInput:
         ]
 
     def _on_delete(self, b):
-        self.form.delete_debt_input(self)
+        self.form.delete_scheduled_debt_input(self)
 
     def update_account_dropdown(self, account_options):
         Helpers.update_dropdown_fields(self.pay_from_account_widget, account_options)
