@@ -31,7 +31,9 @@ class ResultsDisplayer:
 
             # Net worth median
             median_trajectory = df.median(axis=0)
-            plt.plot(years, median_trajectory, linewidth=2, label="Median")
+            plt.plot(
+                years, median_trajectory, linewidth=2, color="black", label="Net Worth"
+            )
 
             # Up to 50 trajctories
             num_trajectories_to_plot = min(50, df.shape[0])
@@ -82,7 +84,6 @@ class ResultsDisplayer:
                 plt.plot(
                     years,
                     bank_account_df.median(axis=0),
-                    color="yellow",
                     linewidth=1,
                     label="Bank account",
                 )

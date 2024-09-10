@@ -1,20 +1,24 @@
 default_data = {
-    "investment_vehicles": [
-        {
-            "name": "stocks",
-            "aagr": 0.0655,
-            "dynamic_mean": 0.077,
-            "dynamic_std_dev": 0.1175,
-        },
-        {
-            "name": "bonds",
-            "aagr": 0.0352,
-            "dynamic_mean": 0.039,
-            "dynamic_std_dev": 0.0855,
-        },
+    "debts": [
+        {"name": "outstanding credit card balance", "amount": 5000.0, "aagr": 0.22}
     ],
-    "debts": [],
-    "assets": [],
+    "scheduled_debts": [
+        {
+            "name": "car loan",
+            "amount": 25000.0,
+            "aagr": 0.072,
+            "remaining_loan_term": 5,
+            "pay_from_account": "chase (checking + savings)",
+        }
+    ],
+    "assets": [
+        {
+            "name": "3 acres of pine trees",
+            "value": 25000.0,
+            "aagr": 0.02,
+            "tax_rate": 0.0071,
+        }
+    ],
     "accounts": [
         {
             "name": "vanguard mutual funds",
@@ -25,15 +29,21 @@ default_data = {
                 {
                     "years": "2024-2048",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.9},
-                        {"investment_vehicle": "bonds", "proportion": 0.1},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.9},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.1,
+                        },
                     ],
                 },
                 {
                     "years": "2048-2070",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.5},
-                        {"investment_vehicle": "bonds", "proportion": 0.5},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.5},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.5,
+                        },
                     ],
                 },
             ],
@@ -47,36 +57,51 @@ default_data = {
                 {
                     "years": "2024-2030",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.9},
-                        {"investment_vehicle": "bonds", "proportion": 0.1},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.9},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.1,
+                        },
                     ],
                 },
                 {
                     "years": "2031-2036",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.8},
-                        {"investment_vehicle": "bonds", "proportion": 0.2},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.8},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.2,
+                        },
                     ],
                 },
                 {
                     "years": "2037-2042",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.7},
-                        {"investment_vehicle": "bonds", "proportion": 0.3},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.7},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.3,
+                        },
                     ],
                 },
                 {
                     "years": "2043-2048",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.6},
-                        {"investment_vehicle": "bonds", "proportion": 0.4},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.6},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.4,
+                        },
                     ],
                 },
                 {
                     "years": "2049-2070",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.5},
-                        {"investment_vehicle": "bonds", "proportion": 0.5},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.5},
+                        {
+                            "investment_vehicle": "historical corporate bonds",
+                            "proportion": 0.5,
+                        },
                     ],
                 },
             ],
@@ -86,7 +111,14 @@ default_data = {
             "account_type": "bank",
             "starting_balance": 30000.0,
             "earliest_withdrawal_year": 2024,
-            "investment_distributions": [],
+            "investment_distributions": [
+                {
+                    "years": "2024-2070",
+                    "investment_proportions": [
+                        {"investment_vehicle": "checking account", "proportion": 1.0}
+                    ],
+                }
+            ],
         },
         {
             "name": "nysaves (college fund)",
@@ -97,36 +129,36 @@ default_data = {
                 {
                     "years": "2024-2026",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.9},
-                        {"investment_vehicle": "bonds", "proportion": 0.1},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.9},
+                        {"investment_vehicle": "money market funds", "proportion": 0.1},
                     ],
                 },
                 {
                     "years": "2027-2029",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.8},
-                        {"investment_vehicle": "bonds", "proportion": 0.2},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.8},
+                        {"investment_vehicle": "money market funds", "proportion": 0.2},
                     ],
                 },
                 {
                     "years": "2030-2032",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.7},
-                        {"investment_vehicle": "bonds", "proportion": 0.3},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.7},
+                        {"investment_vehicle": "money market funds", "proportion": 0.3},
                     ],
                 },
                 {
                     "years": "2033-2036",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.6},
-                        {"investment_vehicle": "bonds", "proportion": 0.4},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.6},
+                        {"investment_vehicle": "money market funds", "proportion": 0.4},
                     ],
                 },
                 {
                     "years": "2037-2070",
                     "investment_proportions": [
-                        {"investment_vehicle": "stocks", "proportion": 0.5},
-                        {"investment_vehicle": "bonds", "proportion": 0.5},
+                        {"investment_vehicle": "historical S&P", "proportion": 0.5},
+                        {"investment_vehicle": "money market funds", "proportion": 0.5},
                     ],
                 },
             ],
@@ -255,6 +287,32 @@ default_data = {
             "transfer_to": "fidelity IRA",
             "required": False,
         }
+    ],
+    "investment_vehicles": [
+        {
+            "name": "historical S&P",
+            "aagr": 0.0655,
+            "dynamic_mean": 0.077,
+            "dynamic_std_dev": 0.1175,
+        },
+        {
+            "name": "historical corporate bonds",
+            "aagr": 0.0352,
+            "dynamic_mean": 0.039,
+            "dynamic_std_dev": 0.0855,
+        },
+        {
+            "name": "money market funds",
+            "aagr": 0.02,
+            "dynamic_mean": 0.0,
+            "dynamic_std_dev": 0.0,
+        },
+        {
+            "name": "checking account",
+            "aagr": -0.02,
+            "dynamic_mean": -0.02,
+            "dynamic_std_dev": 0.0,
+        },
     ],
     "house_purchases": [],
 }

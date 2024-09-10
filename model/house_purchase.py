@@ -3,6 +3,7 @@ from typing import Tuple
 from model.account import Account
 from model.asset import Asset
 from model.debt import Debt
+from model.scheduled_debt import ScheduledDebt
 from model.expense import Expense
 from model.transfer import Transfer
 
@@ -74,74 +75,15 @@ class HousePurchase:
         )
         transfers.append(down_payment)
 
-        mortgage_transfers, mortgage_expenses = (
-            self.calculate_annual_interest_and_principal(
-                debt=debt,
-                loan_amount=self.home_price - down_payment.amount,
-                annual_interest_rate=self.annual_interest_rate,
-                first_year_of_loan=self.first_year,
-                loan_term_years=self.loan_term_years,
-                pay_from_account=self.mortgage_acct_src,
-            )
+        mortgage_transfers = ScheduledDebt.calculate_annual_interest_and_principal(
+            debt=debt,
+            loan_amount=self.home_price - down_payment.amount,
+            annual_interest_rate=self.annual_interest_rate,
+            first_year_of_loan=self.first_year,
+            loan_term_years=self.loan_term_years,
+            pay_from_account=self.mortgage_acct_src,
         )
 
         transfers.extend(mortgage_transfers)
-        expenses.extend(mortgage_expenses)
 
         return house, debt, expenses, transfers
-
-    # Returns two lists of expenses and transfers.
-    def calculate_annual_interest_and_principal(
-        self,
-        debt,
-        loan_amount,
-        annual_interest_rate,
-        first_year_of_loan,
-        loan_term_years,
-        pay_from_account,
-    ) -> Tuple[List[Transfer], List[Expense]]:
-        monthly_interest_rate = annual_interest_rate / 12
-
-        # Total number of monthly payments
-        total_payments = loan_term_years * 12
-
-        # Monthly mortgage payment
-        if monthly_interest_rate > 0:
-            monthly_payment = (loan_amount * monthly_interest_rate) / (
-                1 - (1 + monthly_interest_rate) ** -total_payments
-            )
-        else:
-            monthly_payment = loan_amount / total_payments
-
-        # Initialize balance
-        balance = loan_amount
-        principal_payments = []
-        interest_payments = []
-
-        for year in range(first_year_of_loan, first_year_of_loan + loan_term_years):
-            interest_paid = 0
-            principal_paid = 0
-
-            for month in range(1, 13):
-                interest_payment = balance * monthly_interest_rate
-                principal_payment = monthly_payment - interest_payment
-                balance -= principal_payment
-
-                interest_paid += interest_payment
-                principal_paid += principal_payment
-
-            interest_payments.append(
-                Expense(f"mortgage interest paid {year}", interest_paid, year)
-            )
-            principal_payments.append(
-                Transfer(
-                    f"mortgage principal paid {year}",
-                    principal_paid,
-                    year,
-                    transfer_from=pay_from_account,
-                    transfer_to=debt,
-                    required=True,
-                )
-            )
-
-        return principal_payments, interest_payments

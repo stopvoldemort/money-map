@@ -5,9 +5,9 @@ from form.helpers import Helpers
 class InvestmentVehicleInput:
     column_labels = [
         "Name",
-        "AAGR",
-        "Dynamic Mean",
-        "Dynamic Std Dev",
+        "Real AAGR",
+        "Dynamic Mean (optional)",
+        "Dynamic Std Dev (optional)",
         "",
     ]
 

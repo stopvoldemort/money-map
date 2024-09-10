@@ -19,22 +19,29 @@ class AccountInput:
         self.investment_distribution_inputs = []
 
         self.name_widget = widgets.Text(
-            description="Name:", value=name, continuous_update=False
+            value=name, continuous_update=False, layout=Helpers.basic_layout()
         )
         self.name_widget.observe(self._on_name_change, names="value")
 
         self.account_type_widget = widgets.Dropdown(
-            options=AccountType.ALL, description="Type:", value=account_type
+            options=AccountType.ALL, value=account_type, layout=Helpers.basic_layout()
+        )
+        self.account_type_widget.observe(
+            lambda change: self.earliest_withdrawal_year_widget.set_trait(
+                "disabled", change["new"] != AccountType.RETIREMENT
+            ),
+            names="value",
         )
         self.starting_balance_widget = widgets.FloatText(
-            description="Balance", value=starting_balance
+            value=starting_balance, layout=Helpers.basic_layout()
         )
         self.earliest_withdrawal_year_widget = widgets.BoundedIntText(
             min=2024,
             max=2070,
             step=1,
             value=earliest_withdrawal_year,
-            description="Earliest Withdrawal Year",
+            disabled=self.account_type_widget.value != AccountType.RETIREMENT,
+            layout=Helpers.basic_layout(),
         )
 
         self.investment_distributions_widget = widgets.VBox(
@@ -51,16 +58,25 @@ class AccountInput:
         self.delete_btn = Helpers.delete_button()
         self.delete_btn.on_click(self._on_delete)
 
+        self.widgets_row = [
+            self.name_widget,
+            self.account_type_widget,
+            self.starting_balance_widget,
+            self.earliest_withdrawal_year_widget,
+            self.delete_btn,
+        ]
+
         self.container = VBox(
             [
-                HBox(
+                Helpers.simple_grid(
+                    [self],
                     [
-                        self.name_widget,
-                        self.account_type_widget,
-                        self.starting_balance_widget,
-                        self.earliest_withdrawal_year_widget,
-                        self.delete_btn,
-                    ]
+                        "Name",
+                        "Type",
+                        "Starting Balance",
+                        "Earliest Withdrawal Year",
+                        "",
+                    ],
                 ),
                 widgets.HTML(value="<h3>Investment Plan (if applicable)</h3>"),
                 self.investment_distributions_widget,
