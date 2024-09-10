@@ -14,18 +14,20 @@ class ScheduledDebt:
         loan_term_years,
         pay_from_account,
     ) -> List[Transfer]:
-        # Total cost of the mortgage
+        number_of_months = loan_term_years * 12
         if annual_interest_rate > 0:
-            number_of_payments = loan_term_years * 12
-            monthly_interest_rate = annual_interest_rate / 12
-            total_cost = loan_amount * (1 + monthly_interest_rate) ** number_of_payments
+            monthly_payment = (
+                loan_amount
+                * (annual_interest_rate / 12)
+                * (1 + annual_interest_rate / 12) ** (number_of_months)
+                / ((1 + annual_interest_rate / 12) ** (number_of_months) - 1)
+            )
+
         else:
-            total_cost = loan_amount
+            monthly_payment = loan_amount / (number_of_months)
 
-        # Annual mortgage payment
-        annual_payment = total_cost / loan_term_years
+        annual_payment = monthly_payment * 12
 
-        # Initialize balance
         transfers = []
 
         for year in range(first_year_of_loan, first_year_of_loan + loan_term_years):
