@@ -94,8 +94,10 @@ class Helpers:
         )
 
     @staticmethod
-    def delete_button():
-        return widgets.Button(description="Delete", button_style="danger")
+    def delete_button(disabled=False):
+        return widgets.Button(
+            description="Delete", button_style="danger", disabled=disabled
+        )
 
     @staticmethod
     def field(label, widget):
