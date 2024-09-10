@@ -6,7 +6,7 @@ class ScheduledDebtInput:
     column_labels = [
         "Name",
         "Amount",
-        "AAGR/Interest Rate",
+        "Real Interest Rate",
         "Remaining Loan Term (years)",
         "Pay From Account",
         "",
@@ -50,6 +50,7 @@ class ScheduledDebtInput:
             self.amount_widget,
             self.aagr_widget,
             self.remaining_loan_term_widget,
+            self.pay_from_account_widget,
             self.delete_btn,
         ]
 
