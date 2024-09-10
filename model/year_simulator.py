@@ -136,7 +136,7 @@ class YearSimulator:
 
         unpaid_expenses = sum(expense.amount for expense in annual_expenses)
         # TODO: The aagr of unpaid expenses should live somewhere rather than be hardcoded here
-        if unpaid_expenses > 0:
+        if unpaid_expenses > 1.0:
             debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, 0.10))
 
         #####   PAY UNSCHEDULED DEBT  ######

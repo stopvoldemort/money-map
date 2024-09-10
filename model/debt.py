@@ -20,4 +20,5 @@ class Debt:
         self.amount += amount
 
     def apply_annual_growth(self):
-        self.amount = self.amount * ((1 + self.aagr / 12)) ** 12
+        new_amount = self.amount * ((1 + self.aagr / 12)) ** 12
+        self.amount = new_amount
