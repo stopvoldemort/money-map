@@ -6,7 +6,7 @@ class DebtInput:
     column_labels = [
         "Name",
         "Amount",
-        "AAGR",
+        "Real Interest Rate",
         "",
     ]
 

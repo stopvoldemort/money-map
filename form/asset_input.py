@@ -6,7 +6,7 @@ class AssetInput:
     column_labels = [
         "Name",
         "Value",
-        "AAGR",
+        "Real AAGR",
         "Tax rate",
         "",
     ]
