@@ -104,3 +104,9 @@ class Helpers:
             layout=widgets.Layout(padding="0 4px"),
             justify_content="flex-start",
         )
+
+    @staticmethod
+    def update_dropdown_fields(dropdown, options):
+        if dropdown.value not in options:
+            dropdown.value = None
+        dropdown.options = options

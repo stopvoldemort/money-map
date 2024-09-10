@@ -68,16 +68,12 @@ class IncomeInput:
         ]
 
         self.delete_btn.on_click(self._on_delete)
-        self.name_widget.observe(self._on_name_change, names="value")
 
     def _on_delete(self, b):
         self.form.delete_income_input(self)
 
-    def _on_name_change(self, change):
-        self.form.update_account_dropdowns()
-
     def update_account_dropdown(self, account_options):
-        self.account_dropdown.options = account_options
+        Helpers.update_dropdown_fields(self.account_dropdown, account_options)
 
     def get_data(self):
         return {

@@ -49,7 +49,7 @@ class GiftInput:
         self.form.delete_gift_input(self)
 
     def update_account_dropdown(self, account_options):
-        self.account_dropdown.options = account_options
+        Helpers.update_dropdown_fields(self.account_dropdown, account_options)
 
     def get_data(self):
         return {

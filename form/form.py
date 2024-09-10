@@ -15,32 +15,12 @@ from examples.empty_form import empty_form
 
 
 class Form:
-    def __init__(self, preload_data: dict = empty_form):
-        self.preload_data = preload_data
-        self.investment_vehicle_inputs = (
-            []
-        )  # List to store instances of InvestmentVehicle
-        self.debt_inputs = []  # List to store instances of DebtInput
-        self.asset_inputs = []  # List to store instances of AssetInput
-        self.account_inputs = []  # List to store instances of AccountInput
-        self.income_inputs = []  # List to store instances of IncomeInput
-        self.expense_inputs = []  # List to store instances of ExpenseInput
-        self.gift_inputs = []  # List to store instances of GiftInput
-        self.transfer_inputs = []  # List to store instances of TransferInput
-        self.house_purchase_inputs = []  # List to store instances of HousePurchaseInput
-
-        self.display_area = widgets.Output()
-
-        self.submit_btn = widgets.Button(
-            description="Print params", button_style="info"
-        )
-        self.submit_btn.on_click(self.handle_submit)
-
     #####  DEBTS  #####
-    def add_debt_input(self, data: dict = {}):
+    def add_debt_input(self, data: dict = {}, update_display=True):
         debt_input = DebtInput(self, **data)
         self.debt_inputs.append(debt_input)
-        self.update_display()
+        if update_display:
+            self.update_debt_display()
 
     def handle_add_debt_input_click(self, b=None):
         self.add_debt_input()
@@ -50,10 +30,11 @@ class Form:
             self.debt_inputs.remove(debt_input)
 
     #####  ASSETS  #####
-    def add_asset_input(self, data: dict = {}):
+    def add_asset_input(self, data: dict = {}, update_display=True):
         asset_input = AssetInput(self, **data)
         self.asset_inputs.append(asset_input)
-        self.update_display()
+        if update_display:
+            self.update_asset_display()
 
     def handle_add_asset_input_click(self, b=None):
         self.add_asset_input()
@@ -61,13 +42,14 @@ class Form:
     def delete_asset_input(self, asset_input):
         if asset_input in self.asset_inputs:
             self.asset_inputs.remove(asset_input)
-        self.update_display()
+        self.update_asset_display()
 
     #####  ACCOUNTS  #####
-    def add_account_input(self, data: dict = {}):
+    def add_account_input(self, data: dict = {}, update_display=True):
         account_input = AccountInput(self, **data)
         self.account_inputs.append(account_input)
-        self.update_display()
+        if update_display:
+            self.update_account_display()
 
     def handle_add_account_input_click(self, b=None):
         self.add_account_input()
@@ -76,27 +58,36 @@ class Form:
         if account_input in self.account_inputs:
             self.account_inputs.remove(account_input)
             self.update_account_dropdowns()
-        self.update_display()
+        self.update_account_display()
 
     def update_account_dropdowns(self):
         account_options = self.get_account_options()
+
         for gift_input in self.gift_inputs:
             gift_input.update_account_dropdown(account_options)
+        self.update_gift_display()
+
         for transfer_input in self.transfer_inputs:
             transfer_input.update_account_dropdown(account_options)
+        self.update_transfer_display()
+
         for income_input in self.income_inputs:
             income_input.update_account_dropdown(account_options)
+        self.update_income_display()
+
         for house_purchase_input in self.house_purchase_inputs:
             house_purchase_input.update_account_dropdown(account_options)
+        self.update_house_purchase_display()
 
     def get_account_options(self):
         return [account.get_data()["name"] for account in self.account_inputs]
 
     #####  INCOMES  #####
-    def add_income_input(self, data={}):
+    def add_income_input(self, data={}, update_display=True):
         income_input = IncomeInput(self, **data)
         self.income_inputs.append(income_input)
-        self.update_display()
+        if update_display:
+            self.update_income_display()
 
     def handle_add_income_input_click(self, b=None):
         self.add_income_input()
@@ -104,13 +95,14 @@ class Form:
     def delete_income_input(self, income_input):
         if income_input in self.income_inputs:
             self.income_inputs.remove(income_input)
-        self.update_display()
+        self.update_income_display()
 
     #####  EXPENSES  #####
-    def add_expense_input(self, data: dict = {}):
+    def add_expense_input(self, data: dict = {}, update_display=True):
         expense_input = ExpenseInput(self, **data)
         self.expense_inputs.append(expense_input)
-        self.update_display()
+        if update_display:
+            self.update_expense_display()
 
     def handle_add_expense_input_click(self, b=None):
         self.add_expense_input()
@@ -118,13 +110,14 @@ class Form:
     def delete_expense_input(self, expense_input):
         if expense_input in self.expense_inputs:
             self.expense_inputs.remove(expense_input)
-        self.update_display()
+        self.update_expense_display()
 
     #####  GIFTS  #####
-    def add_gift_input(self, data: dict = {}):
+    def add_gift_input(self, data: dict = {}, update_display=True):
         gift_input = GiftInput(self, **data)
         self.gift_inputs.append(gift_input)
-        self.update_display()
+        if update_display:
+            self.update_gift_display()
 
     def handle_add_gift_input_click(self, b=None):
         self.add_gift_input()
@@ -132,13 +125,14 @@ class Form:
     def delete_gift_input(self, gift_input):
         if gift_input in self.gift_inputs:
             self.gift_inputs.remove(gift_input)
-        self.update_display()
+        self.update_gift_display()
 
     #####  TRANSFERS  #####
-    def add_transfer_input(self, data: dict = {}):
+    def add_transfer_input(self, data: dict = {}, update_display=True):
         transfer_input = TransferInput(self, **data)
         self.transfer_inputs.append(transfer_input)
-        self.update_display()
+        if update_display:
+            self.update_transfer_display()
 
     def handle_add_transfer_input_click(self, b=None):
         self.add_transfer_input()
@@ -146,13 +140,14 @@ class Form:
     def delete_transfer_input(self, transfer_input):
         if transfer_input in self.transfer_inputs:
             self.transfer_inputs.remove(transfer_input)
-        self.update_display()
+        self.update_transfer_display()
 
     #####  INVESTMENT VEHICLES  #####
-    def add_investment_vehicle_input(self, data: dict = {}):
+    def add_investment_vehicle_input(self, data: dict = {}, update_display=True):
         input = InvestmentVehicleInput(self, **data)
         self.investment_vehicle_inputs.append(input)
-        self.update_display()
+        if update_display:
+            self.update_investment_vehicle_display()
 
     def handle_add_investment_vehicle_input_click(self, b=None):
         self.add_investment_vehicle_input()
@@ -160,8 +155,8 @@ class Form:
     def delete_investment_vehicle_input(self, investment_vehicle_input):
         if investment_vehicle_input in self.investment_vehicle_inputs:
             self.investment_vehicle_inputs.remove(investment_vehicle_input)
-        self.update_display()
         self.update_investment_vehicle_dropdowns()
+        self.update_investment_vehicle_display()
 
     def get_investment_vehicle_options(self):
         return [input.get_data()["name"] for input in self.investment_vehicle_inputs]
@@ -175,15 +170,16 @@ class Form:
                 for (
                     investment_proportion_input
                 ) in investment_distribution_input.investment_proportion_inputs:
-                    investment_proportion_input.investment_widget.options = (
+                    investment_proportion_input.update_investment_vehicle_dropdown(
                         self.get_investment_vehicle_options()
                     )
 
     #####  HOUSE PURCHASE  #####
-    def add_house_purchase_input(self, data: dict = {}):
+    def add_house_purchase_input(self, data: dict = {}, update_display=True):
         house_purchase_input = HousePurchaseInput(self, **data)
         self.house_purchase_inputs.append(house_purchase_input)
-        self.update_display()
+        if update_display:
+            self.update_house_purchase_display()
 
     def handle_add_house_purchase_input_click(self, b=None):
         self.add_house_purchase_input()
@@ -191,44 +187,18 @@ class Form:
     def delete_house_purchase_input(self, house_purchase_input):
         if house_purchase_input in self.house_purchase_inputs:
             self.house_purchase_inputs.remove(house_purchase_input)
-        self.update_display()
+        self.update_house_purchase_display()
 
-    #####  PRINT  #####
-    def update_display(self):
-        with self.display_area:
+    #####  DISPLAY  #####
+    def update_investment_vehicle_display(self):
+        with self.investment_vehicle_display_area:
             clear_output(wait=True)
-
-            add_investment_vehicle_btn = Helpers.add_input_button(
-                "Add Investment Vehicle"
+            add_investment_vehicle_btn = widgets.Button(
+                description="Add Investment Vehicle"
             )
             add_investment_vehicle_btn.on_click(
                 self.handle_add_investment_vehicle_input_click
             )
-
-            add_account_btn = Helpers.add_input_button("Add Account")
-            add_account_btn.on_click(self.handle_add_account_input_click)
-
-            add_debt_btn = Helpers.add_input_button("Add Debt")
-            add_debt_btn.on_click(self.handle_add_debt_input_click)
-
-            add_asset_btn = Helpers.add_input_button("Add Asset")
-            add_asset_btn.on_click(self.handle_add_asset_input_click)
-
-            add_income_btn = Helpers.add_input_button("Add Income")
-            add_income_btn.on_click(self.handle_add_income_input_click)
-
-            add_expense_btn = Helpers.add_input_button("Add Expense")
-            add_expense_btn.on_click(self.handle_add_expense_input_click)
-
-            add_gift_btn = Helpers.add_input_button("Add Gift")
-            add_gift_btn.on_click(self.handle_add_gift_input_click)
-
-            add_transfer_btn = Helpers.add_input_button("Add Transfer")
-            add_transfer_btn.on_click(self.handle_add_transfer_input_click)
-
-            add_house_purchase_btn = Helpers.add_input_button("Add House Purchase")
-            add_house_purchase_btn.on_click(self.handle_add_house_purchase_input_click)
-
             display(
                 widgets.VBox(
                     [
@@ -241,30 +211,44 @@ class Form:
                             add_investment_vehicle_btn,
                             is_empty=(len(self.investment_vehicle_inputs) == 0),
                         ),
+                    ]
+                )
+            )
+
+    def display_investment_vehicles(self):
+        display(self.investment_vehicle_display_area)
+        self.update_investment_vehicle_display()
+
+    def update_account_display(self):
+        with self.account_display_area:
+            clear_output(wait=True)
+            add_account_btn = widgets.Button(description="Add Account")
+            add_account_btn.on_click(self.handle_add_account_input_click)
+            display(
+                widgets.VBox(
+                    [
                         Helpers.account_inputs_group(
                             "Accounts",
                             self.account_inputs,
                             add_account_btn,
                             is_empty=len(self.account_inputs) == 0,
                         ),
-                        Helpers.inputs_group(
-                            "Debt",
-                            Helpers.simple_grid(
-                                self.debt_inputs,
-                                DebtInput.column_labels,
-                            ),
-                            add_debt_btn,
-                            is_empty=(len(self.debt_inputs) == 0),
-                        ),
-                        Helpers.inputs_group(
-                            "Asset",
-                            Helpers.simple_grid(
-                                self.asset_inputs,
-                                AssetInput.column_labels,
-                            ),
-                            add_asset_btn,
-                            is_empty=(len(self.asset_inputs) == 0),
-                        ),
+                    ]
+                )
+            )
+
+    def display_accounts(self):
+        display(self.account_display_area)
+        self.update_account_display()
+
+    def update_income_display(self):
+        with self.income_display_area:
+            clear_output(wait=True)
+            add_income_btn = widgets.Button(description="Add Income")
+            add_income_btn.on_click(self.handle_add_income_input_click)
+            display(
+                widgets.VBox(
+                    [
                         Helpers.inputs_group(
                             "Income",
                             Helpers.simple_grid(
@@ -274,6 +258,72 @@ class Form:
                             add_income_btn,
                             is_empty=(len(self.income_inputs) == 0),
                         ),
+                    ]
+                )
+            )
+
+    def display_incomes(self):
+        display(self.income_display_area)
+        self.update_income_display()
+
+    def update_asset_display(self):
+        with self.assset_display_area:
+            clear_output(wait=True)
+            add_asset_btn = widgets.Button(description="Add Asset")
+            add_asset_btn.on_click(self.handle_add_asset_input_click)
+            display(
+                widgets.VBox(
+                    [
+                        Helpers.inputs_group(
+                            "Asset",
+                            Helpers.simple_grid(
+                                self.asset_inputs,
+                                AssetInput.column_labels,
+                            ),
+                            add_asset_btn,
+                            is_empty=(len(self.asset_inputs) == 0),
+                        ),
+                    ]
+                )
+            )
+
+    def display_assets(self):
+        display(self.assset_display_area)
+        self.update_asset_display()
+
+    def update_debt_display(self):
+        with self.debt_display_area:
+            clear_output(wait=True)
+            add_debt_btn = widgets.Button(description="Add Debt")
+            add_debt_btn.on_click(self.handle_add_debt_input_click)
+            display(
+                widgets.VBox(
+                    [
+                        Helpers.inputs_group(
+                            "Debt",
+                            Helpers.simple_grid(
+                                self.debt_inputs,
+                                DebtInput.column_labels,
+                            ),
+                            add_debt_btn,
+                            is_empty=(len(self.debt_inputs) == 0),
+                        ),
+                    ]
+                )
+            )
+
+    def display_debts(self):
+        display(self.debt_display_area)
+        self.update_debt_display()
+
+    def update_expense_display(self):
+        with self.expense_display_area:
+            clear_output(wait=True)
+            add_expense_btn = widgets.Button(description="Add Expense")
+            add_expense_btn.on_click(self.handle_add_expense_input_click)
+            display(
+                widgets.VBox(
+                    [
                         Helpers.inputs_group(
                             "Expenses",
                             Helpers.simple_grid(
@@ -283,6 +333,22 @@ class Form:
                             add_expense_btn,
                             is_empty=(len(self.expense_inputs) == 0),
                         ),
+                    ]
+                )
+            )
+
+    def display_expenses(self):
+        display(self.expense_display_area)
+        self.update_expense_display()
+
+    def update_gift_display(self):
+        with self.gift_display_area:
+            clear_output(wait=True)
+            add_gift_btn = widgets.Button(description="Add Gift")
+            add_gift_btn.on_click(self.handle_add_gift_input_click)
+            display(
+                widgets.VBox(
+                    [
                         Helpers.inputs_group(
                             "Gifts",
                             Helpers.simple_grid(
@@ -292,6 +358,22 @@ class Form:
                             add_gift_btn,
                             is_empty=(len(self.gift_inputs) == 0),
                         ),
+                    ]
+                )
+            )
+
+    def display_gifts(self):
+        display(self.gift_display_area)
+        self.update_gift_display()
+
+    def update_transfer_display(self):
+        with self.transfer_display_area:
+            clear_output(wait=True)
+            add_transfer_btn = widgets.Button(description="Add Transfer")
+            add_transfer_btn.on_click(self.handle_add_transfer_input_click)
+            display(
+                widgets.VBox(
+                    [
                         Helpers.inputs_group(
                             "Transfers",
                             Helpers.simple_grid(
@@ -301,6 +383,22 @@ class Form:
                             add_transfer_btn,
                             is_empty=(len(self.transfer_inputs) == 0),
                         ),
+                    ]
+                )
+            )
+
+    def display_transfers(self):
+        display(self.transfer_display_area)
+        self.update_transfer_display()
+
+    def update_house_purchase_display(self):
+        with self.house_purchase_display_area:
+            clear_output(wait=True)
+            add_house_purchase_btn = widgets.Button(description="Add House Purchase")
+            add_house_purchase_btn.on_click(self.handle_add_house_purchase_input_click)
+            display(
+                widgets.VBox(
+                    [
                         Helpers.inputs_group(
                             "House Purchases",
                             Helpers.simple_grid(
@@ -310,44 +408,68 @@ class Form:
                             add_house_purchase_btn,
                             is_empty=(len(self.house_purchase_inputs) == 0),
                         ),
-                        self.submit_btn,
                     ]
                 )
             )
 
-    def initialize(self):
+    def display_house_purchases(self):
+        display(self.house_purchase_display_area)
+        self.update_house_purchase_display()
+
+    def display_print_button(self):
+        print_btn = widgets.Button(description="Print params", button_style="info")
+        print_btn.on_click(self.handle_submit)
+        display(print_btn)
+
+    def initialize(self, preload_data: dict = empty_form):
+        self.preload_data = preload_data
+
+        self.investment_vehicle_inputs = []
+        self.debt_inputs = []
+        self.asset_inputs = []
+        self.account_inputs = []
+        self.income_inputs = []
+        self.expense_inputs = []
+        self.gift_inputs = []
+        self.transfer_inputs = []
+        self.house_purchase_inputs = []
+
+        self.account_display_area = widgets.Output()
+        self.investment_vehicle_display_area = widgets.Output()
+        self.income_display_area = widgets.Output()
+        self.assset_display_area = widgets.Output()
+        self.debt_display_area = widgets.Output()
+        self.expense_display_area = widgets.Output()
+        self.gift_display_area = widgets.Output()
+        self.transfer_display_area = widgets.Output()
+        self.house_purchase_display_area = widgets.Output()
+
         for vehicle in self.preload_data["investment_vehicles"]:
-            self.add_investment_vehicle_input(vehicle)
+            self.add_investment_vehicle_input(vehicle, update_display=False)
 
         for acct in self.preload_data["accounts"]:
-            self.add_account_input(acct)
+            self.add_account_input(acct, update_display=False)
 
         for income in self.preload_data["incomes"]:
-            self.add_income_input(income)
+            self.add_income_input(income, update_display=False)
 
         for debt in self.preload_data["debts"]:
-            self.add_debt_input(debt)
+            self.add_debt_input(debt, update_display=False)
 
         for asset in self.preload_data["assets"]:
-            self.add_asset_input(asset)
+            self.add_asset_input(asset, update_display=False)
 
         for exp in self.preload_data["expenses"]:
-            self.add_expense_input(exp)
+            self.add_expense_input(exp, update_display=False)
 
         for gift in self.preload_data["gifts"]:
-            self.add_gift_input(gift)
+            self.add_gift_input(gift, update_display=False)
 
         for transfer in self.preload_data["transfers"]:
-            self.add_transfer_input(transfer)
+            self.add_transfer_input(transfer, update_display=False)
 
         for house_purchase in self.preload_data["house_purchases"]:
-            self.add_house_purchase_input(house_purchase)
-
-    def display(self):
-        self.initialize()
-
-        display(self.display_area)
-        self.update_display()
+            self.add_house_purchase_input(house_purchase, update_display=False)
 
     @staticmethod
     def get_all_inputs_data(inputs):
