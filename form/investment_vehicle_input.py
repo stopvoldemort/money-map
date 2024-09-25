@@ -15,7 +15,10 @@ class InvestmentVehicleInput:
         self.form = form  # Reference to the form instance
 
         self.name_widget = Text(
-            value=name, continuous_update=False, layout=Helpers.basic_layout()
+            value=name,
+            continuous_update=False,
+            layout=Helpers.basic_layout(),
+            disabled=self.form.basic,
         )
         self.aagr_widget = FloatText(value=aagr, layout=Helpers.basic_layout())
         self.dynamic_mean_widget = FloatText(
@@ -24,7 +27,9 @@ class InvestmentVehicleInput:
         self.dynamic_std_dev_widget = FloatText(
             value=dynamic_std_dev, layout=Helpers.basic_layout()
         )
-        self.delete_btn = Button(description="Delete", button_style="danger")
+        self.delete_btn = Button(
+            description="Delete", button_style="danger", disabled=self.form.basic
+        )
 
         self.widgets_row = [
             self.name_widget,

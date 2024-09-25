@@ -217,7 +217,8 @@ class Form:
         with self.investment_vehicle_display_area:
             clear_output(wait=True)
             add_investment_vehicle_btn = widgets.Button(
-                description="Add investment type"
+                description="Add investment type",
+                disabled=self.basic,
             )
             add_investment_vehicle_btn.on_click(
                 self.handle_add_investment_vehicle_input_click
@@ -239,14 +240,15 @@ class Form:
             )
 
     def display_investment_vehicles(self):
-        if not self.basic:
-            display(self.investment_vehicle_display_area)
-            self.update_investment_vehicle_display()
+        display(self.investment_vehicle_display_area)
+        self.update_investment_vehicle_display()
 
     def update_account_display(self):
         with self.account_display_area:
             clear_output(wait=True)
-            add_account_btn = widgets.Button(description="Add account")
+            add_account_btn = widgets.Button(
+                description="Add account", disabled=self.basic
+            )
             add_account_btn.on_click(self.handle_add_account_input_click)
             display(
                 widgets.VBox(
