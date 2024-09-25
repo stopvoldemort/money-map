@@ -5,7 +5,7 @@ from form.helpers import Helpers
 class IncomeInput:
     column_labels = [
         "Name",
-        "Amount",
+        "Annual Amount",
         "Years",
         "Deposit In",
         "Federal Income Tax",
