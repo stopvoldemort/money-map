@@ -5,7 +5,7 @@ from form.helpers import Helpers
 class ExpenseInput:
     column_labels = [
         "Name",
-        "Amount",
+        "Annual Amount",
         "Years",
         "529 Eligible",
         "",
