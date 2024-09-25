@@ -39,7 +39,6 @@ class ScheduledDebtInput:
             options=self.form.get_account_options(),
             value=pay_from_account,
             layout=Helpers.basic_layout(),
-            disabled=self.form.basic,
         )
 
         self.delete_btn = Helpers.delete_button()
