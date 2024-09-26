@@ -71,9 +71,8 @@ class YearSimulator:
             if income.payroll_tax:
                 payroll_taxes += tax_calculator.calculate_payroll_tax(income.amount)
 
-        # TODO: This will overestimate the retirement contribution when there aren't sufficient funds in the transfer_from account
         retirement_transfer = sum(
-            transfer.amount
+            transfer.transfered_amount
             for transfer in annual_transfers
             if isinstance(transfer.transfer_to, Account)
             and transfer.transfer_to.account_type == AccountType.RETIREMENT

@@ -34,7 +34,8 @@ class AccountInput:
         )
         self.account_type_widget.observe(
             lambda change: self.earliest_withdrawal_year_widget.set_trait(
-                "disabled", change["new"] != AccountType.RETIREMENT
+                "disabled",
+                change["new"] not in {AccountType.RETIREMENT, AccountType.ROTH_IRA},
             ),
             names="value",
         )
@@ -46,7 +47,8 @@ class AccountInput:
             max=2070,
             step=1,
             value=earliest_withdrawal_year,
-            disabled=self.account_type_widget.value != AccountType.RETIREMENT,
+            disabled=self.account_type_widget.value
+            not in {AccountType.RETIREMENT, AccountType.ROTH_IRA},
             layout=Helpers.basic_layout(),
         )
 
