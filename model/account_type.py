@@ -3,5 +3,6 @@ class AccountType:
     RETIREMENT = "retirement"
     INVESTMENT = "investments"
     FIVE_TWO_NINE = "529"
+    ROTH_IRA = "roth_ira"
     # Note: The order of this is the order in which they should be withdrawn from to pay for things
-    ALL = [FIVE_TWO_NINE, BANK, INVESTMENT, RETIREMENT]
+    ALL = [FIVE_TWO_NINE, BANK, INVESTMENT, ROTH_IRA, RETIREMENT]

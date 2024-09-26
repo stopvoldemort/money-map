@@ -185,6 +185,13 @@ default_data = {
             "investment_distributions": retirement_investment_plan_data,
         },
         {
+            "name": "Roth IRA",
+            "account_type": "roth_ira",
+            "starting_balance": 5000.0,
+            "earliest_withdrawal_year": 2039,
+            "investment_distributions": retirement_investment_plan_data,
+        },
+        {
             "name": "Bank account",
             "account_type": "bank",
             "starting_balance": 30000.0,
@@ -320,7 +327,21 @@ default_data = {
             "years": "2024-2039",
             "transfer_from": "Bank account",
             "transfer_to": "Retirement account (IRA, 401k)",
-        }
+        },
+        {
+            "name": "roth ira contribution",
+            "amount": 3000.0,
+            "years": "2024-2039",
+            "transfer_from": "Bank account",
+            "transfer_to": "Roth IRA",
+        },
+        {
+            "name": "529 contribution",
+            "amount": 1000.0,
+            "years": "2024-2037",
+            "transfer_from": "Bank account",
+            "transfer_to": "529 account (college fund)",
+        },
     ],
     "investment_vehicles": [stocks, bonds, money_market, checking],
     "house_purchases": [],

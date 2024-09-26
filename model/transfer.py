@@ -17,6 +17,7 @@ class Transfer:
     ):
         self.name = name
         self.amount = amount
+        self.transfered_amount = 0.0
         self.year = year
         self.transfer_from = transfer_from
         self.transfer_to = transfer_to
@@ -53,6 +54,8 @@ class Transfer:
             self.transfer_to.pay(amount)
         else:
             self.transfer_to.deposit(amount)
+
+        self.transfered_amount = amount
 
     def is_debt_transfer(self):
         return isinstance(self.transfer_to, Debt)
