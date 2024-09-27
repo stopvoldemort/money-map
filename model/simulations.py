@@ -22,13 +22,11 @@ class Simulations:
         first_year: int,
         last_year: int,
         mode: str,
-        debug: bool = False,
     ):
         self.data = data
         self.first_year = first_year
         self.last_year = last_year
         self.dynamic = mode == ConfigForm.DYNAMIC
-        self.debug = debug
 
     def execute_simulation(
         self,
@@ -41,7 +39,6 @@ class Simulations:
         debts: List[Debt],
         assets: List[Asset],
         gifts: List[Gift],
-        debug: bool = False,
         dynamic: bool = False,
     ) -> Aggregator:
         aggregator = Aggregator()
@@ -57,7 +54,6 @@ class Simulations:
                     debts=debts,
                     assets=assets,
                     gifts=gifts,
-                    debug=debug,
                     dynamic=dynamic,
                 )
             )
@@ -119,7 +115,6 @@ class Simulations:
                 debts=parsed.debts,
                 assets=parsed.assets,
                 gifts=parsed.gifts,
-                debug=self.debug,
                 dynamic=self.dynamic,
             )
             aggregator.append(results)
