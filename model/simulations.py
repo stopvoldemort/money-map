@@ -12,6 +12,7 @@ from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
 from model.account_type import AccountType
 from model.form_data_parser import FormDataParser
+from form.config_form import ConfigForm
 
 
 class Simulations:
@@ -20,18 +21,12 @@ class Simulations:
         data: dict,
         first_year: int,
         last_year: int,
-        dynamic: bool = False,
-        debug: bool = False,
+        mode: str,
     ):
-        if debug and dynamic:
-            print("Dynamic simulations are not supported in debug mode.")
-            dynamic = False
-
         self.data = data
         self.first_year = first_year
         self.last_year = last_year
-        self.dynamic = dynamic
-        self.debug = debug
+        self.dynamic = mode == ConfigForm.DYNAMIC
 
     def execute_simulation(
         self,
@@ -44,7 +39,6 @@ class Simulations:
         debts: List[Debt],
         assets: List[Asset],
         gifts: List[Gift],
-        debug: bool = False,
         dynamic: bool = False,
     ) -> Aggregator:
         aggregator = Aggregator()
@@ -60,7 +54,6 @@ class Simulations:
                     debts=debts,
                     assets=assets,
                     gifts=gifts,
-                    debug=debug,
                     dynamic=dynamic,
                 )
             )
@@ -95,11 +88,43 @@ class Simulations:
                 sum(
                     account.balance()
                     for account in accounts
-                    if account.account_type.name
-                    in {AccountType.RETIREMENT, AccountType.ROTH_IRA}
+                    if account.account_type.name == AccountType.RETIREMENT
+                )
+            )
+            aggregator.roth_ira.append(
+                sum(
+                    account.balance()
+                    for account in accounts
+                    if account.account_type.name == AccountType.ROTH_IRA
                 )
             )
             aggregator.debt.append(sum(d.amount for d in debts))
+            aggregator.income.append(
+                sum(income.amount for income in incomes if income.year == year)
+            )
+            aggregator.expenses.append(
+                sum(
+                    expense.starting_amount
+                    for expense in expenses
+                    if expense.year == year and not expense.tax_payment
+                )
+            )
+            aggregator.taxes.append(
+                sum(
+                    expense.starting_amount
+                    for expense in expenses
+                    if expense.year == year and expense.tax_payment
+                )
+            )
+            aggregator.investment_gains.append(
+                sum(
+                    [
+                        sum(a.annual_growth for a in accounts),
+                        sum(a.annual_growth for a in assets),
+                        sum(-d.annual_growth for d in debts),
+                    ]
+                )
+            )
         return aggregator
 
     def execute(self) -> Aggregator:
@@ -122,7 +147,6 @@ class Simulations:
                 debts=parsed.debts,
                 assets=parsed.assets,
                 gifts=parsed.gifts,
-                debug=self.debug,
                 dynamic=self.dynamic,
             )
             aggregator.append(results)

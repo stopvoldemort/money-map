@@ -26,7 +26,6 @@ class YearSimulator:
         debts: List[Debt],
         assets: List[Asset],
         gifts: List[Gift],
-        debug: bool = False,
         dynamic: bool = False,
     ) -> Tuple[
         List[Account],
@@ -122,6 +121,7 @@ class YearSimulator:
                 + nyc_income_taxes
                 + asset_taxes,
                 year,
+                tax_payment=True,
             )
         )
         annual_expenses = [e for e in expenses if e.year == year]
@@ -175,31 +175,23 @@ class YearSimulator:
         if capital_gains > 0:
             capital_gains_tax = capital_gains * tax_calculator.capital_gains_tax_rate()
             expenses.append(
-                Expense(f"capital gains tax for {year}", capital_gains_tax, year + 1)
+                Expense(
+                    f"capital gains tax for {year}",
+                    capital_gains_tax,
+                    year + 1,
+                    tax_payment=True,
+                )
             )
 
         if extra_income_taxes > 0:
             expenses.append(
-                Expense(f"extra income taxes for {year}", extra_taxes, year + 1)
+                Expense(
+                    f"extra income taxes for {year}",
+                    extra_taxes,
+                    year + 1,
+                    tax_payment=True,
+                )
             )
-
-        if debug:
-            print(f"*** END OF {year} ***")
-            for a in accounts:
-                print(f"[{year}] [account] {a.name}: {a.balance()}")
-            for d in debts:
-                print(f"[{year}] [debt] {d.name}: {d.amount} ({d.scheduled})")
-            for t in annual_transfers:
-                print(f"[{year}] [transfer] {t.name}: {t.amount}")
-            for g in annual_gifts:
-                print(f"[{year}] [gift] {g.name}: {g.amount}")
-            for i in annual_incomes:
-                print(f"[{year}] [income] {i.name}: {i.amount}")
-            for e in expenses:
-                if e.year == year:
-                    print(f"[{year}] [expense] {e.name}: {e.starting_amount}")
-            for w in withdrawals:
-                print(f"[{year}] [withdrawal] {w.amount}, {w.account_type.name}")
 
         # APPLY ANNUAL GROWTH
         for account in accounts:

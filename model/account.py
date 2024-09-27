@@ -21,18 +21,23 @@ class Account:
         self.principal = starting_balance
         self.gains = 0.0
 
+        # This is used to track the growth of the account over the year
+        self.annual_growth = 0.0
+
     def deposit(self, amount: float):
         self.principal += amount
 
-    def apply_annual_growth(self, year: int):
-        growth = 0
+    def apply_annual_growth(self, year: int) -> float:
+        self.annual_growth = 0
 
         for investment_distribution in self.investment_distributions:
             if year in investment_distribution.years:
-                growth += investment_distribution.annual_growth(self.balance())
+                self.annual_growth += investment_distribution.annual_growth(
+                    self.balance()
+                )
                 break
 
-        self.gains += growth
+        self.gains += self.annual_growth
 
     def balance(self):
         return self.principal + self.gains

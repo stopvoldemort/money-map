@@ -3,9 +3,6 @@
 TODO:
 
 - Let Income, Expense, and maybe other classes grow over time (i.e., have an AAGR)
-- Report the results for each year in a table, e.g., account balances, total spending, total income, taxes
-  - Probably only show on non-dynamic runs
-  - Really just an enhancement of the "debug" setting
 - Add a ceiling on an account, after which money goes into another account
 - Incorporate 401k/IRA required withdrawals
 - Assets can be sold.
