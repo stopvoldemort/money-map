@@ -17,14 +17,14 @@ class Payer:
         # sort payables with five_two_nine_eligible payables first
         payables.sort(key=lambda p: p.five_two_nine_eligible, reverse=True)
         # sort accounts according to the order of their account type in AccountType.ALL
-        accounts.sort(key=lambda a: AccountType.ALL.index(a.account_type))
+        accounts.sort(key=lambda a: AccountType.ALL.index(a.account_type.name))
 
         for payable in payables:
             for account in accounts:
                 if year < account.earliest_withdrawal_year:
                     continue
                 if (
-                    account.account_type == AccountType.FIVE_TWO_NINE
+                    account.account_type.five_two_nine
                     and not payable.five_two_nine_eligible
                 ):
                     continue

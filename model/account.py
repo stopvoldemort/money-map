@@ -9,13 +9,13 @@ class Account:
     def __init__(
         self,
         name: str,
-        account_type: AccountType,
+        account_type: str,
         starting_balance: float,
         investment_distributions: List[InvestmentDistribution] = [],
         earliest_withdrawal_year: int = 0,
     ):
         self.name = name
-        self.account_type = account_type
+        self.account_type = AccountType(account_type)
         self.investment_distributions = investment_distributions
         self.earliest_withdrawal_year = earliest_withdrawal_year
         self.principal = starting_balance
@@ -39,7 +39,9 @@ class Account:
 
     def withdraw(self, amount: float) -> Withdrawal:
         if math.isclose(amount, 0):
-            return Withdrawal(0.0, self.account_type)
+            return Withdrawal(
+                amount=0.0, tax_type=self.account_type.withdrawal_tax_treatment
+            )
 
         if self.balance() < amount:
             raise ValueError("Insufficient funds")
@@ -50,4 +52,8 @@ class Account:
         self.gains -= gains_reduction
         self.principal -= principal_reduction
 
-        return Withdrawal(amount, self.account_type, capital_gains=gains_reduction)
+        return Withdrawal(
+            amount=amount,
+            tax_type=self.account_type.withdrawal_tax_treatment,
+            capital_gains=gains_reduction,
+        )
