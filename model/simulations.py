@@ -12,6 +12,7 @@ from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
 from model.account_type import AccountType
 from model.form_data_parser import FormDataParser
+from form.config_form import ConfigForm
 
 
 class Simulations:
@@ -20,17 +21,13 @@ class Simulations:
         data: dict,
         first_year: int,
         last_year: int,
-        dynamic: bool = False,
+        mode: str,
         debug: bool = False,
     ):
-        if debug and dynamic:
-            print("Dynamic simulations are not supported in debug mode.")
-            dynamic = False
-
         self.data = data
         self.first_year = first_year
         self.last_year = last_year
-        self.dynamic = dynamic
+        self.dynamic = mode == ConfigForm.DYNAMIC
         self.debug = debug
 
     def execute_simulation(
