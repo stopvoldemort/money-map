@@ -23,23 +23,23 @@ class ResultsDisplayer:
             # Clear the plot output
             self.plot_output.clear_output(wait=True)
             years = list(range(first_year, last_year))
-            df = pd.DataFrame(aggregator.net_worth, columns=years)
-            number_of_simulations = df.shape[0]
+            net_worth_df = pd.DataFrame(aggregator.net_worth, columns=years)
+            number_of_simulations = net_worth_df.shape[0]
 
             # All net worths
             plt.figure(figsize=(10, 6))
 
             # Net worth median
-            median_trajectory = df.median(axis=0)
+            median_trajectory = net_worth_df.median(axis=0)
             plt.plot(
                 years, median_trajectory, linewidth=2, color="black", label="Net Worth"
             )
 
             # Up to 50 trajctories
-            num_trajectories_to_plot = min(50, df.shape[0])
+            num_trajectories_to_plot = min(50, net_worth_df.shape[0])
             for i in range(num_trajectories_to_plot):
                 plt.plot(
-                    years, df.iloc[i], linewidth=1, color="gray", alpha=0.5
+                    years, net_worth_df.iloc[i], linewidth=1, color="gray", alpha=0.5
                 )  # alpha controls transparency
 
             if not dynamic:
@@ -96,11 +96,14 @@ class ResultsDisplayer:
                     linewidth=1,
                     label="Assets",
                 )
+                median_net_worth = "${:,.0f}".format(median_trajectory.iloc[-1])
+                result_string = f"## Net Worth in {last_year}: {median_net_worth}"
+                display(Markdown(result_string))
 
             if dynamic:
                 # Calculate percentages
-                below_one_million_count = (df[last_year - 1] < 1000000).sum()
-                below_zero_count = (df[last_year - 1] < 0).sum()
+                below_one_million_count = (net_worth_df[last_year - 1] < 1000000).sum()
+                below_zero_count = (net_worth_df[last_year - 1] < 0).sum()
 
                 below_one_million_percent = (
                     below_one_million_count / number_of_simulations
@@ -125,7 +128,8 @@ class ResultsDisplayer:
             # If dynamic, scale y-axis according to the 33th/67th percentile
             if dynamic:
                 plt.ylim(
-                    df.quantile(0.33, axis=0).min(), df.quantile(0.67, axis=0).max()
+                    net_worth_df.quantile(0.33, axis=0).min(),
+                    net_worth_df.quantile(0.67, axis=0).max(),
                 )
 
             # Max x-axis dark

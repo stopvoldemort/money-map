@@ -78,8 +78,8 @@ class TestHousePurchase(unittest.TestCase):
             "down payment", 200, 2024, self.down_payment_acct_src, debt, True, transfers
         )
         self.assertTransferIn(
-            "mortgage principal paid 2024",
-            380.1,
+            "mortgage scheduled payment 2024",
+            442.99,
             2024,
             self.mortgage_acct_src,
             debt,
@@ -87,8 +87,8 @@ class TestHousePurchase(unittest.TestCase):
             transfers,
         )
         self.assertTransferIn(
-            "mortgage principal paid 2025",
-            419.9,
+            "mortgage scheduled payment 2025",
+            442.99,
             2025,
             self.mortgage_acct_src,
             debt,
@@ -97,7 +97,7 @@ class TestHousePurchase(unittest.TestCase):
         )
 
         # Test Expenses
-        self.assertEqual(len(expenses), 6)
+        self.assertEqual(len(expenses), 4)
         self.assertExpenseIn("house closing costs", 40, 2024, expenses)
         self.assertExpenseIn(
             "maintenance, insurance, extra utilities 2024", 1215.5, 2024, expenses
@@ -108,8 +108,6 @@ class TestHousePurchase(unittest.TestCase):
         self.assertExpenseIn(
             "maintenance, insurance, extra utilities 2026", 1215.5, 2026, expenses
         )
-        self.assertExpenseIn("mortgage interest paid 2024", 62.89, 2024, expenses)
-        self.assertExpenseIn("mortgage interest paid 2025", 23.09, 2025, expenses)
 
 
 if __name__ == "__main__":

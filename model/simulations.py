@@ -74,28 +74,29 @@ class Simulations:
                 sum(
                     account.balance()
                     for account in accounts
-                    if account.account_type == AccountType.FIVE_TWO_NINE
+                    if account.account_type.name == AccountType.FIVE_TWO_NINE
                 )
             )
             aggregator.bank_account.append(
                 sum(
                     account.balance()
                     for account in accounts
-                    if account.account_type == AccountType.BANK
+                    if account.account_type.name == AccountType.BANK
                 )
             )
             aggregator.investment.append(
                 sum(
                     account.balance()
                     for account in accounts
-                    if account.account_type == AccountType.INVESTMENT
+                    if account.account_type.name == AccountType.INVESTMENT
                 )
             )
             aggregator.retirement.append(
                 sum(
                     account.balance()
                     for account in accounts
-                    if account.account_type == AccountType.RETIREMENT
+                    if account.account_type.name
+                    in {AccountType.RETIREMENT, AccountType.ROTH_IRA}
                 )
             )
             aggregator.debt.append(sum(d.amount for d in debts))

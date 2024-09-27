@@ -10,9 +10,7 @@ from model.debt import Debt
 from model.asset import Asset
 from model.gift import Gift
 from model.payer import Payer
-from model.withdrawal import Withdrawal
 from model.withdrawal_tax_type import WithdrawalTaxType
-from model.account_type import AccountType
 
 
 class YearSimulator:
@@ -71,42 +69,42 @@ class YearSimulator:
             if income.payroll_tax:
                 payroll_taxes += tax_calculator.calculate_payroll_tax(income.amount)
 
-        retirement_transfer = sum(
+        # federal
+        federal_tax_eligible_income = sum(
+            income.amount for income in annual_incomes if income.federal_income_tax
+        )
+        federal_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
             if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type == AccountType.RETIREMENT
+            and transfer.transfer_to.account_type.federal_income_tax_deductible
         )
-
-        federal_tax_eligible_income = -(min(retirement_transfer, 45000))
-        for income in annual_incomes:
-            if income.federal_income_tax:
-                federal_tax_eligible_income += income.amount
         federal_income_taxes = tax_calculator.calculate_federal_income_tax(
             federal_tax_eligible_income
         )
 
-        five_two_nine_transfer = sum(
-            transfer.amount
+        # state
+        ny_tax_eligible_income = sum(
+            income.amount for income in annual_incomes if income.ny_income_tax
+        )
+        ny_tax_eligible_income -= sum(
+            transfer.transfered_amount
             for transfer in annual_transfers
             if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type == AccountType.FIVE_TWO_NINE
+            and transfer.transfer_to.account_type.state_income_tax_deductible
         )
-
-        ny_tax_eligible_income = -(
-            min(retirement_transfer, 45000) + min(five_two_nine_transfer, 10000)
-        )
-        for income in annual_incomes:
-            if income.ny_income_tax:
-                ny_tax_eligible_income += income.amount
         ny_income_taxes = tax_calculator.calculate_ny_income_tax(ny_tax_eligible_income)
 
-        nyc_tax_eligible_income = -(
-            min(retirement_transfer, 45000) + min(five_two_nine_transfer, 10000)
+        # local
+        nyc_tax_eligible_income = sum(
+            income.amount for income in annual_incomes if income.nyc_income_tax
         )
-        for income in annual_incomes:
-            if income.nyc_income_tax:
-                nyc_tax_eligible_income += income.amount
+        nyc_tax_eligible_income -= sum(
+            transfer.transfered_amount
+            for transfer in annual_transfers
+            if isinstance(transfer.transfer_to, Account)
+            and transfer.transfer_to.account_type.local_income_tax_deductible
+        )
         nyc_income_taxes = tax_calculator.calculate_nyc_income_tax(
             nyc_tax_eligible_income
         )
@@ -150,9 +148,9 @@ class YearSimulator:
         extra_income = 0.0
         capital_gains = 0.0
         for withdrawal in withdrawals:
-            if withdrawal.tax_type() == WithdrawalTaxType.INCOME:
+            if withdrawal.tax_type == WithdrawalTaxType.INCOME:
                 extra_income += withdrawal.amount
-            elif withdrawal.tax_type() == WithdrawalTaxType.CAPITAL_GAINS:
+            elif withdrawal.tax_type == WithdrawalTaxType.CAPITAL_GAINS:
                 capital_gains += withdrawal.capital_gains
 
         extra_income_taxes += (
@@ -201,7 +199,7 @@ class YearSimulator:
                 if e.year == year:
                     print(f"[{year}] [expense] {e.name}: {e.starting_amount}")
             for w in withdrawals:
-                print(f"[{year}] [withdrawal] {w.amount}, {w.account_type}")
+                print(f"[{year}] [withdrawal] {w.amount}, {w.account_type.name}")
 
         # APPLY ANNUAL GROWTH
         for account in accounts:
