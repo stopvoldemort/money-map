@@ -121,6 +121,7 @@ class YearSimulator:
                 + nyc_income_taxes
                 + asset_taxes,
                 year,
+                tax_payment=True,
             )
         )
         annual_expenses = [e for e in expenses if e.year == year]
@@ -174,12 +175,22 @@ class YearSimulator:
         if capital_gains > 0:
             capital_gains_tax = capital_gains * tax_calculator.capital_gains_tax_rate()
             expenses.append(
-                Expense(f"capital gains tax for {year}", capital_gains_tax, year + 1)
+                Expense(
+                    f"capital gains tax for {year}",
+                    capital_gains_tax,
+                    year + 1,
+                    tax_payment=True,
+                )
             )
 
         if extra_income_taxes > 0:
             expenses.append(
-                Expense(f"extra income taxes for {year}", extra_taxes, year + 1)
+                Expense(
+                    f"extra income taxes for {year}",
+                    extra_taxes,
+                    year + 1,
+                    tax_payment=True,
+                )
             )
 
         # APPLY ANNUAL GROWTH

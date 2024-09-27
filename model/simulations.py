@@ -88,11 +88,43 @@ class Simulations:
                 sum(
                     account.balance()
                     for account in accounts
-                    if account.account_type.name
-                    in {AccountType.RETIREMENT, AccountType.ROTH_IRA}
+                    if account.account_type.name == AccountType.RETIREMENT
+                )
+            )
+            aggregator.roth_ira.append(
+                sum(
+                    account.balance()
+                    for account in accounts
+                    if account.account_type.name == AccountType.ROTH_IRA
                 )
             )
             aggregator.debt.append(sum(d.amount for d in debts))
+            aggregator.income.append(
+                sum(income.amount for income in incomes if income.year == year)
+            )
+            aggregator.expenses.append(
+                sum(
+                    expense.starting_amount
+                    for expense in expenses
+                    if expense.year == year and not expense.tax_payment
+                )
+            )
+            aggregator.taxes.append(
+                sum(
+                    expense.starting_amount
+                    for expense in expenses
+                    if expense.year == year and expense.tax_payment
+                )
+            )
+            aggregator.investment_gains.append(
+                sum(
+                    [
+                        sum(a.annual_growth for a in accounts),
+                        sum(a.annual_growth for a in assets),
+                        sum(-d.annual_growth for d in debts),
+                    ]
+                )
+            )
         return aggregator
 
     def execute(self) -> Aggregator:

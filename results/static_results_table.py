@@ -24,15 +24,17 @@ class StaticResultsTable:
                 {
                     "Year": list(range(first_year, last_year)),
                     "Net Worth": StaticResultsTable.in_dollars(results.net_worth[0]),
-                    # "Income": StaticResultsTable.in_dollars(results.income[0]),
-                    # "Investment Returns": StaticResultsTable.in_dollars(results.investment_gains[0]),
-                    # "Expenses": StaticResultsTable.in_dollars(results.expenses[0]),
-                    # "Taxes": StaticResultsTable.in_dollars(results.taxes[0]),
+                    "Income": StaticResultsTable.in_dollars(results.income[0]),
+                    "Investment Returns": StaticResultsTable.in_dollars(
+                        results.investment_gains[0]
+                    ),
+                    "Expenses": StaticResultsTable.in_dollars(results.expenses[0]),
+                    "Taxes": StaticResultsTable.in_dollars(results.taxes[0]),
                     "Bank": StaticResultsTable.in_dollars(results.bank_account[0]),
                     "Investments": StaticResultsTable.in_dollars(results.investment[0]),
                     "529": StaticResultsTable.in_dollars(results.five_two_nine[0]),
                     "Retirement": StaticResultsTable.in_dollars(results.retirement[0]),
-                    # "Roth IRA": StaticResultsTable.in_dollars(results.roth_ira[0]),
+                    "Roth IRA": StaticResultsTable.in_dollars(results.roth_ira[0]),
                     "Other Assets": StaticResultsTable.in_dollars(results.assets[0]),
                     "Debts": StaticResultsTable.in_dollars(results.debt[0]),
                 }
