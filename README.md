@@ -17,7 +17,7 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 ## Dynamic mode:
 <img width="793" alt="Screenshot 2024-10-07 at 3 19 38 PM" src="https://github.com/user-attachments/assets/7afa3332-f2dd-4214-a370-9c7effbe7e2a">
 
-## Editing an input in a Jupyter Notebook:
+## Editing inputs:
 <img width="1404" alt="Screenshot 2024-10-07 at 3 25 20 PM" src="https://github.com/user-attachments/assets/992fb442-480b-43a2-8067-7650c87306fe">
 
 
