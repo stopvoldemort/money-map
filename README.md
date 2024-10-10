@@ -2,7 +2,7 @@
 
 This repo provides a tool for modeling out your financial trajectory, based on your savings, assets, debts, income, expenses, and plans for the future.
 
-For convenience, there's also a form of widgets that can be imported into a jupyter notebook for easily adjusting the inputs to the model. I've also a couple ways to visualize the results of the money map.
+For convenience, I've included a form that can be imported in a jupyter notebook, and which can render widgets widgets to easily adjust inputs to the model. There are also some tools to visualize the results of the money map in a jupyter notebook.
 
 For an example and step-by-step instructions on using the model in a jupyter notebook see:
 https://colab.research.google.com/drive/1blrIDsWdIlDt-gjOgxV4HImuQXqDSZge
@@ -23,11 +23,13 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 
 ### TODO:
 
-- Let Income, Expense, and maybe other classes grow over time (i.e., have an AAGR)
-- Add a ceiling on an account, after which money goes into another account
-- Incorporate 401k/IRA required withdrawals
+- IMPROVE THIS README
+- Let Income, Expense, and maybe other classes grow over time (i.e., have a AAGR)
+- Add a ceiling on an account, after which money goes into another account, e.g., after $50k, all deposits into a bank account instead go into a mutual fund.
 - Assets can be sold
-- Large purchases can occur on a specific year
+- Home purchases can occur on a specific year, rather than always occurring in 2024
+- Users can set their local and state tax brackets, rather than always using NY/NYC's
+- Accounts can be invested at differing degrees of aggressiveness (cautious, moderate, aggressive)
+- Incorporate 401k/IRA required withdrawals
 - Dynamic model improvements
   - Bond and stock market returns are correlated
-  - Accounts can be invested at differing degrees of aggressiveness (cautious, moderate, aggressive)
