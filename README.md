@@ -1,6 +1,6 @@
 # Welcome to Money Map
 
-This repo provides a tool for modeling out your financial trajectory, based on your savings, assets, debts, income, expenses, and plans for the future.
+This repo provides a tool for modeling out your financial trajectory, based on your savings, assets, debts, income, expenses, and plans for the future. It accounts for taxes, rules around retirement and 529 saving accounts, and uncertainty around investment returns.
 
 For convenience, I've included a form that can be imported in a jupyter notebook, and which can render widgets widgets to easily adjust inputs to the model. There are also some tools to visualize the results of the money map in a jupyter notebook.
 
