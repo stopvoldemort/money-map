@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+.chart-container {
+    height: 400px;
+    padding: 20px;
+}
+
+.form-container {
+    padding: 20px;
+}
+
+.form-label {
+    font-weight: 500;
+}
