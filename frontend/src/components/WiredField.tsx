@@ -10,7 +10,7 @@ interface WiredFieldProps {
 }
 
 const WiredField: React.FC<WiredFieldProps> = ({ name, type, className, formik }) => {
-    const [initialValue, setInitialValue] = useState(formik.values[name]);
+    const [initialValue] = useState(formik.values[name]);
 
     return (
         <Field
@@ -21,10 +21,6 @@ const WiredField: React.FC<WiredFieldProps> = ({ name, type, className, formik }
                 if (formik.touched[name] && formik.values[name] !== initialValue) {
                     formik.submitForm();
                 }
-            }}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                formik.setFieldValue(name, e.target.value);
-                setInitialValue(formik.values[name]);
             }}
         />
     );
