@@ -1,43 +1,55 @@
-import { Col } from 'react-bootstrap';
+import { Col, Row, InputGroup } from 'react-bootstrap';
 import { Field } from 'formik';
+import YearGrid from './YearComponent/YearGrid';
 
 const ExpenseFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Col>
-        <Field
-          name={`${ExpenseFields.fieldsKey}.${index}.name`}
-          className="form-control"
-          placeholder="Expense Name"
-        />
-      </Col>
-      <Col>
-        <Field
-          type="number"
-          name={`${ExpenseFields.fieldsKey}.${index}.amount`}
-          className="form-control"
-          placeholder="Amount"
-        />
-      </Col>
-      <Col>
-        <Field
-          name={`${ExpenseFields.fieldsKey}.${index}.years`}
-          className="form-control"
-          placeholder="e.g., 2024-2030 or 2024, 2025"
-        />
-      </Col>
-      <Col>
-        <div className="form-check">
+      <Row className="my-1">
+        <Col>
           <Field
-            type="checkbox"
-            name={`${ExpenseFields.fieldsKey}.${index}.five_two_nine_eligible`}
-            className="form-check-input"
+            name={`${ExpenseFields.fieldsKey}.${index}.name`}
+            className="form-control"
+            placeholder="Name"
+            id={`expense-name-${index}`}
           />
-          <label className="form-check-label">
-            529 Eligible
-          </label>
-        </div>
-      </Col>
+        </Col>
+      </Row>
+      <Row className="my-1">
+        <Col>
+          <InputGroup>
+            <InputGroup.Text>$</InputGroup.Text>
+            <Field
+              type="number"
+              name={`${ExpenseFields.fieldsKey}.${index}.amount`}
+              className="form-control"
+              placeholder="Amount"
+            />
+          </InputGroup>
+        </Col>
+        <Col>
+          <Field
+            name={`${ExpenseFields.fieldsKey}.${index}.years`}
+            as={YearGrid}
+          />
+        </Col>
+        <Col >
+          <div className="form-check d-flex gap-2">
+            <Field
+              type="checkbox"
+              name={`${ExpenseFields.fieldsKey}.${index}.five_two_nine_eligible`}
+              className="form-check-input"
+              id={`five-two-nine-${index}`}
+            />
+            <label
+              className="form-check-label"
+              htmlFor={`five-two-nine-${index}`}
+            >
+              529 Eligible
+            </label>
+          </div>
+        </Col>
+      </Row>
     </>
   )
 }
@@ -45,7 +57,7 @@ const ExpenseFields = ({ index }: { index: number }) => {
 ExpenseFields.initialValues = {
   name: '',
   amount: 0,
-  years: '',
+  years: [],
   five_two_nine_eligible: false,
 }
 
