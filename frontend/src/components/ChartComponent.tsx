@@ -8,7 +8,7 @@ const NetWorthChart = ({ data }: { data: any }) => {
     const formatYAxis = (value: number) => `${(value / 1000000).toFixed(1)}M`;
 
     // Format tooltip values to dollars
-    const formatTooltip = (value: number) => `$${value.toLocaleString()}`;
+    const formatTooltip = (value: number) => `$${Math.round(value).toLocaleString()}`;
 
     return (
         <ResponsiveContainer width="100%" height={400}>
