@@ -89,18 +89,26 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
 
   const getSummaryText = () => {
     const count = selectedYears.length;
-    return `${count} ${count === 1 ? 'year' : 'years'} selected`;
+    if (count === 0) {
+      return 'No years selected';
+    } else if (count < 4) {
+      return selectedYears.join(', ');
+    }
+    return `${count} years selected`;
   };
 
   return (
     <Container className="position-relative" ref={containerRef}>
       <div className="d-flex justify-content-start">
         <Button
-          variant="outline-secondary"
+          variant="light"
           onClick={() => setIsExpanded(!isExpanded)}
-          style={{ backgroundColor: 'white' }}
-          className="mb-2"
+          style={{
+            backgroundColor: 'white'
+          }}
+          className="mb-2 year-selector-btn"
           aria-expanded={isExpanded}
+          active
         >
           {getSummaryText()} {isExpanded ? '▼' : '▶'}
         </Button>
