@@ -1,60 +1,50 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+// import { default_response } from '../../default_response';
 
-interface ChartComponentProps {
-    chartData: {
-        labels: string[];
-        datasets: Array<{
-            label: string;
-            data: number[];
-            backgroundColor: string;
-            borderColor: string;
-            borderWidth: number;
-        }>;
-    };
-}
 
-const ChartComponent: React.FC<ChartComponentProps> = ({ chartData }) => {
-    const chartRef = useRef<HTMLCanvasElement>(null);
-    const chartInstance = useRef<Chart | null>(null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const NetWorthChart = ({ data }: { data: any }) => {
+    // Format number to millions
+    const formatYAxis = (value: number) => `${(value / 1000000).toFixed(1)}M`;
 
-    // Setup effect - runs once on mount
-    useEffect(() => {
-        const ctx = chartRef.current?.getContext('2d');
-        if (ctx) {
-            chartInstance.current = new Chart(ctx, {
-                type: 'bar',
-                data: chartData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
+    // Format tooltip values to dollars
+    const formatTooltip = (value: number) => `$${value.toLocaleString()}`;
 
-        // Cleanup on unmount
-        return () => {
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
-                chartInstance.current = null;
-            }
-        };
-    }, [chartData]); // Empty dependency array - only run on mount/unmount
+    return (
+        <ResponsiveContainer width="100%" height={400}>
+            <LineChart
+                data={data}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                    dataKey="year"
+                    label={{ value: 'Year', position: 'bottom' }}
+                />
+                <YAxis
+                    tickFormatter={formatYAxis}
+                    label={{ value: 'Value ($)', angle: -90, position: 'insideLeft' }}
+                />
+                <Tooltip formatter={formatTooltip} />
 
-    // Update effect - runs when chartData changes
-    useEffect(() => {
-        if (chartInstance.current) {
-            chartInstance.current.data = chartData;
-            chartInstance.current.update();
-        }
-    }, [chartData]);
-
-    return <canvas ref={chartRef} />;
+                <Line
+                    type="monotone"
+                    dataKey="net_worth"
+                    stroke="#000000"
+                    strokeWidth={2}
+                    name="Net Worth"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="five_two_nine"
+                    stroke="#8B4513"
+                    name="529"
+                    dot={false}
+                />
+            </LineChart>
+        </ResponsiveContainer>
+    );
 };
 
-export default ChartComponent;
+export default NetWorthChart;

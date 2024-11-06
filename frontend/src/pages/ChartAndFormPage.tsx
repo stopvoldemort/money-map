@@ -2,24 +2,15 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ChartComponent from '../components/ChartComponent';
 import FormComponent from '../components/FormComponent';
+import { default_response } from '../../default_response';
 
-const dummyData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [{
-        label: 'Monthly Data',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-    }]
-}
 const ChartAndFormPage: React.FC = () => {
-    const [chartData, setChartData] = useState(dummyData);
+    const [chartData, setChartData] = useState(default_response);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleUpdate = (data: any) => {
         console.log(data);
-        setChartData(dummyData);
+        setChartData(default_response);
     };
 
     return (
@@ -29,7 +20,7 @@ const ChartAndFormPage: React.FC = () => {
                     <FormComponent onUpdate={handleUpdate} />
                 </Col>
                 <Col md={4} className="chart-container">
-                    <ChartComponent chartData={chartData} />
+                    <ChartComponent data={chartData} />
                 </Col>
             </Row>
         </Container>
