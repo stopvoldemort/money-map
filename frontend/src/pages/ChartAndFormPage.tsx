@@ -10,10 +10,18 @@ const ChartAndFormPage: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleUpdate = (formData: any) => {
         console.log("Form Data:", formData);
-        fetch('/api/hello')
+        fetch('/api/simulations/run', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
             .then((response) => response.json())
-            .then((responseData) => console.log("Response Data: ", responseData));
-        setChartData(default_response);
+            .then((responseData) => {
+                console.log("Response Data: ", responseData)
+                setChartData(responseData);
+            })
     };
 
     return (
