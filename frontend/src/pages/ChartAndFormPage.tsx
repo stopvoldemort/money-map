@@ -8,8 +8,11 @@ const ChartAndFormPage: React.FC = () => {
     const [chartData, setChartData] = useState(default_response);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleUpdate = (data: any) => {
-        console.log(data);
+    const handleUpdate = (formData: any) => {
+        console.log("Form Data:", formData);
+        fetch('/api/hello')
+            .then((response) => response.json())
+            .then((responseData) => console.log("Response Data: ", responseData));
         setChartData(default_response);
     };
 
