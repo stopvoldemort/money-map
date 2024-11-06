@@ -5,7 +5,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const NetWorthChart = ({ data }: { data: any }) => {
     // Format number to millions
-    const formatYAxis = (value: number) => `${(value / 1000000).toFixed(1)}M`;
+    const formatYAxis = (value: number) => {
+        if (Math.abs(value) >= 1000000) {
+            return `$${(value / 1000000).toFixed(1)}M`;
+        } else if (Math.abs(value) >= 1000) {
+            return `$${(value / 1000).toFixed(1)}K`;
+        }
+        return `$${value.toFixed(0)}`;
+    };
 
     // Format tooltip values to dollars
     const formatTooltip = (value: number) => `$${Math.round(value).toLocaleString()}`;
@@ -23,7 +30,6 @@ const NetWorthChart = ({ data }: { data: any }) => {
                 />
                 <YAxis
                     tickFormatter={formatYAxis}
-                    label={{ value: 'Value ($)', angle: -90, position: 'insideLeft' }}
                 />
                 <Tooltip formatter={formatTooltip} />
 
