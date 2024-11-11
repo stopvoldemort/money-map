@@ -9,29 +9,32 @@ const Fields = ({ name, values, initialValues, fieldsComponent }: { name: string
     <FieldArray name={name}>
       {({ push, remove }) => (
         <React.Fragment >
-          {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            values.map((_: any, index: number) => (
-              <Container key={index} className="p-3 mb-3 bg-light rounded position-relative" style={{ border: '1px solid #dee2e6' }}>
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  className="position-absolute hover-visible rounded-circle"
-                  style={{
-                    top: -10,
-                    right: -10,
-                    width: '24px',
-                    height: '24px',
-                    padding: 0,
-                    lineHeight: 1
-                  }}
-                  onClick={() => remove(index)}
-                >
-                  ×
-                </Button>
-                <FieldsComponent index={index} />
-              </Container>
-            ))
+          {values.length === 0 && (
+            <Container className="p-3 mb-3 rounded position-relative" style={{ border: '1px solid #dee2e6' }}>
+              None
+            </Container>
+          )}
+          {values.map((_: unknown, index: number) => (
+            <Container key={index} className="p-3 mb-3 bg-light rounded position-relative" style={{ border: '1px solid #dee2e6' }}>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                className="position-absolute hover-visible rounded-circle"
+                style={{
+                  top: -10,
+                  right: -10,
+                  width: '24px',
+                  height: '24px',
+                  padding: 0,
+                  lineHeight: 1
+                }}
+                onClick={() => remove(index)}
+              >
+                ×
+              </Button>
+              <FieldsComponent index={index} />
+            </Container>
+          ))
           }
           <div className="text-start">
             <Button

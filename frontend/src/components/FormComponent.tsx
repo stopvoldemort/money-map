@@ -13,8 +13,8 @@ interface FormComponentProps {
 
 const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
   const initialValues = {
-    expenses: [ExpenseFields.initialValues],
-    incomes: [IncomeFields.initialValues]
+    expenses: [],
+    incomes: []
   };
 
   return (
