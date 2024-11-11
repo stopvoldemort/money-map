@@ -3,7 +3,7 @@ import { Accordion } from 'react-bootstrap';
 
 const Section = ({ title, children }: { title: string, children: React.ReactNode }) => {
   return (
-    <Accordion.Item eventKey="expenses" >
+    <Accordion.Item eventKey={title} >
       <Accordion.Header>{title}</Accordion.Header>
       <Accordion.Body>
         {children}

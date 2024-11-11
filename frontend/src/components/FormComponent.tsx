@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { Accordion, Button } from 'react-bootstrap';
 import ExpenseFields from './ExpenseFields';
+import IncomeFields from './IncomeFields';
 import Section from './Section';
 import Fields from './Fields';
 
@@ -12,7 +13,8 @@ interface FormComponentProps {
 
 const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
   const initialValues = {
-    expenses: [ExpenseFields.initialValues]
+    expenses: [ExpenseFields.initialValues],
+    incomes: [IncomeFields.initialValues]
   };
 
   return (
@@ -28,13 +30,21 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
     >
       {(formik) => (
         <Form onSubmit={formik.handleSubmit}>
-          <Accordion>
+          <Accordion alwaysOpen>
             <Section title="Expenses">
               <Fields
                 name="expenses"
                 values={formik.values.expenses}
                 initialValues={ExpenseFields.initialValues}
                 fieldsComponent={ExpenseFields}
+              />
+            </Section>
+            <Section title="Income">
+              <Fields
+                name="incomes"
+                values={formik.values.incomes}
+                initialValues={IncomeFields.initialValues}
+                fieldsComponent={IncomeFields}
               />
             </Section>
           </Accordion>

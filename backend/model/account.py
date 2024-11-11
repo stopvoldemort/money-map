@@ -1,4 +1,4 @@
-from typing import List, Tuple, Optional
+from typing import List
 import math
 from model.account_type import AccountType
 from model.investment_distribution import InvestmentDistribution

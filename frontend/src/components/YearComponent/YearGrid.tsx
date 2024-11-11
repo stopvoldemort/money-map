@@ -88,11 +88,19 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
   };
 
   const getSummaryText = () => {
+    // sort selected years
     const count = selectedYears.length;
     if (count === 0) {
       return 'No years selected';
-    } else if (count < 4) {
-      return selectedYears.join(', ');
+    }
+    const sortedSelectedYears = [...selectedYears].sort((a, b) => a - b);
+    if (count < 4) {
+      return sortedSelectedYears.join(', ');
+    }
+    // determine if the years are consecutive, and if so, return the range
+    const isConsecutive = sortedSelectedYears.every((year, index) => year === sortedSelectedYears[0] + index);
+    if (isConsecutive) {
+      return `${sortedSelectedYears[0]} - ${sortedSelectedYears[sortedSelectedYears.length - 1]}`;
     }
     return `${count} years selected`;
   };
@@ -104,7 +112,8 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
           variant="light"
           onClick={() => setIsExpanded(!isExpanded)}
           style={{
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+            border: '1px solid #dee2e6'
           }}
           className="mb-2 year-selector-btn"
           aria-expanded={isExpanded}
