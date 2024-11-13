@@ -31,7 +31,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
       {(formik) => (
         <Form onSubmit={formik.handleSubmit}>
           <Accordion alwaysOpen>
-            <Section title="Expenses">
+            <Section title="Spending">
               <Fields
                 name="expenses"
                 values={formik.values.expenses}

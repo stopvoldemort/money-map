@@ -21,6 +21,11 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 <img width="1404" alt="Screenshot 2024-10-07 at 3 25 20 PM" src="https://github.com/user-attachments/assets/992fb442-480b-43a2-8067-7650c87306fe">
 
 
+### IN-PROGRESS:
+- Building a React/Flask app that makes this all much easier to use.
+To run the app locally:
+`docker compose up` or `docker compose up --build` if you've made changes to the Dockerfile or dependencies.
+
 ### TODO:
 
 - IMPROVE THIS README

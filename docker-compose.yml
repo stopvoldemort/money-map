@@ -1,22 +1,25 @@
-# docker-compose.yml
+version: "3.8"  # Ensure the version is at least 3.8
 
-version: '3'
 services:
-  flask:
+  backend:
+    platform: linux/amd64
     build:
       context: ./backend
+      platforms:
+        - linux/amd64
     volumes:
       - ./backend:/app
     ports:
       - "5000:5000"
     environment:
       - FLASK_ENV=development
-    # depends_on:
-    #   - react
 
-  react:
+  frontend:
+    platform: linux/amd64
     build:
       context: ./frontend
+      platforms:
+        - linux/amd64
     volumes:
       - ./frontend:/app
       - /app/node_modules

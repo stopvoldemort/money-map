@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173, // Optional: Specify the port Vite runs on
+    port: 3000, // Optional: Specify the port Vite runs on
     proxy: {
       '/api': {
         target: 'http://localhost:5000', // Your Flask backend
@@ -14,5 +14,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },
+    cors: true,
   },
 })
