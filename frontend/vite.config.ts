@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000, // Optional: Specify the port Vite runs on
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Your Flask backend
+        target: 'http://backend:5000', // Your Flask backend
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
