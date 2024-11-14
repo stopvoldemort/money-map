@@ -1,6 +1,13 @@
 money-map/
 private/
 notebook.ipynb
+node_modules/
+
+# Google Cloud authentication
+.docker/
+.config/gcloud/
+*.json.key
+credentials.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
