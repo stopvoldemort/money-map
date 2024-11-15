@@ -1,10 +1,10 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
-import { Accordion, Button } from 'react-bootstrap';
-import ExpenseFields from './ExpenseFields';
-import IncomeFields from './IncomeFields';
-import Section from './Section';
-import Fields from './Fields';
+import React from "react";
+import { Formik, Form } from "formik";
+import { Accordion, Button } from "react-bootstrap";
+import ExpenseFields from "./ExpenseFields";
+import IncomeFields from "./IncomeFields";
+import Section from "./Section";
+import Fields from "./Fields";
 
 interface FormComponentProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +14,7 @@ interface FormComponentProps {
 const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
   const initialValues = {
     expenses: [],
-    incomes: []
+    incomes: [],
   };
 
   return (
@@ -24,21 +24,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
         try {
           onUpdate(values);
         } catch (error) {
-          console.error('Error submitting form:', error);
+          console.error("Error submitting form:", error);
         }
       }}
     >
       {(formik) => (
         <Form onSubmit={formik.handleSubmit}>
           <Accordion alwaysOpen>
-            <Section title="Spending">
-              <Fields
-                name="expenses"
-                values={formik.values.expenses}
-                initialValues={ExpenseFields.initialValues}
-                fieldsComponent={ExpenseFields}
-              />
-            </Section>
+            <Section title="Savings">{[]}</Section>
             <Section title="Income">
               <Fields
                 name="incomes"
@@ -47,8 +40,21 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={IncomeFields}
               />
             </Section>
+            <Section title="Assets">{[]}</Section>
+            <Section title="Spending">
+              <Fields
+                name="expenses"
+                values={formik.values.expenses}
+                initialValues={ExpenseFields.initialValues}
+                fieldsComponent={ExpenseFields}
+              />
+            </Section>
+            <Section title="Debts">{[]}</Section>
+            <Section title="Transfers">{[]}</Section>
           </Accordion>
-          <Button variant="primary" type="submit" className="mt-3">Submit</Button>
+          <Button variant="primary" type="submit" className="mt-3">
+            Submit
+          </Button>
         </Form>
       )}
     </Formik>
