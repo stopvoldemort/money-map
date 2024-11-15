@@ -1,21 +1,22 @@
 import React from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { FieldArray } from 'formik';
+import FieldsContainer from './FieldsContainer';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Fields = ({ name, values, initialValues, fieldsComponent }: { name: string, values: any, initialValues: any, fieldsComponent: React.FC<{ index: number }> }) => {
+const DynamicFields = ({ name, values, initialValues, fieldsComponent }: { name: string, values: any, initialValues: any, fieldsComponent: React.FC<{ index: number }> }) => {
   const FieldsComponent = fieldsComponent
   return (
     <FieldArray name={name}>
       {({ push, remove }) => (
         <React.Fragment >
           {values.length === 0 && (
-            <Container className="p-3 mb-3 rounded position-relative" style={{ border: '1px solid #dee2e6' }}>
+            <FieldsContainer>
               None
-            </Container>
+            </FieldsContainer>
           )}
           {values.map((_: unknown, index: number) => (
-            <Container key={index} className="p-3 mb-3 bg-light rounded position-relative" style={{ border: '1px solid #dee2e6' }}>
+            <FieldsContainer key={index}>
               <Button
                 variant="outline-secondary"
                 size="sm"
@@ -33,7 +34,7 @@ const Fields = ({ name, values, initialValues, fieldsComponent }: { name: string
                 ×
               </Button>
               <FieldsComponent index={index} />
-            </Container>
+            </FieldsContainer>
           ))
           }
           <div className="text-start">
@@ -53,4 +54,4 @@ const Fields = ({ name, values, initialValues, fieldsComponent }: { name: string
   );
 };
 
-export default Fields;
+export default DynamicFields;
