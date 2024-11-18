@@ -1,4 +1,5 @@
 from model.account import Account
+from model.account_type import AccountType
 from model.debt import Debt
 from model.asset import Asset
 from model.expense import Expense
@@ -82,6 +83,7 @@ class FormDataParser:
                     **account_input, investment_distributions=investment_distributions
                 )
             )
+        bank_account = self.get_account_by_type(AccountType.BANK)
 
         for debt_input in self.data["debts"]:
             self.debts.append(Debt(**debt_input))
@@ -121,13 +123,10 @@ class FormDataParser:
                 self.expenses.append(Expense(**expense_input, year=year))
 
         for income_input in self.data["incomes"]:
-            deposit_in = self.find_object_by_name(
-                self.accounts, income_input.pop("deposit_in", None)
-            )
-            years = self.parse_years(income_input.pop("years", []))
+            years = income_input.pop("years", [])
             for year in years:
                 self.incomes.append(
-                    Income(**income_input, year=year, deposit_in=deposit_in)
+                    Income(**income_input, year=year, deposit_in=bank_account)
                 )
 
         for transfer_input in self.data["transfers"]:
@@ -164,6 +163,12 @@ class FormDataParser:
             self.debts.append(house_debt)
             self.expenses.extend(house_expenses)
             self.transfers.extend(house_transfers)
+
+    def get_account_by_type(self, account_type):
+        for account in self.accounts:
+            if account.account_type.name == account_type:
+                return account
+        raise ValueError(f"can't find account with type {account_type}")
 
     @staticmethod
     def find_object_by_name(objects, target_name):

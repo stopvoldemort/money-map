@@ -109,7 +109,6 @@ IncomeFields.initialValues = {
   name: '',
   amount: 0,
   years: '2024-2070',
-  deposit_in: null,
   federal_income_tax: true,
   ny_income_tax: true,
   nyc_income_tax: true,
