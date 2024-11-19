@@ -8,7 +8,7 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "5000:5000"
+      - "5000:5000" # Default port for Flask
     environment:
       - FLASK_ENV=development
 
@@ -21,7 +21,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - "5173:5173" # Default port for Vite
     environment:
       NODE_ENV: development
       CHOKIDAR_USEPOLLING: true
