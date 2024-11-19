@@ -17,10 +17,6 @@ COPY . .
 ARG ENV=development
 ENV NODE_ENV=$ENV
 
-# EXPOSE 3000
-
-# Set a default port environment variable for the app to listen on
-ENV PORT=8080
 
 # Build the app and set up Nginx in production
 RUN if [ "$ENV" = "production" ]; then \
