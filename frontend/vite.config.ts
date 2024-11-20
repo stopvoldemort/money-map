@@ -8,16 +8,5 @@ export default defineConfig(({ mode }: { mode: string }) => {
 
   return defineConfig({
     plugins: [react()],
-    server: {
-      proxy: {
-        "/api": {
-          target: env.VITE_BACKEND_URL,
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/api /, "/api"),
-        },
-      },
-      cors: true,
-    },
   });
 });

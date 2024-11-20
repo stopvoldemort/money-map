@@ -33,12 +33,17 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 
 #### Frontend
 
-- Set a tag: `export TAG=v3`
+- Set a tag: `export TAG=v0.0.1`
 - Build the frontend image: `docker build -t us-central1-docker.pkg.dev/money-map-441715/frontend/frontend:$TAG --build-arg ENV=production ./frontend`
 - Push the frontend image: `docker push us-central1-docker.pkg.dev/money-map-441715/frontend/frontend:$TAG`
 - Deploy the frontend image: `gcloud run deploy frontend-service --image us-central1-docker.pkg.dev/money-map-441715/frontend/frontend:$TAG --platform managed --region us-central1 --allow-unauthenticated --set-env-vars NODE_ENV=production`
 
 #### Backend
+
+- Set a tag: `export TAG=v0.0.1`
+- Build the backend image: `docker build -t us-central1-docker.pkg.dev/money-map-441715/backend/backend:$TAG --build-arg ENV=production ./backend`
+- Push the backend image: `docker push us-central1-docker.pkg.dev/money-map-441715/backend/backend:$TAG`
+- Deploy the backend image: `gcloud run deploy backend-service --image us-central1-docker.pkg.dev/money-map-441715/backend/backend:$TAG --platform managed --region us-central1 --allow-unauthenticated`
 
 ### TODO:
 

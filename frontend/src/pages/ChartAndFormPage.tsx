@@ -1,41 +1,56 @@
-import React, { useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import ChartComponent from '../components/ChartComponent';
-import FormComponent from '../components/FormComponent';
-import { default_response } from '../../default_response';
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import React, { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import ChartComponent from "../components/ChartComponent";
+import FormComponent from "../components/FormComponent";
+import { default_response } from "../../default_response";
 
 const ChartAndFormPage: React.FC = () => {
-    const [chartData, setChartData] = useState(default_response);
+  const [chartData, setChartData] = useState(default_response);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleUpdate = (formData: any) => {
-        console.log("Form Data:", formData);
-        fetch('/api/simulations/run', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.json())
-            .then((responseData) => {
-                console.log("Response Data: ", responseData)
-                setChartData(responseData);
-            })
-    };
+  const mutation = useMutation({
+    mutationFn: async (formData: any) => {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
+      if (backendUrl === "") {
+        console.log("VITE_BACKEND_URL is not set");
+        console.log("FRONTEND ENV:", import.meta.env);
+      }
+      const { data } = await axios.post(
+        `${backendUrl}/api/simulations/run`,
+        formData
+      );
+      return data;
+    },
+    onSuccess: (data: any) => {
+      console.log("Response:", data);
+      setChartData(data);
+    },
+    onError: (error: any) => {
+      console.error("Error making request:", error);
+    },
+  });
 
-    return (
-        <Container fluid className="px-0">
-            <Row>
-                <Col md={8} className="form-container">
-                    <FormComponent onUpdate={handleUpdate} />
-                </Col>
-                <Col md={4} className="chart-container">
-                    <ChartComponent data={chartData} />
-                </Col>
-            </Row>
-        </Container>
-    );
+  const handleUpdate = (formData: any) => {
+    console.log("Form Data:", formData);
+    mutation.mutate(formData);
+  };
+
+  return (
+    <Container fluid className="px-0">
+      <Row>
+        <Col md={8} className="form-container">
+          <FormComponent
+            onUpdate={handleUpdate}
+            // isLoading={mutation.isPending}
+          />
+        </Col>
+        <Col md={4} className="chart-container">
+          <ChartComponent data={chartData} />
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default ChartAndFormPage;

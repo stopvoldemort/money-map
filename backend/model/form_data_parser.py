@@ -11,6 +11,7 @@ from model.transfer import Transfer
 from model.gift import Gift
 from model.scheduled_debt import ScheduledDebt
 from model.house_purchase import HousePurchase
+from logger import get_logger
 
 initial_form_data = {
     "investment_vehicles": [],
@@ -24,6 +25,7 @@ initial_form_data = {
     "scheduled_debts": [],
     "house_purchases": [],
 }
+
 
 class FormDataParser:
     def __init__(self, form_data: dict):
@@ -168,7 +170,7 @@ class FormDataParser:
         for account in self.accounts:
             if account.account_type.name == account_type:
                 return account
-        raise ValueError(f"can't find account with type {account_type}")
+        get_logger().warning(f"can't find account with type {account_type}")
 
     @staticmethod
     def find_object_by_name(objects, target_name):
