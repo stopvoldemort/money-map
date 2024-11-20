@@ -12,14 +12,38 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 # Examples:
 
 ## Static mode:
+
 <img width="879" alt="Screenshot 2024-10-07 at 3 19 06 PM" src="https://github.com/user-attachments/assets/34cadbd2-4a3a-41ff-a8a1-5d8183027570">
 
 ## Dynamic mode:
+
 <img width="793" alt="Screenshot 2024-10-07 at 3 19 38 PM" src="https://github.com/user-attachments/assets/7afa3332-f2dd-4214-a370-9c7effbe7e2a">
 
 ## Editing inputs:
+
 <img width="1404" alt="Screenshot 2024-10-07 at 3 25 20 PM" src="https://github.com/user-attachments/assets/992fb442-480b-43a2-8067-7650c87306fe">
 
+## IN-PROGRESS:
+
+- Building a React/Flask app that makes this all much easier to use.
+  To run the app locally:
+  `docker compose up` or `docker compose up --build` if you've made changes to the Dockerfile or dependencies.
+
+### To deploy:
+
+#### Frontend
+
+- Set a tag: `export TAG=v0.0.1`
+- Build the frontend image: `docker build -t us-central1-docker.pkg.dev/money-map-441715/frontend/frontend:$TAG --build-arg ENV=production ./frontend`
+- Push the frontend image: `docker push us-central1-docker.pkg.dev/money-map-441715/frontend/frontend:$TAG`
+- Deploy the frontend image: `gcloud run deploy frontend-service --image us-central1-docker.pkg.dev/money-map-441715/frontend/frontend:$TAG --platform managed --region us-central1 --allow-unauthenticated --set-env-vars NODE_ENV=production`
+
+#### Backend
+
+- Set a tag: `export TAG=v0.0.1`
+- Build the backend image: `docker build -t us-central1-docker.pkg.dev/money-map-441715/backend/backend:$TAG --build-arg ENV=production ./backend`
+- Push the backend image: `docker push us-central1-docker.pkg.dev/money-map-441715/backend/backend:$TAG`
+- Deploy the backend image: `gcloud run deploy backend-service --image us-central1-docker.pkg.dev/money-map-441715/backend/backend:$TAG --platform managed --region us-central1 --allow-unauthenticated`
 
 ### TODO:
 

@@ -1,0 +1,29 @@
+services:
+  backend:
+    platform: linux/amd64
+    build:
+      context: ./backend
+      platforms:
+        - linux/amd64
+    volumes:
+      - ./backend:/app
+    ports:
+      - "5000:5000" # Default port for Flask
+    environment:
+      - FLASK_ENV=development
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        ENV: development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173" # Default port for Vite
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: true
+      HOST: 0.0.0.0
+    command: npm start
