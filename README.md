@@ -27,7 +27,9 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 
 - Building a React/Flask app that makes this all much easier to use.
   To run the app locally:
-  `docker compose up` or `docker compose up --build` if you've made changes to the Dockerfile or dependencies.
+  `docker compose up backend/frontend` or `docker compose up backend/frontend --build`
+
+  If you've made changes to package.json, you need to first run `docker compose down frontend -v`, then `docker compose up frontend --build` in order to delete the existing frontend volume.
 
 ### To deploy:
 
