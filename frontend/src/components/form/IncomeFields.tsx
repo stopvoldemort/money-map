@@ -1,6 +1,6 @@
 import { Col, Row, InputGroup } from "react-bootstrap";
 import { Field } from "formik";
-import YearsInput from "./Inputs/YearsInput";
+import YearsInput from "../inputs/YearsInput";
 
 // TODO: Need to link to an account
 const IncomeFields = ({ index }: { index: number }) => {
