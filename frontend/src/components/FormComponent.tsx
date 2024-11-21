@@ -7,6 +7,7 @@ import Section from "./Section";
 import DynamicFields from "./DynamicFields";
 import { ACCOUNT_TYPES, YEARS } from "../constants";
 import Accounts from "./Accounts";
+import LineGraphWithAnchorsInput from "./LineGraphWithAnchorsInput";
 interface FormComponentProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (data: any) => void;
@@ -67,6 +68,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
           <Accordion alwaysOpen>
             <Section title="Savings">
               <Accounts />
+              <LineGraphWithAnchorsInput anchors={[{ year: 2024, value: 50 }, { year: 2029, value: 50 }, { year: 2034, value: 50 }, { year: 2039, value: 50 }, { year: 2044, value: 50 }, { year: 2049, value: 50 }, { year: 2054, value: 50 }, { year: 2059, value: 50 }, { year: 2064, value: 50 }, { year: 2069, value: 50 }]} onAnchorChange={(data) => { console.log(data) }} />
             </Section>
             <Section title="Income">
               <DynamicFields
