@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { Button, Container, Row, Col, Collapse } from 'react-bootstrap';
-import { YEARS } from '../../constants';
-import { FieldInputProps } from 'formik';
-const YearGrid = (props: FieldInputProps<number[]>) => {
+import { useState, useEffect, useRef } from "react";
+import { Button, Container, Row, Col, Collapse } from "react-bootstrap";
+import { YEARS } from "../../constants";
+import { FieldInputProps } from "formik";
+const YearsInput = (props: FieldInputProps<number[]>) => {
   // Generate the list of years
   const years: number[] = [];
   for (let year = YEARS.START; year <= YEARS.END; year++) {
@@ -16,17 +16,20 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsExpanded(false);
       }
     };
 
     if (isExpanded) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isExpanded]);
 
@@ -40,12 +43,12 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
 
       // Format as a proper input event object for Formik
       props.onChange({
-        type: 'change',
+        type: "change",
         target: {
-          type: 'input',
+          type: "input",
           name: props.name,
-          value: newSelectedYears
-        }
+          value: newSelectedYears,
+        },
       });
 
       return newSelectedYears;
@@ -59,20 +62,32 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
     const decades: number[][] = [];
 
     // Generate full decades
-    for (let decadeStart = startDecade; decadeStart <= endDecade; decadeStart += 10) {
+    for (
+      let decadeStart = startDecade;
+      decadeStart <= endDecade;
+      decadeStart += 10
+    ) {
       const decade = Array.from({ length: 10 }, (_, i) => decadeStart + i);
       decades.push(decade);
     }
 
     return decades.map((decade, decadeIndex) => (
-      <Row key={decadeIndex} className="gx-1" style={{ marginBottom: '2px' }}>
+      <Row key={decadeIndex} className="gx-1" style={{ marginBottom: "2px" }}>
         {decade.map((year) => {
           const isSelected = selectedYears.includes(year);
           const isDisabled = year < YEARS.START || year > YEARS.END;
           return (
-            <Col key={year} style={{ width: '10%', flex: '0 0 10%', paddingLeft: '1px', paddingRight: '1px' }}>
+            <Col
+              key={year}
+              style={{
+                width: "10%",
+                flex: "0 0 10%",
+                paddingLeft: "1px",
+                paddingRight: "1px",
+              }}
+            >
               <Button
-                variant={isSelected ? 'primary' : 'outline-primary'}
+                variant={isSelected ? "primary" : "outline-primary"}
                 onClick={() => toggleYear(year)}
                 aria-pressed={isSelected}
                 className="w-100"
@@ -91,16 +106,20 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
     // sort selected years
     const count = selectedYears.length;
     if (count === 0) {
-      return 'No years selected';
+      return "No years selected";
     }
     const sortedSelectedYears = [...selectedYears].sort((a, b) => a - b);
     if (count < 4) {
-      return sortedSelectedYears.join(', ');
+      return sortedSelectedYears.join(", ");
     }
     // determine if the years are consecutive, and if so, return the range
-    const isConsecutive = sortedSelectedYears.every((year, index) => year === sortedSelectedYears[0] + index);
+    const isConsecutive = sortedSelectedYears.every(
+      (year, index) => year === sortedSelectedYears[0] + index
+    );
     if (isConsecutive) {
-      return `${sortedSelectedYears[0]} - ${sortedSelectedYears[sortedSelectedYears.length - 1]}`;
+      return `${sortedSelectedYears[0]} - ${
+        sortedSelectedYears[sortedSelectedYears.length - 1]
+      }`;
     }
     return `${count} years selected`;
   };
@@ -112,20 +131,20 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
           variant="light"
           onClick={() => setIsExpanded(!isExpanded)}
           style={{
-            backgroundColor: 'white',
-            border: '1px solid #dee2e6'
+            backgroundColor: "white",
+            border: "1px solid #dee2e6",
           }}
           className="mb-2 year-selector-btn"
           aria-expanded={isExpanded}
           active
         >
-          {getSummaryText()} {isExpanded ? '▼' : '▶'}
+          {getSummaryText()} {isExpanded ? "▼" : "▶"}
         </Button>
       </div>
       <Collapse in={isExpanded}>
         <div
           className="position-absolute bg-white shadow rounded p-2"
-          style={{ zIndex: 1000, width: '800px' }}
+          style={{ zIndex: 1000, width: "800px" }}
         >
           {renderYearButtons()}
         </div>
@@ -134,4 +153,4 @@ const YearGrid = (props: FieldInputProps<number[]>) => {
   );
 };
 
-export default YearGrid;
+export default YearsInput;
