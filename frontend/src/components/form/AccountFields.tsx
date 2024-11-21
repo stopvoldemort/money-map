@@ -1,5 +1,6 @@
 import { Row, InputGroup, Form } from 'react-bootstrap';
 import { Field, useFormikContext } from 'formik';
+import LineGraphWithAnchorsInput from '../inputs/LineGraphWithAnchorsInput';
 
 
 const AccountFields = ({ index }: { index: number }) => {
@@ -32,6 +33,10 @@ const AccountFields = ({ index }: { index: number }) => {
             as={Form.Control}
           />
         </InputGroup>
+        <Field
+          name={`${fieldsKey}.${index}.investment_anchors`}
+          as={LineGraphWithAnchorsInput}
+        />
       </Row>
     </>
   )
