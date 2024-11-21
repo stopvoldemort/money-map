@@ -2,8 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import ChartComponent from "../components/ChartComponent";
-import FormComponent from "../components/FormComponent";
+import ChartComponent from "../components/results/ChartComponent";
+import FormComponent from "../components/form/FormComponent";
 import { default_response } from "../../default_response";
 
 const ChartAndFormPage: React.FC = () => {

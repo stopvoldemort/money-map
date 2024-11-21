@@ -1,5 +1,5 @@
 from typing import List
-from model.investment_proportion import InvestmentProportion
+from model.investment_proportion_LEGACY import InvestmentProportion
 
 
 class InvestmentDistribution:

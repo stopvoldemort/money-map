@@ -1,4 +1,4 @@
-from model.expense import Expense
+from model.expense_LEGACY import Expense
 
 
 class Asset:

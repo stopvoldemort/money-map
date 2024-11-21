@@ -1,8 +1,8 @@
 from typing import List, Tuple, Optional
 import math
-from model.account_type import AccountType
-from model.investment_distribution import InvestmentDistribution
-from model.withdrawal import Withdrawal
+from model.account_type_LEGACY import AccountType
+from model.investment_distribution_LEGACY import InvestmentDistribution
+from model.withdrawal_LEGACY import Withdrawal
 
 
 class Account:

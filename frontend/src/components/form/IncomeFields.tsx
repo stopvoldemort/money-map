@@ -1,6 +1,6 @@
-import { Col, Row, InputGroup } from 'react-bootstrap';
-import { Field } from 'formik';
-import YearGrid from './YearComponent/YearGrid';
+import { Col, Row, InputGroup } from "react-bootstrap";
+import { Field } from "formik";
+import YearsInput from "../inputs/YearsInput";
 
 // TODO: Need to link to an account
 const IncomeFields = ({ index }: { index: number }) => {
@@ -31,7 +31,7 @@ const IncomeFields = ({ index }: { index: number }) => {
         <Col>
           <Field
             name={`${IncomeFields.fieldsKey}.${index}.years`}
-            as={YearGrid}
+            as={YearsInput}
           />
         </Col>
       </Row>
@@ -60,10 +60,7 @@ const IncomeFields = ({ index }: { index: number }) => {
               className="form-check-input"
               id={`ny-tax-${index}`}
             />
-            <label
-              className="form-check-label"
-              htmlFor={`ny-tax-${index}`}
-            >
+            <label className="form-check-label" htmlFor={`ny-tax-${index}`}>
               NY Income Tax
             </label>
           </div>
@@ -76,10 +73,7 @@ const IncomeFields = ({ index }: { index: number }) => {
               className="form-check-input"
               id={`nyc-tax-${index}`}
             />
-            <label
-              className="form-check-label"
-              htmlFor={`nyc-tax-${index}`}
-            >
+            <label className="form-check-label" htmlFor={`nyc-tax-${index}`}>
               NYC Income Tax
             </label>
           </div>
@@ -102,19 +96,19 @@ const IncomeFields = ({ index }: { index: number }) => {
         </Col>
       </Row>
     </>
-  )
-}
+  );
+};
 
 IncomeFields.initialValues = {
-  name: '',
+  name: "",
   amount: 0,
-  years: '2024-2070',
+  years: "2024-2070",
   federal_income_tax: true,
   ny_income_tax: true,
   nyc_income_tax: true,
   payroll_tax: true,
-}
+};
 
-IncomeFields.fieldsKey = 'incomes';
+IncomeFields.fieldsKey = "incomes";
 
 export default IncomeFields;

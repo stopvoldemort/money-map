@@ -1,5 +1,5 @@
 from typing import List
-from model.transfer import Transfer
+from model.transfer_LEGACY import Transfer
 
 
 # This class is responsible for calculating the annual interest and principal payments for a scheduled debt.
