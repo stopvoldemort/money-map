@@ -33,10 +33,12 @@ const AccountFields = ({ index }: { index: number }) => {
             as={Form.Control}
           />
         </InputGroup>
-        <Field
-          name={`${fieldsKey}.${index}.investment_anchors`}
-          as={LineGraphWithAnchorsInput}
-        />
+        {values.accounts[index].investments.length > 0 && (
+          <Field
+            name={`${fieldsKey}.${index}.investments`}
+            as={LineGraphWithAnchorsInput}
+          />)
+        }
       </Row>
     </>
   )
