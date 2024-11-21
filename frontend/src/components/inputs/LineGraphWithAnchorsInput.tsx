@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { FieldInputProps } from 'formik';
 
@@ -34,11 +34,35 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
   const yScale = (value: number) =>
     height - padding - (value / 100) * (height - 2 * padding);
 
+  // Compute sum of percentages at each year
+  const yearSums: Record<number, number> = {};
+  linesData[0].anchors.forEach((_, index) => {
+    const year = linesData[0].anchors[index].year;
+    const sum = linesData.reduce(
+      (acc, line) => acc + line.anchors[index].value,
+      0
+    );
+    yearSums[year] = sum;
+  });
+
+  // State to track hovered and dragged anchors
+  const [hoveredAnchor, setHoveredAnchor] = useState<{
+    lineIndex: number;
+    anchorIndex: number;
+  } | null>(null);
+
+  const [draggingAnchor, setDraggingAnchor] = useState<{
+    lineIndex: number;
+    anchorIndex: number;
+  } | null>(null);
+
   const handleDrag = (
     lineIndex: number,
     anchorIndex: number,
     newValue: number
   ): void => {
+    newValue = Math.round(Math.max(0, Math.min(100, newValue)));
+
     const updatedLinesData = [...linesData];
     updatedLinesData[lineIndex] = {
       ...updatedLinesData[lineIndex],
@@ -48,6 +72,7 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
       ...updatedLinesData[lineIndex].anchors[anchorIndex],
       value: newValue,
     };
+
     onChange({
       target: {
         name,
@@ -62,7 +87,8 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
   );
 
   return (
-    <svg width={width} height={height} style={{ margin: "20px" }}>
+    <svg width={width} height={height} style={{ margin: '20px' }}>
+      {/* Legend */}
       <g transform={`translate(${width - padding - 100}, ${padding})`}>
         <rect x={0} y={0} width={10} height={10} fill="steelblue" />
         <text x={15} y={10} fontSize={10}>
@@ -115,43 +141,72 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
             {lineData.anchors.map((point, anchorIndex) => {
               const x = xScale(point.year);
               const y = yScale(point.value);
+              const year = point.year;
+              const sumAtYear = yearSums[year];
+
+              // Determine if the sum at this year equals 100%
+              const isSum100 = sumAtYear === 100;
+
+              const isHovered =
+                hoveredAnchor &&
+                hoveredAnchor.lineIndex === lineIndex &&
+                hoveredAnchor.anchorIndex === anchorIndex;
+
+              const isDragging =
+                draggingAnchor &&
+                draggingAnchor.lineIndex === lineIndex &&
+                draggingAnchor.anchorIndex === anchorIndex;
 
               return (
-                <Draggable
-                  key={`${lineData.name}-${point.year}`}
-                  axis="y"
-                  bounds={{ top: padding, bottom: height - padding }}
-                  position={{ x, y }}
-                  nodeRef={
-                    anchorRefs.current[lineIndex][anchorIndex]
-                  }
-                  onDrag={(_: DraggableEvent, data: DraggableData) => {
-                    const newY = data.y;
-                    const newValue = Math.max(
-                      0,
-                      Math.min(
-                        100,
-                        ((height - padding - newY) /
-                          (height - 2 * padding)) *
-                        100
-                      )
-                    );
-                    handleDrag(lineIndex, anchorIndex, newValue);
-                  }}
-                >
-                  <circle
-                    ref={
-                      anchorRefs.current[lineIndex][anchorIndex]
-                    }
-                    cx={0}
-                    cy={0}
-                    r={8}
-                    fill={lineData.color}
-                    stroke="none"
-                    cursor="pointer"
-                    onMouseDown={(e) => e.stopPropagation()}
-                  />
-                </Draggable>
+                <React.Fragment key={`${lineData.name}-${point.year}`}>
+                  <Draggable
+                    axis="y"
+                    bounds={{ top: padding, bottom: height - padding }}
+                    position={{ x, y }}
+                    nodeRef={anchorRefs.current[lineIndex][anchorIndex]}
+                    onStart={() => {
+                      setDraggingAnchor({ lineIndex, anchorIndex });
+                    }}
+                    onDrag={(_: DraggableEvent, data: DraggableData) => {
+                      const newY = data.y;
+                      const newValue =
+                        ((height - padding - newY) / (height - 2 * padding)) *
+                        100;
+                      handleDrag(lineIndex, anchorIndex, newValue);
+                    }}
+                    onStop={() => {
+                      setDraggingAnchor(null);
+                    }}
+                  >
+                    <circle
+                      ref={anchorRefs.current[lineIndex][anchorIndex]}
+                      cx={0}
+                      cy={0}
+                      r={8}
+                      fill={isSum100 ? lineData.color : 'white'}
+                      stroke={lineData.color}
+                      cursor="pointer"
+                      onMouseEnter={() =>
+                        setHoveredAnchor({ lineIndex, anchorIndex })
+                      }
+                      onMouseLeave={() => setHoveredAnchor(null)}
+                      onMouseDown={(e) => e.stopPropagation()}
+                    />
+                  </Draggable>
+
+                  {/* Display value when hovered or dragging */}
+                  <text
+                    x={x}
+                    y={y - 10}
+                    textAnchor="middle"
+                    fontSize={12}
+                    fill="black"
+                    stroke="white"
+                    strokeWidth={0.5}
+                  >
+                    {point.value.toFixed()}%
+                  </text>
+                </React.Fragment>
               );
             })}
           </React.Fragment>
@@ -186,6 +241,5 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
     </svg>
   );
 };
-
 
 export default LineGraphWithAnchorsInput;
