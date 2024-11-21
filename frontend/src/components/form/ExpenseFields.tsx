@@ -1,6 +1,6 @@
-import { Col, Row, InputGroup } from 'react-bootstrap';
-import { Field } from 'formik';
-import YearGrid from './YearComponent/YearGrid';
+import { Col, Row, InputGroup } from "react-bootstrap";
+import { Field } from "formik";
+import YearsInput from "../inputs/YearsInput";
 
 const ExpenseFields = ({ index }: { index: number }) => {
   return (
@@ -30,10 +30,10 @@ const ExpenseFields = ({ index }: { index: number }) => {
         <Col>
           <Field
             name={`${ExpenseFields.fieldsKey}.${index}.years`}
-            as={YearGrid}
+            as={YearsInput}
           />
         </Col>
-        <Col >
+        <Col>
           <div className="form-check d-flex gap-2">
             <Field
               type="checkbox"
@@ -51,16 +51,16 @@ const ExpenseFields = ({ index }: { index: number }) => {
         </Col>
       </Row>
     </>
-  )
-}
+  );
+};
 
 ExpenseFields.initialValues = {
-  name: '',
+  name: "",
   amount: 0,
   years: [],
   five_two_nine_eligible: false,
-}
+};
 
-ExpenseFields.fieldsKey = 'expenses';
+ExpenseFields.fieldsKey = "expenses";
 
 export default ExpenseFields;
