@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { FieldInputProps } from 'formik';
 
@@ -45,16 +45,6 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
     yearSums[year] = sum;
   });
 
-  // State to track hovered and dragged anchors
-  const [hoveredAnchor, setHoveredAnchor] = useState<{
-    lineIndex: number;
-    anchorIndex: number;
-  } | null>(null);
-
-  const [draggingAnchor, setDraggingAnchor] = useState<{
-    lineIndex: number;
-    anchorIndex: number;
-  } | null>(null);
 
   const handleDrag = (
     lineIndex: number,
@@ -147,15 +137,7 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
               // Determine if the sum at this year equals 100%
               const isSum100 = sumAtYear === 100;
 
-              const isHovered =
-                hoveredAnchor &&
-                hoveredAnchor.lineIndex === lineIndex &&
-                hoveredAnchor.anchorIndex === anchorIndex;
 
-              const isDragging =
-                draggingAnchor &&
-                draggingAnchor.lineIndex === lineIndex &&
-                draggingAnchor.anchorIndex === anchorIndex;
 
               return (
                 <React.Fragment key={`${lineData.name}-${point.year}`}>
@@ -164,18 +146,12 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
                     bounds={{ top: padding, bottom: height - padding }}
                     position={{ x, y }}
                     nodeRef={anchorRefs.current[lineIndex][anchorIndex]}
-                    onStart={() => {
-                      setDraggingAnchor({ lineIndex, anchorIndex });
-                    }}
                     onDrag={(_: DraggableEvent, data: DraggableData) => {
                       const newY = data.y;
                       const newValue =
                         ((height - padding - newY) / (height - 2 * padding)) *
                         100;
                       handleDrag(lineIndex, anchorIndex, newValue);
-                    }}
-                    onStop={() => {
-                      setDraggingAnchor(null);
                     }}
                   >
                     <circle
@@ -186,15 +162,10 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
                       fill={isSum100 ? lineData.color : 'white'}
                       stroke={lineData.color}
                       cursor="pointer"
-                      onMouseEnter={() =>
-                        setHoveredAnchor({ lineIndex, anchorIndex })
-                      }
-                      onMouseLeave={() => setHoveredAnchor(null)}
-                      onMouseDown={(e) => e.stopPropagation()}
                     />
                   </Draggable>
 
-                  {/* Display value when hovered or dragging */}
+                  {/* Always display value above anchor */}
                   <text
                     x={x}
                     y={y - 10}
