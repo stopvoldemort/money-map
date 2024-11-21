@@ -1,4 +1,4 @@
-from model.investment_vehicle import InvestmentVehicle
+from model.investment_vehicle_LEGACY import InvestmentVehicle
 
 
 class InvestmentProportion:

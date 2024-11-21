@@ -3,6 +3,8 @@ private/
 notebook.ipynb
 node_modules/
 
+frontend/.vite/
+
 # Google Cloud authentication
 .docker/
 .config/gcloud/

@@ -1,8 +1,8 @@
 from typing import Tuple, Optional
-from model.account import Account
-from model.debt import Debt
-from model.expense import Expense
-from model.withdrawal import Withdrawal
+from model.account_LEGACY import Account
+from model.debt_LEGACY import Debt
+from model.expense_LEGACY import Expense
+from model.withdrawal_LEGACY import Withdrawal
 
 
 class Transfer:

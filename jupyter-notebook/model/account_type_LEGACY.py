@@ -1,4 +1,4 @@
-from model.withdrawal_tax_type import WithdrawalTaxType
+from model.withdrawal_tax_type_LEGACY import WithdrawalTaxType
 
 
 class AccountType:

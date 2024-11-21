@@ -1,16 +1,16 @@
 from typing import Tuple, List
 from operator import ge
-from model.tax_calculator import TaxCalculator
-from model.investment_vehicle import InvestmentVehicle
-from model.account import Account
-from model.expense import Expense
-from model.income import Income
-from model.transfer import Transfer
-from model.debt import Debt
-from model.asset import Asset
-from model.gift import Gift
-from model.payer import Payer
-from model.withdrawal_tax_type import WithdrawalTaxType
+from model.tax_calculator_LEGACY import TaxCalculator
+from model.investment_vehicle_LEGACY import InvestmentVehicle
+from model.account_LEGACY import Account
+from model.expense_LEGACY import Expense
+from model.income_LEGACY import Income
+from model.transfer_LEGACY import Transfer
+from model.debt_LEGACY import Debt
+from model.asset_LEGACY import Asset
+from model.gift_LEGACY import Gift
+from model.payer_LEGACY import Payer
+from model.withdrawal_tax_type_LEGACY import WithdrawalTaxType
 
 
 class YearSimulator:

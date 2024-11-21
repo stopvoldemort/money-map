@@ -1,9 +1,9 @@
 from typing import List
-from model.account import Account
-from model.account_type import AccountType
-from model.debt import Debt
-from model.expense import Expense
-from model.withdrawal import Withdrawal
+from model.account_LEGACY import Account
+from model.account_type_LEGACY import AccountType
+from model.debt_LEGACY import Debt
+from model.expense_LEGACY import Expense
+from model.withdrawal_LEGACY import Withdrawal
 
 
 class Payer:

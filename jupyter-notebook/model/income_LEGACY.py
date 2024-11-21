@@ -1,4 +1,4 @@
-from model.account import Account
+from model.account_LEGACY import Account
 
 
 class Income:

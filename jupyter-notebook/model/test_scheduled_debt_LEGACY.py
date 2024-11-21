@@ -1,7 +1,7 @@
 import unittest
-from model.expense import Expense
-from model.transfer import Transfer
-from model.scheduled_debt import ScheduledDebt
+from model.expense_LEGACY import Expense
+from model.transfer_LEGACY import Transfer
+from model.scheduled_debt_LEGACY import ScheduledDebt
 
 
 class MockDebt:
