@@ -38,6 +38,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                     <AccountFields index={1} />
                     <AccountFields index={2} />
                     <AccountFields index={3} />
+                    <AccountFields index={4} />
                   </FieldsContainer>
                 )}
               </FieldArray>
