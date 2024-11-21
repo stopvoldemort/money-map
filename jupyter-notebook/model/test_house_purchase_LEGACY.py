@@ -1,11 +1,11 @@
 import unittest
-from model.account import Account
-from model.account_type import AccountType
-from model.asset import Asset
-from model.debt import Debt
-from model.expense import Expense
-from model.transfer import Transfer
-from model.house_purchase import HousePurchase
+from model.account_LEGACY import Account
+from model.account_type_LEGACY import AccountType
+from model.asset_LEGACY import Asset
+from model.debt_LEGACY import Debt
+from model.expense_LEGACY import Expense
+from model.transfer_LEGACY import Transfer
+from model.house_purchase_LEGACY import HousePurchase
 
 
 class TestHousePurchase(unittest.TestCase):

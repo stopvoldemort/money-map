@@ -1,15 +1,15 @@
-from model.account import Account
-from model.debt import Debt
-from model.asset import Asset
-from model.expense import Expense
-from model.income import Income
-from model.investment_distribution import InvestmentDistribution
-from model.investment_proportion import InvestmentProportion
-from model.investment_vehicle import InvestmentVehicle
-from model.transfer import Transfer
-from model.gift import Gift
-from model.scheduled_debt import ScheduledDebt
-from model.house_purchase import HousePurchase
+from model.account_LEGACY import Account
+from model.debt_LEGACY import Debt
+from model.asset_LEGACY import Asset
+from model.expense_LEGACY import Expense
+from model.income_LEGACY import Income
+from model.investment_distribution_LEGACY import InvestmentDistribution
+from model.investment_proportion_LEGACY import InvestmentProportion
+from model.investment_vehicle_LEGACY import InvestmentVehicle
+from model.transfer_LEGACY import Transfer
+from model.gift_LEGACY import Gift
+from model.scheduled_debt_LEGACY import ScheduledDebt
+from model.house_purchase_LEGACY import HousePurchase
 
 
 class FormDataParser:

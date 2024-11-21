@@ -1,17 +1,17 @@
 from typing import List, Tuple
 import copy
-from model.year_simulator import YearSimulator
-from model.account import Account
-from model.aggregator import Aggregator
-from model.asset import Asset
-from model.debt import Debt
-from model.expense import Expense
-from model.gift import Gift
-from model.income import Income
-from model.investment_vehicle import InvestmentVehicle
-from model.transfer import Transfer
-from model.account_type import AccountType
-from model.form_data_parser import FormDataParser
+from model.year_simulator_LEGACY import YearSimulator
+from model.account_LEGACY import Account
+from model.aggregator_LEGACY import Aggregator
+from model.asset_LEGACY import Asset
+from model.debt_LEGACY import Debt
+from model.expense_LEGACY import Expense
+from model.gift_LEGACY import Gift
+from model.income_LEGACY import Income
+from model.investment_vehicle_LEGACY import InvestmentVehicle
+from model.transfer_LEGACY import Transfer
+from model.account_type_LEGACY import AccountType
+from model.form_data_parser_LEGACY import FormDataParser
 from form.config_form import ConfigForm
 
 

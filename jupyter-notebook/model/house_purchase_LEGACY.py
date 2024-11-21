@@ -1,11 +1,11 @@
 from typing import List
 from typing import Tuple
-from model.account import Account
-from model.asset import Asset
-from model.debt import Debt
-from model.scheduled_debt import ScheduledDebt
-from model.expense import Expense
-from model.transfer import Transfer
+from model.account_LEGACY import Account
+from model.asset_LEGACY import Asset
+from model.debt_LEGACY import Debt
+from model.scheduled_debt_LEGACY import ScheduledDebt
+from model.expense_LEGACY import Expense
+from model.transfer_LEGACY import Transfer
 
 
 class HousePurchase:
