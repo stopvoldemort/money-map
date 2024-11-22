@@ -1,11 +1,15 @@
-import { Row, InputGroup, Form } from 'react-bootstrap';
+import { useState } from 'react';
+import { Row, InputGroup, Form, Collapse } from 'react-bootstrap';
 import { Field, useFormikContext } from 'formik';
+import InvestmentsInput from '../inputs/InvestmentsInput';
+import { ChevronRight, ChevronDown } from 'react-bootstrap-icons';
 
 
 const AccountFields = ({ index }: { index: number }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { values } = useFormikContext<any>();
   const fieldsKey = "accounts";
+  const [showInvestments, setShowInvestments] = useState(false);
 
   return (
     <>
@@ -32,6 +36,29 @@ const AccountFields = ({ index }: { index: number }) => {
             as={Form.Control}
           />
         </InputGroup>
+        <div className="mt-3">
+          {values.accounts[index].investments.length > 0 && (
+            <div>
+              <div
+                onClick={() => setShowInvestments(!showInvestments)}
+                role="button"
+                className="d-flex align-items-center mb-2"
+                style={{ cursor: 'pointer' }}
+              >
+                {showInvestments ? <ChevronDown /> : <ChevronRight />}
+                <span className="ms-1 small">Edit investment strategy</span>
+              </div>
+              <Collapse in={showInvestments}>
+                <div>
+                  <Field
+                    name={`${fieldsKey}.${index}.investments`}
+                    as={InvestmentsInput}
+                  />
+                </div>
+              </Collapse>
+            </div>
+          )}
+        </div>
       </Row>
     </>
   )
