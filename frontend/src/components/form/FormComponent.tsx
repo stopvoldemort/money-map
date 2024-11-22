@@ -43,7 +43,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 )}
               </FieldArray>
             </Section>
-            <Section title="Income">
+            <Section title="Expected future salary" infoText="Some info text.">
               <DynamicFields
                 name="incomes"
                 values={formik.values.incomes}

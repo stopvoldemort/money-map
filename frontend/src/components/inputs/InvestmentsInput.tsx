@@ -2,23 +2,23 @@ import React from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { FieldInputProps } from 'formik';
 
-export interface AnchorPoint {
+interface AnchorPoint {
   year: number;
   value: number; // Percentage between 0 and 100
 }
 
-export interface LineData {
+interface LineData {
   name: string;
   color: string;
   anchors: AnchorPoint[];
 }
 
-interface LineGraphWithAnchorsInputProps extends FieldInputProps<LineData[]> {
+interface InvestmentsInputProps extends FieldInputProps<LineData[]> {
   width?: number;
   height?: number;
 }
 
-const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
+const InvestmentsInput: React.FC<InvestmentsInputProps> = ({
   value: linesData,
   onChange,
   name,
@@ -165,7 +165,7 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
                     />
                   </Draggable>
 
-                  {/* Always display value above anchor */}
+                  {/* Display value above anchor */}
                   <text
                     x={x}
                     y={y - 10}
@@ -213,4 +213,4 @@ const LineGraphWithAnchorsInput: React.FC<LineGraphWithAnchorsInputProps> = ({
   );
 };
 
-export default LineGraphWithAnchorsInput;
+export default InvestmentsInput;
