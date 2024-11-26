@@ -52,7 +52,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={AssetFields}
               />
             </Section>
-            <Section title="Debts">{[]}</Section>
+            <Section title="Scheduled Debt Payments">{[]}</Section>
+            <Section title="Other Debts">{[]}</Section>
             <Section title="Expected future income" infoText="Some info text.">
               <DynamicFields
                 name="incomes"

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import ChartComponent, { NetWorthChartData } from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
@@ -38,20 +38,18 @@ const ChartAndFormPage: React.FC = () => {
   };
 
   return (
-    <Container fluid className="px-0">
-      <Row>
-        <Col md={8} className="form-container">
-          <FormComponent
-            onUpdate={handleUpdate}
-          />
-        </Col>
-        <Col md={4} className="chart-container">
-          <ChartComponent
-            data={chartData}
-          />
-        </Col>
+    <Container fluid>
+      <Row className="my-5" style={{ height: "400px" }}>
+        <ChartComponent
+          data={chartData}
+        />
       </Row>
-    </Container>
+      <Row className="my-5">
+        <FormComponent
+          onUpdate={handleUpdate}
+        />
+      </Row>
+    </Container >
   );
 };
 

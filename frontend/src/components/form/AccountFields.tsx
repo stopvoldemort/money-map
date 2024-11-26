@@ -14,7 +14,7 @@ const AccountFields = ({ index }: { index: number }) => {
     <>
       <Row className="mb-4">
         <InputGroup>
-          <div className="form-label text-start" id={`account-name-${index}`}>
+          <div className="form-label text-start" id={`account-name-${index}`} style={{ fontWeight: "500" }}>
             {values.accounts[index].name}
           </div>
           <Field
