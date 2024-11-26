@@ -102,7 +102,7 @@ const IncomeFields = ({ index }: { index: number }) => {
 IncomeFields.initialValues = {
   name: "",
   amount: 0,
-  years: "2024-2070",
+  years: [],
   federal_income_tax: true,
   ny_income_tax: true,
   nyc_income_tax: true,

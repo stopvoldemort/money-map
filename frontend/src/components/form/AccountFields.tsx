@@ -3,11 +3,10 @@ import { Row, InputGroup, Form, Collapse } from 'react-bootstrap';
 import { Field, useFormikContext } from 'formik';
 import InvestmentsInput from '../inputs/InvestmentsInput';
 import { ChevronRight, ChevronDown } from 'react-bootstrap-icons';
-
+import { FormValuesType } from './types';
 
 const AccountFields = ({ index }: { index: number }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { values } = useFormikContext<any>();
+  const { values } = useFormikContext<FormValuesType>();
   const fieldsKey = "accounts";
   const [showInvestments, setShowInvestments] = useState(false);
 

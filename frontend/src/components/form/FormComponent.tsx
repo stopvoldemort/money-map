@@ -9,10 +9,10 @@ import FieldsContainer from "./FieldsContainer";
 import AccountFields from "./AccountFields";
 import { FieldArray } from "formik";
 import { initialValues } from "./initialValues";
+import { FormValuesType } from "./types";
 
 interface FormComponentProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onUpdate: (data: any) => void;
+  onUpdate: (data: FormValuesType) => void;
 }
 
 const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
@@ -30,7 +30,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
       {(formik) => (
         <Form onSubmit={formik.handleSubmit}>
           <Accordion alwaysOpen>
-            <Section title="Savings">
+            <Section title="Accounts">
               <FieldArray name="accounts">
                 {() => (
                   <FieldsContainer>
@@ -43,7 +43,9 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 )}
               </FieldArray>
             </Section>
-            <Section title="Expected future salary" infoText="Some info text.">
+            <Section title="Assets">{[]}</Section>
+            <Section title="Debts">{[]}</Section>
+            <Section title="Expected future income" infoText="Some info text.">
               <DynamicFields
                 name="incomes"
                 values={formik.values.incomes}
@@ -51,8 +53,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={IncomeFields}
               />
             </Section>
-            <Section title="Assets">{[]}</Section>
-            <Section title="Spending">
+            <Section title="Expected future expenses">
               <DynamicFields
                 name="expenses"
                 values={formik.values.expenses}
@@ -60,8 +61,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={ExpenseFields}
               />
             </Section>
-            <Section title="Debts">{[]}</Section>
-            <Section title="Transfers">{[]}</Section>
+            <Section title="Expected future transfers between accounts">{[]}</Section>
             <Section title="Miscellaneous">{[]}</Section>
           </Accordion>
           <Button variant="primary" type="submit" className="mt-3">

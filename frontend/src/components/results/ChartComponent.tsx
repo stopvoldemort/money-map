@@ -1,9 +1,13 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-// import { default_response } from '../../default_response';
+
+export interface NetWorthChartData {
+    year: number;
+    net_worth: number;
+    five_two_nine: number;
+}
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const NetWorthChart = ({ data }: { data: any }) => {
+const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
     // Format number to millions
     const formatYAxis = (value: number) => {
         if (Math.abs(value) >= 1000000) {
