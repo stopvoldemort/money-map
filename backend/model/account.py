@@ -1,7 +1,8 @@
 from typing import List
 import math
+from model.investment_vehicle import InvestmentVehicle
 from model.account_type import AccountType
-from model.investment_distribution import InvestmentDistribution
+from model.annual_investment_allocation import AnnualInvestmentAllocation
 from model.withdrawal import Withdrawal
 
 
@@ -11,12 +12,12 @@ class Account:
         name: str,
         account_type: str,
         starting_balance: float,
-        investment_distributions: List[InvestmentDistribution] = [],
+        annual_investment_allocations: List[AnnualInvestmentAllocation] = [],
         earliest_withdrawal_year: int = 0,
     ):
         self.name = name
         self.account_type = AccountType(account_type)
-        self.investment_distributions = investment_distributions
+        self.annual_investment_allocations = annual_investment_allocations
         self.earliest_withdrawal_year = earliest_withdrawal_year
         self.principal = starting_balance
         self.gains = 0.0
@@ -27,13 +28,13 @@ class Account:
     def deposit(self, amount: float):
         self.principal += amount
 
-    def apply_annual_growth(self, year: int) -> float:
+    def apply_annual_growth(self, year: int, investment_vehicles: List[InvestmentVehicle]) -> float:
         self.annual_growth = 0
 
-        for investment_distribution in self.investment_distributions:
-            if year in investment_distribution.years:
+        for investment_distribution in self.annual_investment_allocations:
+            if year == investment_distribution.year:
                 self.annual_growth += investment_distribution.annual_growth(
-                    self.balance()
+                    self.balance(), investment_vehicles
                 )
                 break
 

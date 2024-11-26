@@ -1,4 +1,4 @@
-import { ACCOUNT_TYPES, YEARS } from "../../constants";
+import { ACCOUNT_TYPES, INVESTMENT_VEHICLES, YEARS } from "../../constants";
 
 
 export const initialValues = {
@@ -171,6 +171,20 @@ export const initialValues = {
           ],
         },
       ],
+    },
+  ],
+  investment_vehicles: [
+    {
+      name: INVESTMENT_VEHICLES.STOCKS,
+      aagr: 0.0655,
+      dynamic_mean: 0.077,
+      dynamic_std_dev: 0.1175,
+    },
+    {
+      name: INVESTMENT_VEHICLES.BONDS,
+      aagr: 0.0352,
+      dynamic_mean: 0.039,
+      dynamic_std_dev: 0.0855,
     },
   ],
 };

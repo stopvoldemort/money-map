@@ -11,3 +11,8 @@ export const ACCOUNT_TYPES = {
   FIVE_TWO_NINE: '529',
   ROTH_IRA: 'roth_ira',
 };
+
+export const INVESTMENT_VEHICLES = {
+  STOCKS: 'stocks',
+  BONDS: 'bonds',
+};
