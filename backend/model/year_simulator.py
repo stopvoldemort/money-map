@@ -195,7 +195,7 @@ class YearSimulator:
 
         # APPLY ANNUAL GROWTH
         for account in accounts:
-            account.apply_annual_growth(year)
+            account.apply_annual_growth(year, investment_vehicles)
 
         for debt in debts:
             debt.apply_annual_growth()

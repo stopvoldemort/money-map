@@ -4,7 +4,7 @@ from model.debt import Debt
 from model.asset import Asset
 from model.expense import Expense
 from model.income import Income
-from model.investment_distribution import InvestmentDistribution
+from model.annual_investment_allocation import AnnualInvestmentAllocation
 from model.investment_proportion import InvestmentProportion
 from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
@@ -12,7 +12,7 @@ from model.gift import Gift
 from model.scheduled_debt import ScheduledDebt
 from model.house_purchase import HousePurchase
 from logger import get_logger
-
+from requests.account_parser import account_parser
 initial_form_data = {
     "investment_vehicles": [],
     "accounts": [],
@@ -27,7 +27,7 @@ initial_form_data = {
 }
 
 
-class FormDataParser:
+class Handler:
     def __init__(self, form_data: dict):
         self.data = {**initial_form_data, **form_data}
         self.investment_vehicles = []
@@ -46,51 +46,14 @@ class FormDataParser:
             )
 
         for account_input in self.data["accounts"]:
-            investment_distributions = []
-            investment_distributions_input = account_input.pop(
-                "investment_distributions", []
-            )
+            self.accounts.append(account_parser(account_input))
 
-            for investment_distribution_input in investment_distributions_input:
-                investment_proportions = []
-                parsed_years = self.parse_years(
-                    investment_distribution_input.pop("years")
-                )
-                investment_proportions_input = investment_distribution_input.pop(
-                    "investment_proportions", []
-                )
-
-                for investment_proportion_input in investment_proportions_input:
-                    investment_vehicle = self.find_object_by_name(
-                        self.investment_vehicles,
-                        investment_proportion_input.pop("investment_vehicle", None),
-                    )
-                    investment_proportions.append(
-                        InvestmentProportion(
-                            **investment_proportion_input,
-                            investment_vehicle=investment_vehicle,
-                        )
-                    )
-
-                investment_distributions.append(
-                    InvestmentDistribution(
-                        **investment_distribution_input,
-                        years=parsed_years,
-                        investment_proportions=investment_proportions,
-                    )
-                )
-
-            self.accounts.append(
-                Account(
-                    **account_input, investment_distributions=investment_distributions
-                )
-            )
         bank_account = self.get_account_by_type(AccountType.BANK)
 
         for debt_input in self.data["debts"]:
             self.debts.append(Debt(**debt_input))
-        for scheduled_debt_input in self.data["scheduled_debts"]:
 
+        for scheduled_debt_input in self.data["scheduled_debts"]:
             pay_from_account = self.find_object_by_name(
                 self.accounts, scheduled_debt_input.pop("pay_from_account", None)
             )

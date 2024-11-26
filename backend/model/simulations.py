@@ -11,7 +11,7 @@ from model.income import Income
 from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
 from model.account_type import AccountType
-from model.form_data_parser import FormDataParser
+from requests.handler import Handler
 from model.config import Config
 
 
@@ -136,7 +136,7 @@ class Simulations:
             number_of_simulations = 1000
 
         for i in range(0, number_of_simulations):
-            parsed = FormDataParser(copy.deepcopy(self.data))
+            parsed = Handler(copy.deepcopy(self.data))
             results = self.execute_simulation(
                 years,
                 investment_vehicles=parsed.investment_vehicles,
