@@ -2,7 +2,12 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { FieldArray } from "formik";
 import FieldsContainer from "./FieldsContainer";
-import { IncomeFieldsType, ExpenseFieldsType } from "./types";
+import {
+  IncomeFieldsType,
+  ExpenseFieldsType,
+  AssetFieldsType,
+} from "./types";
+
 const DynamicFields = ({
   name,
   values,
@@ -10,8 +15,8 @@ const DynamicFields = ({
   fieldsComponent,
 }: {
   name: string;
-  values: IncomeFieldsType[] | ExpenseFieldsType[];
-  initialValues: IncomeFieldsType | ExpenseFieldsType;
+  values: IncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[];
+  initialValues: IncomeFieldsType | ExpenseFieldsType | AssetFieldsType;
   fieldsComponent: React.FC<{ index: number }>;
 }) => {
   const FieldsComponent = fieldsComponent;

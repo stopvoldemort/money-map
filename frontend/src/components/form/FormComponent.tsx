@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import { Accordion, Button } from "react-bootstrap";
 import ExpenseFields from "./ExpenseFields";
 import IncomeFields from "./IncomeFields";
+import AssetFields from "./AssetFields";
 import Section from "./Section";
 import DynamicFields from "./DynamicFields";
 import FieldsContainer from "./FieldsContainer";
@@ -43,7 +44,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 )}
               </FieldArray>
             </Section>
-            <Section title="Assets">{[]}</Section>
+            <Section title="Assets">
+              <DynamicFields
+                name={AssetFields.fieldsKey}
+                values={formik.values.assets}
+                initialValues={AssetFields.initialValues}
+                fieldsComponent={AssetFields}
+              />
+            </Section>
             <Section title="Debts">{[]}</Section>
             <Section title="Expected future income" infoText="Some info text.">
               <DynamicFields

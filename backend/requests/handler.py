@@ -72,7 +72,11 @@ class Handler:
             self.transfers.extend(transfers)
 
         for asset_input in self.data["assets"]:
-            self.assets.append(Asset(**asset_input))
+            aagr = asset_input.pop("aagr", 0)
+            aagr = round(aagr / 100, 2)
+            tax_rate = asset_input.pop("tax_rate", 0)
+            tax_rate = round(tax_rate / 100, 2)
+            self.assets.append(Asset(**asset_input, aagr=aagr, tax_rate=tax_rate))
 
         for gift_input in self.data["gifts"]:
             account = self.find_object_by_name(

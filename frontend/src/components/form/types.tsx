@@ -3,6 +3,7 @@ export interface FormValuesType {
   investment_vehicles: InvestmentVehicleFieldsType[];
   expenses: ExpenseFieldsType[];
   incomes: IncomeFieldsType[];
+  assets: AssetFieldsType[];
 }
 
 export interface AccountFieldsType {
@@ -41,4 +42,11 @@ export interface InvestmentVehicleFieldsType {
   aagr: number;
   dynamic_mean: number;
   dynamic_std_dev: number;
+}
+
+export interface AssetFieldsType {
+  name: string;
+  value: number;
+  aagr: number;
+  tax_rate: number;
 }
