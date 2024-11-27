@@ -1,10 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import ChartComponent, { NetWorthChartData } from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
+import { initialValues } from "../components/form/initialValues";
 
 
 const ChartAndFormPage: React.FC = () => {
@@ -36,6 +37,11 @@ const ChartAndFormPage: React.FC = () => {
     console.log("Form Data:", formData);
     mutation.mutate(formData);
   };
+
+  useEffect(() => {
+    handleUpdate(initialValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container fluid>
