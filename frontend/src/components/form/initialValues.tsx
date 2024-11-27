@@ -3,18 +3,23 @@ import { ACCOUNT_TYPES, INVESTMENT_VEHICLES, YEARS } from "../../constants";
 
 export const initialValues = {
   expenses: [],
-  incomes: [],
+  salaries: [],
+  other_incomes: [],
+  assets: [],
+  scheduled_debts: [],
+  other_debts: [],
+  transfers: [],
   accounts: [
     {
       name: "Bank accounts",
-      account_type: ACCOUNT_TYPES.BANK,
+      account_type: ACCOUNT_TYPES.BANK.value,
       starting_balance: 0,
       earliest_withdrawal_year: YEARS.START,
       investments: [],
     },
     {
       name: "Investment accounts",
-      account_type: ACCOUNT_TYPES.INVESTMENT,
+      account_type: ACCOUNT_TYPES.INVESTMENT.value,
       starting_balance: 0,
       earliest_withdrawal_year: YEARS.START,
       investments: [
@@ -22,7 +27,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 70 },
+            { year: 2025, value: 70 },
             { year: 2030, value: 70 },
             { year: 2035, value: 70 },
             { year: 2040, value: 70 },
@@ -38,7 +43,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 30 },
+            { year: 2025, value: 30 },
             { year: 2030, value: 30 },
             { year: 2035, value: 30 },
             { year: 2040, value: 30 },
@@ -54,7 +59,7 @@ export const initialValues = {
     },
     {
       name: "Traditional IRA/401k accounts",
-      account_type: ACCOUNT_TYPES.RETIREMENT,
+      account_type: ACCOUNT_TYPES.RETIREMENT.value,
       starting_balance: 0,
       earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
@@ -62,7 +67,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 100 },
+            { year: 2025, value: 100 },
             { year: 2030, value: 90 },
             { year: 2035, value: 80 },
             { year: 2040, value: 70 },
@@ -78,7 +83,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 0 },
+            { year: 2025, value: 0 },
             { year: 2030, value: 10 },
             { year: 2035, value: 20 },
             { year: 2040, value: 30 },
@@ -94,7 +99,7 @@ export const initialValues = {
     },
     {
       name: "Roth IRA/401k accounts",
-      account_type: ACCOUNT_TYPES.ROTH_IRA,
+      account_type: ACCOUNT_TYPES.ROTH_IRA.value,
       starting_balance: 0,
       earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
@@ -102,7 +107,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 100 },
+            { year: 2025, value: 100 },
             { year: 2030, value: 90 },
             { year: 2035, value: 80 },
             { year: 2040, value: 70 },
@@ -118,7 +123,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 0 },
+            { year: 2025, value: 0 },
             { year: 2030, value: 10 },
             { year: 2035, value: 20 },
             { year: 2040, value: 30 },
@@ -134,7 +139,7 @@ export const initialValues = {
     },
     {
       name: "529 accounts",
-      account_type: ACCOUNT_TYPES.FIVE_TWO_NINE,
+      account_type: ACCOUNT_TYPES.FIVE_TWO_NINE.value,
       starting_balance: 0,
       earliest_withdrawal_year: YEARS.START,
       investments: [
@@ -142,7 +147,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 70 },
+            { year: 2025, value: 70 },
             { year: 2030, value: 60 },
             { year: 2035, value: 50 },
             { year: 2040, value: 50 },
@@ -158,7 +163,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 30 },
+            { year: 2025, value: 30 },
             { year: 2030, value: 40 },
             { year: 2035, value: 50 },
             { year: 2040, value: 50 },

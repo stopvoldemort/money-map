@@ -1,6 +1,7 @@
 import React from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { FieldInputProps } from 'formik';
+import { YEARS } from '../../constants';
 
 interface AnchorPoint {
   year: number;
@@ -29,7 +30,7 @@ const InvestmentsInput: React.FC<InvestmentsInputProps> = ({
 
   // Scales to map data values to SVG coordinates
   const xScale = (year: number) =>
-    ((year - 2024) / (2070 - 2024)) * (width - 2 * padding) + padding;
+    ((year - YEARS.START) / (YEARS.END - YEARS.START)) * (width - 2 * padding) + padding;
 
   const yScale = (value: number) =>
     height - padding - (value / 100) * (height - 2 * padding);

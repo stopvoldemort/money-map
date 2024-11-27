@@ -1,16 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import ChartComponent from "../components/results/ChartComponent";
+import axios, { AxiosError } from "axios";
+import React, { useEffect, useState } from "react";
+import { Container, Row } from "react-bootstrap";
+import ChartComponent, { NetWorthChartData } from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
-import { default_response } from "../../default_response";
+import { FormValuesType } from "../components/form/types";
+import { initialValues } from "../components/form/initialValues";
 
 const ChartAndFormPage: React.FC = () => {
-  const [chartData, setChartData] = useState(default_response);
+  const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
 
   const mutation = useMutation({
-    mutationFn: async (formData: any) => {
+    mutationFn: async (formData: FormValuesType) => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
       if (backendUrl === "") {
         console.log("VITE_BACKEND_URL is not set");
@@ -22,34 +23,38 @@ const ChartAndFormPage: React.FC = () => {
       );
       return data;
     },
-    onSuccess: (data: any) => {
+    onSuccess: (data: NetWorthChartData[]) => {
       console.log("Response:", data);
       setChartData(data);
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       console.error("Error making request:", error);
     },
   });
 
-  const handleUpdate = (formData: any) => {
+  const handleUpdate = (formData: FormValuesType) => {
     console.log("Form Data:", formData);
     mutation.mutate(formData);
   };
 
+  useEffect(() => {
+    handleUpdate(initialValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <Container fluid className="px-0">
-      <Row>
-        <Col md={8} className="form-container">
-          <FormComponent
-            onUpdate={handleUpdate}
-            // isLoading={mutation.isPending}
-          />
-        </Col>
-        <Col md={4} className="chart-container">
-          <ChartComponent data={chartData} />
-        </Col>
+    <Container fluid>
+      <Row className="my-5" style={{ height: "400px" }}>
+        <ChartComponent
+          data={chartData}
+        />
       </Row>
-    </Container>
+      <Row className="my-5">
+        <FormComponent
+          onUpdate={handleUpdate}
+        />
+      </Row>
+    </Container >
   );
 };
 

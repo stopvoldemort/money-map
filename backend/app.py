@@ -9,7 +9,7 @@ CORS(app)
 @app.route("/api/simulations/run", methods=["POST"])
 def run_simulation():
     data = request.json
-    simulation = Simulations(data, 2024, 2070, "static").execute()
+    simulation = Simulations(data, 2025, 2070, "static").execute()
     return jsonify(simulation.for_frontend())
 
 

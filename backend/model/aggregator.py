@@ -33,7 +33,7 @@ class Aggregator:
         # Assuming all lists have the same length and represent data for consecutive years
         for i in range(len(self.net_worth[0])):
             year_data = {
-                "year": 2024 + i,  # Assuming starting year is 2024
+                "year": 2025 + i,  # Assuming starting year is 2024
                 "net_worth": self.net_worth[0][i],
                 "assets": self.assets[0][i],
                 "income": self.income[0][i],
