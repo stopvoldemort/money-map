@@ -107,13 +107,9 @@ class Handler:
                 )
 
         for transfer_input in self.data["transfers"]:
-            transfer_from = self.find_object_by_name(
-                self.accounts, transfer_input.pop("transfer_from", None)
-            )
-            transfer_to = self.find_object_by_name(
-                self.accounts, transfer_input.pop("transfer_to", None)
-            )
-            years = self.parse_years(transfer_input.pop("years", []))
+            transfer_from = self.get_account_by_type(transfer_input.pop("transfer_from", None))
+            transfer_to = self.get_account_by_type(transfer_input.pop("transfer_to", None))
+            years = transfer_input.pop("years", [])
             for year in years:
                 self.transfers.append(
                     Transfer(

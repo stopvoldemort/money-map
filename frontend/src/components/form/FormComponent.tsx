@@ -14,13 +14,14 @@ import { FormValuesType } from "./types";
 import ScheduledDebtFields from "./ScheduledDebtFields";
 import OtherDebtFields from "./OtherDebtFields";
 import SalaryFields from "./SalaryFields";
+import TransferFields from "./TransferFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
 }
 
 const Header = ({ title }: { title: string }) => (
-  <h2 className="mb-3 mt-4 text-start fw-bold display-7">{title}</h2>
+  <h4 className="mb-3 mt-4 text-start fw-bold display-7">{title}</h4>
 );
 
 const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
@@ -40,7 +41,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
           <Button variant="primary" type="submit" className="mt-3">
             See your money map
           </Button>
-          <Header title="The Present" />
+          <Header title="Current Assets and Liabilities" />
           <Accordion alwaysOpen>
             <Section title="Savings and investments">
               <FieldArray name="accounts">
@@ -81,7 +82,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
             </Section>
           </Accordion>
 
-          <Header title="The Future" />
+          <Header title="Future Income and Expenses" />
           <Accordion alwaysOpen>
             <Section title="Expected salary">
               <DynamicFields
@@ -107,7 +108,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={ExpenseFields}
               />
             </Section>
-            <Section title="Planned transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a retirement account.">{[]}</Section>
+            <Section title="Transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a 529 account. These will only occur if there's enough money in the source account to cover the transfer.">
+              <DynamicFields
+                name={TransferFields.fieldsKey}
+                values={formik.values.transfers}
+                initialValues={TransferFields.initialValues}
+                fieldsComponent={TransferFields}
+              />
+            </Section>
           </Accordion>
 
           <Header title="Configuration" />

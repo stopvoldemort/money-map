@@ -7,7 +7,6 @@ import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
 import { initialValues } from "../components/form/initialValues";
 
-
 const ChartAndFormPage: React.FC = () => {
   const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
 

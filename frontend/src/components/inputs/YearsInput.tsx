@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button, Container, Row, Col, Collapse } from "react-bootstrap";
 import { YEARS } from "../../constants";
 import { FieldInputProps } from "formik";
+import InfoPopover from "../form/InfoPopover";
 const YearsInput = (props: FieldInputProps<number[]>) => {
   // Generate the list of years
   const years: number[] = [];
@@ -151,6 +152,7 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
         >
           {getSummaryText()} {isExpanded ? "▼" : "▶"}
         </Button>
+        <InfoPopover text="Select the years you expect the event to occur. You can select a range of years by holding down the shift key." />
       </div>
       <Collapse in={isExpanded}>
         <div
