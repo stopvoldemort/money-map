@@ -13,6 +13,8 @@ from model.scheduled_debt import ScheduledDebt
 from model.house_purchase import HousePurchase
 from logger import get_logger
 from requests.account_parser import account_parser
+from requests.salary_parser import parse_salary_input
+
 initial_form_data = {
     "investment_vehicles": [],
     "accounts": [],
@@ -49,6 +51,8 @@ class Handler:
             self.accounts.append(account_parser(account_input))
 
         bank_account = self.get_account_by_type(AccountType.BANK)
+        retirement_account = self.get_account_by_type(AccountType.RETIREMENT)
+        roth_account = self.get_account_by_type(AccountType.ROTH_IRA)
 
         for debt_input in self.data["other_debts"]:
             aagr = debt_input.pop("aagr", 0)
@@ -90,11 +94,16 @@ class Handler:
             for year in years:
                 self.expenses.append(Expense(**expense_input, year=year))
 
-        for income_input in self.data["other_incomes"]:
-            years = income_input.pop("years", [])
+        for salary_input in self.data["salaries"]:
+            incomes, transfers = parse_salary_input(salary_input, bank_account, retirement_account, roth_account)
+            self.incomes.extend(incomes)
+            self.transfers.extend(transfers)
+
+        for other_income_input in self.data["other_incomes"]:
+            years = other_income_input.pop("years", [])
             for year in years:
                 self.incomes.append(
-                    Income(**income_input, year=year, deposit_in=bank_account)
+                    Income(**other_income_input, year=year, deposit_in=bank_account)
                 )
 
         for transfer_input in self.data["transfers"]:

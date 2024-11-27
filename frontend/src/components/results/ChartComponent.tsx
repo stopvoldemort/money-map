@@ -51,16 +51,37 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 />
                 <Line
                     type="monotone"
-                    dataKey="five_two_nine"
-                    stroke="#8B4513"
-                    name="529"
+                    dataKey="bank_account"
+                    stroke="#008000"
+                    name="Bank accounts"
                     dot={false}
                 />
                 <Line
                     type="monotone"
                     dataKey="investment"
                     stroke="#0000FF"
-                    name="Investments"
+                    name="Investment accounts"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="retirement"
+                    stroke="#0000FF"
+                    name="Traditional IRA/401k accounts"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="roth_ira"
+                    stroke="#800080"
+                    name="Roth IRA/401k accounts"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="five_two_nine"
+                    stroke="#8B4513"
+                    name="529 accounts"
                     dot={false}
                 />
                 <Line
@@ -68,20 +89,6 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                     dataKey="debt"
                     stroke="#FF0000"
                     name="Debt"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="roth_ira"
-                    stroke="#800080"
-                    name="Roth IRA"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="bank_account"
-                    stroke="#008000"
-                    name="Bank Account"
                     dot={false}
                 />
             </LineChart>

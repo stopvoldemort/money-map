@@ -13,6 +13,7 @@ import { initialValues } from "./initialValues";
 import { FormValuesType } from "./types";
 import ScheduledDebtFields from "./ScheduledDebtFields";
 import OtherDebtFields from "./OtherDebtFields";
+import SalaryFields from "./SalaryFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -36,6 +37,9 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
     >
       {(formik) => (
         <Form onSubmit={formik.handleSubmit}>
+          <Button variant="primary" type="submit" className="mt-3">
+            See your money map
+          </Button>
           <Header title="The Present" />
           <Accordion alwaysOpen>
             <Section title="Savings and investments">
@@ -79,7 +83,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
 
           <Header title="The Future" />
           <Accordion alwaysOpen>
-            <Section title="Expected salary">{[]}</Section>
+            <Section title="Expected salary">
+              <DynamicFields
+                name={SalaryFields.fieldsKey}
+                values={formik.values.salaries}
+                initialValues={SalaryFields.initialValues}
+                fieldsComponent={SalaryFields}
+              />
+            </Section>
             <Section title="Other income" infoText="Other income expected in the future, like social security.">
               <DynamicFields
                 name={OtherIncomeFields.fieldsKey}
@@ -103,9 +114,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
           <Accordion alwaysOpen>
             <Section title="Stock and bond returns, start and end years, etc. (TODO)">{[]}</Section>
           </Accordion>
-          <Button variant="primary" type="submit" className="mt-3">
-            Submit
-          </Button>
         </Form>
       )
       }

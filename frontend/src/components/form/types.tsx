@@ -2,6 +2,7 @@ export interface FormValuesType {
   accounts: AccountFieldsType[];
   investment_vehicles: InvestmentVehicleFieldsType[];
   expenses: ExpenseFieldsType[];
+  salaries: SalaryFieldsType[];
   other_incomes: OtherIncomeFieldsType[];
   assets: AssetFieldsType[];
   scheduled_debts: ScheduledDebtFieldsType[];
@@ -27,6 +28,16 @@ export interface ExpenseFieldsType {
   amount: number;
   five_two_nine_eligible: boolean;
   years: number[];
+}
+
+export interface SalaryFieldsType {
+  name: string;
+  amount: number;
+  from_year: number;
+  to_year: number;
+  retirement_contribution: number;
+  roth_contribution: number;
+  employer_retirement_contribution: number;
 }
 
 export interface OtherIncomeFieldsType {

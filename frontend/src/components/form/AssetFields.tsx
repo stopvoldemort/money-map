@@ -27,7 +27,7 @@ const AssetFields = ({ index }: { index: number }) => {
           <PercentInput
             name={`${AssetFields.fieldsKey}.${index}.aagr`}
             label="AAGR"
-            infoText="The real average annual growth rate of the asset"
+            infoText="How much you expect the asset's value to grow each year"
           /></Col>
         <Col>
           <PercentInput
@@ -35,7 +35,9 @@ const AssetFields = ({ index }: { index: number }) => {
             label="Tax rate"
             step={0.01}
             infoText="For example, property taxes"
-          /></Col>
+          />
+          {/* TODO: ADD INSURANCE FIELD */}
+        </Col>
       </Row >
     </>
   );
