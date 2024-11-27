@@ -2,7 +2,7 @@ export interface FormValuesType {
   accounts: AccountFieldsType[];
   investment_vehicles: InvestmentVehicleFieldsType[];
   expenses: ExpenseFieldsType[];
-  incomes: IncomeFieldsType[];
+  other_incomes: OtherIncomeFieldsType[];
   assets: AssetFieldsType[];
   scheduled_debts: ScheduledDebtFieldsType[];
   other_debts: OtherDebtFieldsType[];
@@ -29,7 +29,7 @@ export interface ExpenseFieldsType {
   years: number[];
 }
 
-export interface IncomeFieldsType {
+export interface OtherIncomeFieldsType {
   name: string;
   amount: number;
   years: number[];

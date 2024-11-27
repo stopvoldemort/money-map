@@ -2,14 +2,13 @@ import { Col, Row, InputGroup } from "react-bootstrap";
 import { Field } from "formik";
 import YearsInput from "../inputs/YearsInput";
 
-// TODO: Need to link to an account
-const IncomeFields = ({ index }: { index: number }) => {
+const OtherIncomeFields = ({ index }: { index: number }) => {
   return (
     <>
       <Row className="my-1">
         <Col>
           <Field
-            name={`${IncomeFields.fieldsKey}.${index}.name`}
+            name={`${OtherIncomeFields.fieldsKey}.${index}.name`}
             className="form-control"
             placeholder="Name"
             id={`income-name-${index}`}
@@ -22,7 +21,7 @@ const IncomeFields = ({ index }: { index: number }) => {
             <InputGroup.Text>$</InputGroup.Text>
             <Field
               type="number"
-              name={`${IncomeFields.fieldsKey}.${index}.amount`}
+              name={`${OtherIncomeFields.fieldsKey}.${index}.amount`}
               className="form-control"
               placeholder="Annual Amount"
             />
@@ -30,7 +29,7 @@ const IncomeFields = ({ index }: { index: number }) => {
         </Col>
         <Col>
           <Field
-            name={`${IncomeFields.fieldsKey}.${index}.years`}
+            name={`${OtherIncomeFields.fieldsKey}.${index}.years`}
             as={YearsInput}
           />
         </Col>
@@ -40,7 +39,7 @@ const IncomeFields = ({ index }: { index: number }) => {
           <div className="form-check d-flex gap-2">
             <Field
               type="checkbox"
-              name={`${IncomeFields.fieldsKey}.${index}.federal_income_tax`}
+              name={`${OtherIncomeFields.fieldsKey}.${index}.federal_income_tax`}
               className="form-check-input"
               id={`federal-tax-${index}`}
             />
@@ -56,7 +55,7 @@ const IncomeFields = ({ index }: { index: number }) => {
           <div className="form-check d-flex gap-2">
             <Field
               type="checkbox"
-              name={`${IncomeFields.fieldsKey}.${index}.ny_income_tax`}
+              name={`${OtherIncomeFields.fieldsKey}.${index}.ny_income_tax`}
               className="form-check-input"
               id={`ny-tax-${index}`}
             />
@@ -69,7 +68,7 @@ const IncomeFields = ({ index }: { index: number }) => {
           <div className="form-check d-flex gap-2">
             <Field
               type="checkbox"
-              name={`${IncomeFields.fieldsKey}.${index}.nyc_income_tax`}
+              name={`${OtherIncomeFields.fieldsKey}.${index}.nyc_income_tax`}
               className="form-check-input"
               id={`nyc-tax-${index}`}
             />
@@ -82,7 +81,7 @@ const IncomeFields = ({ index }: { index: number }) => {
           <div className="form-check d-flex gap-2">
             <Field
               type="checkbox"
-              name={`${IncomeFields.fieldsKey}.${index}.payroll_tax`}
+              name={`${OtherIncomeFields.fieldsKey}.${index}.payroll_tax`}
               className="form-check-input"
               id={`payroll-tax-${index}`}
             />
@@ -99,7 +98,7 @@ const IncomeFields = ({ index }: { index: number }) => {
   );
 };
 
-IncomeFields.initialValues = {
+OtherIncomeFields.initialValues = {
   name: "",
   amount: 0,
   years: [],
@@ -109,6 +108,6 @@ IncomeFields.initialValues = {
   payroll_tax: true,
 };
 
-IncomeFields.fieldsKey = "incomes";
+OtherIncomeFields.fieldsKey = "other_incomes";
 
-export default IncomeFields;
+export default OtherIncomeFields;

@@ -90,7 +90,7 @@ class Handler:
             for year in years:
                 self.expenses.append(Expense(**expense_input, year=year))
 
-        for income_input in self.data["incomes"]:
+        for income_input in self.data["other_incomes"]:
             years = income_input.pop("years", [])
             for year in years:
                 self.incomes.append(

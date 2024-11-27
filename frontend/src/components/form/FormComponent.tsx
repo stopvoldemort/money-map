@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Accordion, Button } from "react-bootstrap";
 import ExpenseFields from "./ExpenseFields";
-import IncomeFields from "./IncomeFields";
+import OtherIncomeFields from "./OtherIncomeFields";
 import AssetFields from "./AssetFields";
 import Section from "./Section";
 import DynamicFields from "./DynamicFields";
@@ -79,12 +79,13 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
 
           <Header title="The Future" />
           <Accordion alwaysOpen>
-            <Section title="Expected income" infoText="Income expected in the future, like salary, freelance work, social security, etc.">
+            <Section title="Expected salary">{[]}</Section>
+            <Section title="Other income" infoText="Other income expected in the future, like social security.">
               <DynamicFields
-                name={IncomeFields.fieldsKey}
-                values={formik.values.incomes}
-                initialValues={IncomeFields.initialValues}
-                fieldsComponent={IncomeFields}
+                name={OtherIncomeFields.fieldsKey}
+                values={formik.values.other_incomes}
+                initialValues={OtherIncomeFields.initialValues}
+                fieldsComponent={OtherIncomeFields}
               />
             </Section>
             <Section title="Expected expenses" infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc.">
