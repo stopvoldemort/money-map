@@ -13,6 +13,7 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [lastClickedYear, setLastClickedYear] = useState<number | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,12 +35,21 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
   }, [isExpanded]);
 
   // Handle toggling of year selection
-  const toggleYear = (year: number) => {
+  const toggleYear = (year: number, event: React.MouseEvent) => {
     setSelectedYears((prevSelectedYears: number[]) => {
+      let newSelectedYears = [...prevSelectedYears];
       const isSelected = prevSelectedYears.includes(year);
-      const newSelectedYears = isSelected
-        ? prevSelectedYears.filter((y) => y !== year)
-        : [...prevSelectedYears, year];
+
+      if (event.shiftKey && lastClickedYear !== null) {
+        const start = Math.min(lastClickedYear, year);
+        const end = Math.max(lastClickedYear, year);
+        const range = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+        newSelectedYears = Array.from(new Set([...newSelectedYears, ...range]));
+      } else {
+        newSelectedYears = isSelected
+          ? newSelectedYears.filter((y) => y !== year)
+          : [...newSelectedYears, year];
+      }
 
       // Format as a proper input event object for Formik
       props.onChange({
@@ -53,6 +63,8 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
 
       return newSelectedYears;
     });
+
+    setLastClickedYear(year);
   };
 
   // Render the year buttons grouped by decades
@@ -88,9 +100,9 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
             >
               <Button
                 variant={isSelected ? "primary" : "outline-primary"}
-                onClick={() => toggleYear(year)}
+                onClick={(event) => toggleYear(year, event)}
                 aria-pressed={isSelected}
-                className="w-100"
+                className="w-100 p-0"
                 disabled={isDisabled}
               >
                 {year}
@@ -117,9 +129,8 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
       (year, index) => year === sortedSelectedYears[0] + index
     );
     if (isConsecutive) {
-      return `${sortedSelectedYears[0]} - ${
-        sortedSelectedYears[sortedSelectedYears.length - 1]
-      }`;
+      return `${sortedSelectedYears[0]} - ${sortedSelectedYears[sortedSelectedYears.length - 1]
+        }`;
     }
     return `${count} years selected`;
   };
@@ -144,8 +155,25 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
       <Collapse in={isExpanded}>
         <div
           className="position-absolute bg-white shadow rounded p-2"
-          style={{ zIndex: 1000, width: "800px" }}
+          style={{ zIndex: 1000, width: "600px", left: "-200px" }}
         >
+          <div className="d-flex justify-content-end mb-2">
+            <span
+              style={{ cursor: "pointer" }}
+              className="me-1 text-muted"
+              onClick={() => {
+                setSelectedYears([]);
+                props.onChange({
+                  type: "change",
+                  target: {
+                    type: "input",
+                    name: props.name,
+                    value: [],
+                  },
+                });
+              }}
+            >clear</span>
+          </div>
           {renderYearButtons()}
         </div>
       </Collapse>
