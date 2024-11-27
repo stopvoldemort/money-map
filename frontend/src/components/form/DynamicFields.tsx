@@ -24,11 +24,10 @@ const DynamicFields = ({
     <FieldArray name={name}>
       {({ push, remove }) => (
         <React.Fragment>
-          {values.length === 0 && <FieldsContainer>None</FieldsContainer>}
           {values.map((_: unknown, index: number) => (
             <FieldsContainer key={index}>
               <Button
-                variant="outline-secondary"
+                variant="outline-danger"
                 size="sm"
                 className="position-absolute hover-visible rounded-circle"
                 style={{
@@ -48,7 +47,7 @@ const DynamicFields = ({
           ))}
           <div className="text-start">
             <Button
-              variant="outline-secondary"
+              variant="outline-primary"
               size="sm"
               className="rounded-circle"
               onClick={() => push(initialValues)}
@@ -56,6 +55,9 @@ const DynamicFields = ({
             >
               +
             </Button>
+            <span className="text-primary d-inline-flex align-items-center mx-2" style={{ height: "32px" }}>
+              Click to add
+            </span>
           </div>
         </React.Fragment>
       )}
