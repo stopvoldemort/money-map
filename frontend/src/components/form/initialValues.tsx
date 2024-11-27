@@ -6,7 +6,7 @@ export const initialValues = {
   incomes: [],
   assets: [],
   scheduled_debts: [],
-  debts: [],
+  other_debts: [],
   transfers: [],
   accounts: [
     {
@@ -26,7 +26,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 70 },
+            { year: 2025, value: 70 },
             { year: 2030, value: 70 },
             { year: 2035, value: 70 },
             { year: 2040, value: 70 },
@@ -42,7 +42,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 30 },
+            { year: 2025, value: 30 },
             { year: 2030, value: 30 },
             { year: 2035, value: 30 },
             { year: 2040, value: 30 },
@@ -66,7 +66,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 100 },
+            { year: 2025, value: 100 },
             { year: 2030, value: 90 },
             { year: 2035, value: 80 },
             { year: 2040, value: 70 },
@@ -82,7 +82,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 0 },
+            { year: 2025, value: 0 },
             { year: 2030, value: 10 },
             { year: 2035, value: 20 },
             { year: 2040, value: 30 },
@@ -106,7 +106,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 100 },
+            { year: 2025, value: 100 },
             { year: 2030, value: 90 },
             { year: 2035, value: 80 },
             { year: 2040, value: 70 },
@@ -122,7 +122,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 0 },
+            { year: 2025, value: 0 },
             { year: 2030, value: 10 },
             { year: 2035, value: 20 },
             { year: 2040, value: 30 },
@@ -146,7 +146,7 @@ export const initialValues = {
           name: "stocks",
           color: "steelblue",
           anchors: [
-            { year: 2024, value: 70 },
+            { year: 2025, value: 70 },
             { year: 2030, value: 60 },
             { year: 2035, value: 50 },
             { year: 2040, value: 50 },
@@ -162,7 +162,7 @@ export const initialValues = {
           name: "bonds",
           color: "lightgreen",
           anchors: [
-            { year: 2024, value: 30 },
+            { year: 2025, value: 30 },
             { year: 2030, value: 40 },
             { year: 2035, value: 50 },
             { year: 2040, value: 50 },

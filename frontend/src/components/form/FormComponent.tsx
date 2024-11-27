@@ -12,6 +12,7 @@ import { FieldArray } from "formik";
 import { initialValues } from "./initialValues";
 import { FormValuesType } from "./types";
 import ScheduledDebtFields from "./ScheduledDebtFields";
+import OtherDebtFields from "./OtherDebtFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -50,7 +51,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 )}
               </FieldArray>
             </Section>
-            <Section title="Assets" infoText="Any assets you have, like real estate, etc.">
+            <Section title="Other assets" infoText="Any other assets you have, like real estate.">
               <DynamicFields
                 name={AssetFields.fieldsKey}
                 values={formik.values.assets}
@@ -58,7 +59,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={AssetFields}
               />
             </Section>
-            <Section title="Scheduled debts" infoText="Scheduled debt payments are debts that are paid off over time, such as student loans or mortgages.">
+            <Section title="Long-term loans" infoText="Long-term loans are loans that are paid back through regular scheduled payments, like student loans or mortgages.">
               <DynamicFields
                 name={ScheduledDebtFields.fieldsKey}
                 values={formik.values.scheduled_debts}
@@ -66,7 +67,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={ScheduledDebtFields}
               />
             </Section>
-            <Section title="Other debts" infoText="Any other debts you have, like credit card debt or personal loans.">{[]}</Section>
+            <Section title="Other debts" infoText="Any other debts you have, like credit card debt or personal loans.">
+              <DynamicFields
+                name={OtherDebtFields.fieldsKey}
+                values={formik.values.other_debts}
+                initialValues={OtherDebtFields.initialValues}
+                fieldsComponent={OtherDebtFields}
+              />
+            </Section>
           </Accordion>
 
           <Header title="The Future" />
@@ -87,12 +95,12 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 fieldsComponent={ExpenseFields}
               />
             </Section>
-            <Section title="Expected transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a retirement account.">{[]}</Section>
+            <Section title="Planned transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a retirement account.">{[]}</Section>
           </Accordion>
 
-          <Header title="Miscellaneous" />
+          <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Meta-parameters (TODO)" infoText="Stock and bond returns, start and end years, etc.">{[]}</Section>
+            <Section title="Stock and bond returns, start and end years, etc. (TODO)">{[]}</Section>
           </Accordion>
           <Button variant="primary" type="submit" className="mt-3">
             Submit

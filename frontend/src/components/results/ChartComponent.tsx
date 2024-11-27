@@ -4,6 +4,10 @@ export interface NetWorthChartData {
     year: number;
     net_worth: number;
     five_two_nine: number;
+    investment: number;
+    bank_account: number;
+    roth_ira: number;
+    debt: number;
 }
 
 
@@ -50,6 +54,34 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                     dataKey="five_two_nine"
                     stroke="#8B4513"
                     name="529"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="investment"
+                    stroke="#0000FF"
+                    name="Investments"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="debt"
+                    stroke="#FF0000"
+                    name="Debt"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="roth_ira"
+                    stroke="#800080"
+                    name="Roth IRA"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
+                    dataKey="bank_account"
+                    stroke="#008000"
+                    name="Bank Account"
                     dot={false}
                 />
             </LineChart>

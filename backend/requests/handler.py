@@ -19,7 +19,7 @@ initial_form_data = {
     "expenses": [],
     "incomes": [],
     "transfers": [],
-    "debts": [],
+    "other_debts": [],
     "assets": [],
     "gifts": [],
     "scheduled_debts": [],
@@ -50,11 +50,13 @@ class Handler:
 
         bank_account = self.get_account_by_type(AccountType.BANK)
 
-        for debt_input in self.data["debts"]:
-            self.debts.append(Debt(**debt_input))
+        for debt_input in self.data["other_debts"]:
+            aagr = debt_input.pop("aagr", 0)
+            aagr = round(aagr / 100, 2)
+            self.debts.append(Debt(**debt_input, aagr=aagr))
 
         for scheduled_debt_input in self.data["scheduled_debts"]:
-            first_year_of_loan = 2024
+            first_year_of_loan = 2025
             loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
             debt = Debt(**scheduled_debt_input, scheduled=True)
             transfers = ScheduledDebt.calculate_annual_interest_and_principal(

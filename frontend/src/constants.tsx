@@ -1,5 +1,5 @@
 export const YEARS = {
-  START: 2024,
+  START: 2025,
   END: 2070,
   RETIREMENT_START: 2039,
 };

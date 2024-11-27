@@ -5,6 +5,7 @@ export interface FormValuesType {
   incomes: IncomeFieldsType[];
   assets: AssetFieldsType[];
   scheduled_debts: ScheduledDebtFieldsType[];
+  other_debts: OtherDebtFieldsType[];
 }
 
 export interface AccountFieldsType {
@@ -57,4 +58,10 @@ export interface ScheduledDebtFieldsType {
   amount: number;
   aagr: number;
   remaining_loan_term: number;
+}
+
+export interface OtherDebtFieldsType {
+  name: string;
+  amount: number;
+  aagr: number;
 }
