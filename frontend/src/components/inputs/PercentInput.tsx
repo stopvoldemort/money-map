@@ -16,12 +16,17 @@ const PercentInput = ({
 }) => {
   return (
     <InputGroup>
-      <InputGroup.Text>{label}</InputGroup.Text>
+      <span className="d-inline-flex align-items-center mx-2">
+        {label}
+      </span>
       <Field
         type="number"
         name={name}
         className="form-control"
         step={step}
+        max={100}
+        min={0}
+        style={{ maxWidth: "120px" }}
       />
       <InputGroup.Text>(%)</InputGroup.Text>
       {infoText && (

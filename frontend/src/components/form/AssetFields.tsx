@@ -1,6 +1,7 @@
-import { Col, Row, InputGroup } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Field } from "formik";
 import PercentInput from "../inputs/PercentInput";
+import DollarInput from "../inputs/DollarInput";
 
 const AssetFields = ({ index }: { index: number }) => {
   return (
@@ -13,20 +14,15 @@ const AssetFields = ({ index }: { index: number }) => {
             placeholder="Name"
           />
         </Col>
-        <Col>
-          <InputGroup>
-            <InputGroup.Text>Value</InputGroup.Text>
-            <Field
-              type="number"
-              name={`${AssetFields.fieldsKey}.${index}.value`}
-              className="form-control"
-              placeholder="Value"
-            />
-            <InputGroup.Text>$</InputGroup.Text>
-          </InputGroup>
-        </Col>
       </Row>
       <Row className="mt-2" >
+        <Col>
+          <DollarInput
+            name={`${AssetFields.fieldsKey}.${index}.value`}
+            label="Value"
+            infoText="The current value of the asset"
+          />
+        </Col>
         <Col>
           <PercentInput
             name={`${AssetFields.fieldsKey}.${index}.aagr`}
@@ -38,6 +34,7 @@ const AssetFields = ({ index }: { index: number }) => {
             name={`${AssetFields.fieldsKey}.${index}.tax_rate`}
             label="Tax rate"
             step={0.01}
+            infoText="For example, property taxes"
           /></Col>
       </Row >
     </>
@@ -47,7 +44,7 @@ const AssetFields = ({ index }: { index: number }) => {
 AssetFields.initialValues = {
   name: "",
   value: 0,
-  aagr: 2.5,
+  aagr: 1.5,
   tax_rate: 0.67,
 };
 

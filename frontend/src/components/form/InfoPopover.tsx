@@ -5,7 +5,7 @@ import { QuestionCircle } from 'react-bootstrap-icons';
 const InfoPopover = ({ text }: { text: string }) => {
   return (
     <OverlayTrigger
-      placement="right"
+      placement="auto-end"
       overlay={
         <Popover id="popover-basic">
           <Popover.Body>
