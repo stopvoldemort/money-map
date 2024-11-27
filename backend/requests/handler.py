@@ -54,9 +54,6 @@ class Handler:
             self.debts.append(Debt(**debt_input))
 
         for scheduled_debt_input in self.data["scheduled_debts"]:
-            pay_from_account = self.find_object_by_name(
-                self.accounts, scheduled_debt_input.pop("pay_from_account", None)
-            )
             first_year_of_loan = 2024
             loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
             debt = Debt(**scheduled_debt_input, scheduled=True)
@@ -66,7 +63,7 @@ class Handler:
                 annual_interest_rate=debt.aagr,
                 first_year_of_loan=first_year_of_loan,
                 loan_term_years=loan_term_years,
-                pay_from_account=pay_from_account,
+                pay_from_account=bank_account,
             )
             self.debts.append(debt)
             self.transfers.extend(transfers)

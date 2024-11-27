@@ -13,7 +13,7 @@ const Section = ({ title, infoText, children }: { title: string, infoText?: stri
       <Accordion.Body>
         {children}
       </Accordion.Body>
-    </Accordion.Item>
+    </Accordion.Item >
   );
 };
 

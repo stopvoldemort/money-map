@@ -26,7 +26,7 @@ const PercentInput = ({
         step={step}
         max={100}
         min={0}
-        style={{ maxWidth: "120px" }}
+        style={{ maxWidth: "120px", minWidth: "80px" }}
       />
       <InputGroup.Text>(%)</InputGroup.Text>
       {infoText && (

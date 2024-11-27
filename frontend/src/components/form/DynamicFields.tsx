@@ -6,6 +6,7 @@ import {
   IncomeFieldsType,
   ExpenseFieldsType,
   AssetFieldsType,
+  ScheduledDebtFieldsType,
 } from "./types";
 
 const DynamicFields = ({
@@ -15,8 +16,8 @@ const DynamicFields = ({
   fieldsComponent,
 }: {
   name: string;
-  values: IncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[];
-  initialValues: IncomeFieldsType | ExpenseFieldsType | AssetFieldsType;
+  values: IncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[] | ScheduledDebtFieldsType[];
+  initialValues: IncomeFieldsType | ExpenseFieldsType | AssetFieldsType | ScheduledDebtFieldsType;
   fieldsComponent: React.FC<{ index: number }>;
 }) => {
   const FieldsComponent = fieldsComponent;

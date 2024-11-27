@@ -14,7 +14,7 @@ const DollarInput = ({ name, label, infoText }: { name: string, label: string, i
       name={name}
       className="form-control"
       placeholder="Value"
-      style={{ maxWidth: "120px" }}
+      style={{ maxWidth: "120px", minWidth: "80px" }}
       min={0}
     />
     {infoText && (
