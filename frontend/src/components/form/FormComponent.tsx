@@ -15,6 +15,7 @@ import ScheduledDebtFields from "./ScheduledDebtFields";
 import OtherDebtFields from "./OtherDebtFields";
 import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
+import AssetPurchaseFields from "./AssetPurchaseFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -106,6 +107,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
                 values={formik.values.expenses}
                 initialValues={ExpenseFields.initialValues}
                 fieldsComponent={ExpenseFields}
+              />
+            </Section>
+            <Section title="Expected home & property purchases">
+              <DynamicFields
+                name={AssetPurchaseFields.fieldsKey}
+                values={formik.values.house_purchases}
+                initialValues={AssetPurchaseFields.initialValues}
+                fieldsComponent={AssetPurchaseFields}
               />
             </Section>
             <Section title="Transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a 529 account. These will only occur if there's enough money in the source account to cover the transfer.">

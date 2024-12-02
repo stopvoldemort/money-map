@@ -6,6 +6,7 @@ export const initialValues = {
   salaries: [],
   other_incomes: [],
   assets: [],
+  house_purchases: [],
   scheduled_debts: [],
   other_debts: [],
   transfers: [],

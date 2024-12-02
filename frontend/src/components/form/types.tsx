@@ -8,6 +8,7 @@ export interface FormValuesType {
   scheduled_debts: ScheduledDebtFieldsType[];
   other_debts: OtherDebtFieldsType[];
   transfers: TransferFieldsType[];
+  house_purchases: AssetPurchaseFieldsType[];
 }
 
 export interface AccountFieldsType {
@@ -85,4 +86,18 @@ export interface TransferFieldsType {
   transfer_from: string;
   transfer_to: string;
   required: boolean;
+}
+
+export interface AssetPurchaseFieldsType {
+  name: string;
+  price: number;
+  interest_rate: number;
+  year_of_purchase: number;
+  loan_term_years: number;
+  down_payment_proportion: number;
+  property_tax_rate: number;
+  annual_insurance_rate: number;
+  annual_upkeep_cost: number;
+  closing_costs_proportion: number;
+  aagr: number;
 }

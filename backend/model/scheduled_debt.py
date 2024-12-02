@@ -6,7 +6,7 @@ from model.transfer import Transfer
 # It's not an actual model. It's a utility class that is used by the Debt class.
 class ScheduledDebt:
     @staticmethod
-    def calculate_annual_interest_and_principal(
+    def generate_transfers(
         debt,
         loan_amount,
         annual_interest_rate,

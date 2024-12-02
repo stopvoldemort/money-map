@@ -22,6 +22,7 @@ class Debt:
     def add(self, amount: float) -> float:
         self.amount += amount
 
+    # TODO: Calculate based on the month rather than the year
     def apply_annual_growth(self):
         new_amount = self.amount * ((1 + self.aagr / 12)) ** 12
         self.annual_growth = new_amount - self.amount
