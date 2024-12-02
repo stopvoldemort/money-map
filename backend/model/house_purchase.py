@@ -3,31 +3,36 @@ from typing import Tuple
 from model.account import Account
 from model.asset import Asset
 from model.debt import Debt
-from model.scheduled_debt import ScheduledDebt
 from model.expense import Expense
 from model.transfer import Transfer
-
+from model.scheduled_debt import ScheduledDebt
 
 class HousePurchase:
     def __init__(
         self,
+        name: str,
         home_price: int,
+        closing_costs_proportion: float,
+        annual_insurance_rate: float,
+        annual_upkeep_cost: float,
         annual_interest_rate: float,
+        aagr: float,
         first_year: int,
         loan_term_years: int,
-        last_year: int,
-        mortgage_acct_src: Account,
-        down_payment_acct_src: Account,
+        from_account: Account,
         down_payment_proportion: float,
         property_tax_rate: float,
     ):
+        self.name = name
         self.home_price = home_price
+        self.closing_costs_proportion = closing_costs_proportion
+        self.annual_insurance_rate = annual_insurance_rate
+        self.annual_upkeep_cost = annual_upkeep_cost
         self.annual_interest_rate = annual_interest_rate
+        self.aagr = aagr
         self.first_year = first_year
         self.loan_term_years = loan_term_years
-        self.last_year = last_year
-        self.down_payment_acct_src = down_payment_acct_src
-        self.mortgage_acct_src = mortgage_acct_src
+        self.from_account = from_account
         self.down_payment_proportion = down_payment_proportion
         self.property_tax_rate = property_tax_rate
 
@@ -36,54 +41,51 @@ class HousePurchase:
     #   - The value of the house
     # - Expenses:
     #   - Closing costs (once)
-    #   - Property taxes (forever, 0.71% of value) (how does tax assessment work?)
-    #   - Interest portion of mortgage payment (need to figure out when/how to deduct from federal taxable income) (30 years)
+    #   - Property taxes (annual)
+    #   - Upkeep (annual)
+    #   - Insurance (annual)
     # - Transfers
     #   - Down payment (transfer_from=[boa, vanguard], transfer_to=debt)
     #   - Annual paydowns of the mortgage principal (transfer_from=[boa, vanguard], transfer_to=debt)
     # - Debts:
-    #   - The house price
+    #   - The house price, which increases by the AAGR
     def execute(self) -> Tuple[Asset, Debt, List[Expense], List[Transfer]]:
-        house = Asset("house", self.home_price, 0.01, self.property_tax_rate)
-        debt = Debt("mortgage", self.home_price, 0.0, scheduled=True)
+        house = Asset(self.name, self.home_price, self.aagr, self.property_tax_rate)
+        debt = Debt(f"{self.name} mortgage", self.home_price, self.annual_interest_rate, scheduled=True)
 
         expenses = []
         transfers = []
 
         # EXPENSES
-        # Values based mainly on NYTIMES buy vs rent calculator
         expenses.append(
-            Expense("house closing costs", self.home_price * 0.04, self.first_year)
+            Expense(f"{self.name} closing costs", self.closing_costs_proportion * self.home_price, self.first_year)
         )
 
-        for y in range(self.first_year, self.last_year + 1):
-            expenses.append(
-                Expense(
-                    f"maintenance, insurance, extra utilities {y}",
-                    self.home_price * 0.0155 + 1200,
-                    y,
-                )
-            )
+        for y in range(self.first_year, 2070 + 1):
+            upkeep = Expense(f"{self.name} upkeep", self.annual_upkeep_cost, y)
+            insurance = Expense(f"{self.name} insurance", self.home_price * self.annual_insurance_rate, y)
+            taxes = Expense(f"{self.name} taxes", self.home_price * self.property_tax_rate, y)
+            expenses.extend([upkeep, insurance, taxes])
 
+        # TRANSFERS
         down_payment = Transfer(
             "down payment",
             self.home_price * self.down_payment_proportion,
             self.first_year,
-            transfer_from=self.down_payment_acct_src,
+            transfer_from=self.from_account,
             transfer_to=debt,
             required=True,
         )
         transfers.append(down_payment)
 
-        mortgage_transfers = ScheduledDebt.calculate_annual_interest_and_principal(
+        annual_payments = ScheduledDebt.generate_transfers(
             debt=debt,
             loan_amount=self.home_price - down_payment.amount,
             annual_interest_rate=self.annual_interest_rate,
             first_year_of_loan=self.first_year,
             loan_term_years=self.loan_term_years,
-            pay_from_account=self.mortgage_acct_src,
+            pay_from_account=self.from_account,
         )
-
-        transfers.extend(mortgage_transfers)
+        transfers.extend(annual_payments)
 
         return house, debt, expenses, transfers

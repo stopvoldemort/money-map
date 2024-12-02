@@ -10,6 +10,7 @@ import {
   OtherDebtFieldsType,
   SalaryFieldsType,
   TransferFieldsType,
+  AssetPurchaseFieldsType,
 } from "./types";
 
 const DynamicFields = ({
@@ -19,8 +20,8 @@ const DynamicFields = ({
   fieldsComponent,
 }: {
   name: string;
-  values: OtherIncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[] | ScheduledDebtFieldsType[] | OtherDebtFieldsType[] | SalaryFieldsType[] | TransferFieldsType[];
-  initialValues: OtherIncomeFieldsType | ExpenseFieldsType | AssetFieldsType | ScheduledDebtFieldsType | OtherDebtFieldsType | SalaryFieldsType | TransferFieldsType;
+  values: OtherIncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[] | ScheduledDebtFieldsType[] | OtherDebtFieldsType[] | SalaryFieldsType[] | TransferFieldsType[] | AssetPurchaseFieldsType[];
+  initialValues: OtherIncomeFieldsType | ExpenseFieldsType | AssetFieldsType | ScheduledDebtFieldsType | OtherDebtFieldsType | SalaryFieldsType | TransferFieldsType | AssetPurchaseFieldsType;
   fieldsComponent: React.FC<{ index: number }>;
 }) => {
   const FieldsComponent = fieldsComponent;

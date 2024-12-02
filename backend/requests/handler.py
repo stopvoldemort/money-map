@@ -14,7 +14,7 @@ from model.house_purchase import HousePurchase
 from logger import get_logger
 from requests.account_parser import account_parser
 from requests.salary_parser import parse_salary_input
-
+from requests.asset_purchase_parser import parse_asset_purchase
 initial_form_data = {
     "investment_vehicles": [],
     "accounts": [],
@@ -56,14 +56,14 @@ class Handler:
 
         for debt_input in self.data["other_debts"]:
             aagr = debt_input.pop("aagr", 0)
-            aagr = round(aagr / 100, 2)
+            aagr = self.percentize(aagr)
             self.debts.append(Debt(**debt_input, aagr=aagr))
 
         for scheduled_debt_input in self.data["scheduled_debts"]:
             first_year_of_loan = 2025
             loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
             debt = Debt(**scheduled_debt_input, scheduled=True)
-            transfers = ScheduledDebt.calculate_annual_interest_and_principal(
+            transfers = ScheduledDebt.generate_transfers(
                 debt=debt,
                 loan_amount=debt.amount,
                 annual_interest_rate=debt.aagr,
@@ -76,9 +76,9 @@ class Handler:
 
         for asset_input in self.data["assets"]:
             aagr = asset_input.pop("aagr", 0)
-            aagr = round(aagr / 100, 2)
+            aagr = self.percentize(aagr)
             tax_rate = asset_input.pop("tax_rate", 0)
-            tax_rate = round(tax_rate / 100, 2)
+            tax_rate = self.percentize(tax_rate)
             self.assets.append(Asset(**asset_input, aagr=aagr, tax_rate=tax_rate))
 
         for gift_input in self.data["gifts"]:
@@ -121,21 +121,15 @@ class Handler:
                 )
 
         for house_purchase_input in self.data["house_purchases"]:
-            mortgage_acct_src = self.find_object_by_name(
-                self.accounts, house_purchase_input.pop("mortgage_acct_src", None)
-            )
-            down_payment_acct_src = self.find_object_by_name(
-                self.accounts, house_purchase_input.pop("down_payment_acct_src", None)
-            )
-            house_asset, house_debt, house_expenses, house_transfers = HousePurchase(
-                **house_purchase_input,
-                mortgage_acct_src=mortgage_acct_src,
-                down_payment_acct_src=down_payment_acct_src,
-            ).execute()
+            house_asset, house_debt, house_expenses, house_transfers = parse_asset_purchase(house_purchase_input, bank_account)
             self.assets.append(house_asset)
             self.debts.append(house_debt)
             self.expenses.extend(house_expenses)
             self.transfers.extend(house_transfers)
+
+    @staticmethod
+    def percentize(value):
+        return round(value / 100, 2)
 
     def get_account_by_type(self, account_type):
         for account in self.accounts:

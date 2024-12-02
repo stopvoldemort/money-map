@@ -86,6 +86,13 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 />
                 <Line
                     type="monotone"
+                    dataKey="assets"
+                    stroke="#008000"
+                    name="Assets"
+                    dot={false}
+                />
+                <Line
+                    type="monotone"
                     dataKey="debt"
                     stroke="#FF0000"
                     name="Debt"
