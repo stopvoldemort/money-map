@@ -16,8 +16,21 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
             placeholder="Name"
           />
         </Col>
+        <Col>
+          <InputGroup>
+            <span className="d-inline-flex align-items-center mx-2">
+              Year of purchase
+            </span>
+            <Field
+              name={`${AssetPurchaseFields.fieldsKey}.${index}.year_of_purchase`}
+              className="form-control"
+              type="number"
+              max={YEARS.END}
+            />
+          </InputGroup>
+        </Col>
       </Row>
-      <Row className="my-2" >
+      <Row className="my-2">
         <Col>
           <DollarInput
             name={`${AssetPurchaseFields.fieldsKey}.${index}.price`}
