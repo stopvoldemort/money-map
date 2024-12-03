@@ -5,9 +5,11 @@ import { QuestionCircle } from 'react-bootstrap-icons';
 const InfoPopover = ({ text }: { text: string }) => {
   return (
     <OverlayTrigger
-      placement="auto-end"
+      placement="bottom"
       overlay={
-        <Popover id="popover-basic">
+        // Fixed position addresses a bootstrap bug where the popover
+        // flickers
+        <Popover id="popover-basic" style={{ position: "fixed" }}>
           <Popover.Body>
             {text}
           </Popover.Body>

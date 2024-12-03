@@ -5,13 +5,13 @@ import DollarInput from "../inputs/DollarInput";
 import { YEARS } from "../../constants";
 import CollapsibleDetails from "./CollabsibleDetails";
 
-const AssetPurchaseFields = ({ index }: { index: number }) => {
+const HousePurchaseFields = ({ index }: { index: number }) => {
   return (
     <>
       <Row className="my-1">
         <Col>
           <Field
-            name={`${AssetPurchaseFields.fieldsKey}.${index}.name`}
+            name={`${HousePurchaseFields.fieldsKey}.${index}.name`}
             className="form-control"
             placeholder="Name"
           />
@@ -22,7 +22,7 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
               Year of purchase
             </span>
             <Field
-              name={`${AssetPurchaseFields.fieldsKey}.${index}.year_of_purchase`}
+              name={`${HousePurchaseFields.fieldsKey}.${index}.year_of_purchase`}
               className="form-control"
               type="number"
               max={YEARS.END}
@@ -33,19 +33,19 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
       <Row className="my-2">
         <Col>
           <DollarInput
-            name={`${AssetPurchaseFields.fieldsKey}.${index}.price`}
+            name={`${HousePurchaseFields.fieldsKey}.${index}.price`}
             label="Price"
           />
         </Col>
         <Col>
           <PercentInput
-            name={`${AssetPurchaseFields.fieldsKey}.${index}.interest_rate`}
+            name={`${HousePurchaseFields.fieldsKey}.${index}.interest_rate`}
             label="Interest rate"
           />
         </Col>
         <Col>
           <PercentInput
-            name={`${AssetPurchaseFields.fieldsKey}.${index}.down_payment_proportion`}
+            name={`${HousePurchaseFields.fieldsKey}.${index}.down_payment_proportion`}
             label="Down payment"
           />
         </Col>
@@ -59,7 +59,7 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
               </span>
               <Field
                 type="number"
-                name={`${AssetPurchaseFields.fieldsKey}.${index}.loan_term_years`}
+                name={`${HousePurchaseFields.fieldsKey}.${index}.loan_term_years`}
                 className="form-control"
                 max={100}
                 min={0}
@@ -70,13 +70,13 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
           </Col>
           <Col>
             <PercentInput
-              name={`${AssetPurchaseFields.fieldsKey}.${index}.closing_costs_proportion`}
+              name={`${HousePurchaseFields.fieldsKey}.${index}.closing_costs_proportion`}
               label="Closing costs"
             />
           </Col>
           <Col>
             <PercentInput
-              name={`${AssetPurchaseFields.fieldsKey}.${index}.annual_insurance_rate`}
+              name={`${HousePurchaseFields.fieldsKey}.${index}.annual_insurance_rate`}
               label="Annual insurance rate"
               step={0.01}
               infoText="For example, the cost of homeowner's insurance"
@@ -86,14 +86,14 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
         <Row className="mt-2">
           <Col>
             <DollarInput
-              name={`${AssetPurchaseFields.fieldsKey}.${index}.annual_upkeep_cost`}
+              name={`${HousePurchaseFields.fieldsKey}.${index}.annual_upkeep_cost`}
               label="Annual upkeep cost"
               infoText="For example, the cost of maintenance"
             />
           </Col>
           <Col>
             <PercentInput
-              name={`${AssetPurchaseFields.fieldsKey}.${index}.property_tax_rate`}
+              name={`${HousePurchaseFields.fieldsKey}.${index}.property_tax_rate`}
               label="Tax rate"
               step={0.01}
               infoText="Likely only applicable if the asset is subject to property taxes."
@@ -102,7 +102,7 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
           <Col>
             {/* TODO: Let assets depreciate */}
             <PercentInput
-              name={`${AssetPurchaseFields.fieldsKey}.${index}.aagr`}
+              name={`${HousePurchaseFields.fieldsKey}.${index}.aagr`}
               label="Annual appreciation"
               infoText="How much you expect the asset to appreciate each year (adjusted for inflation)"
             />
@@ -113,7 +113,7 @@ const AssetPurchaseFields = ({ index }: { index: number }) => {
   );
 };
 
-AssetPurchaseFields.initialValues = {
+HousePurchaseFields.initialValues = {
   name: "",
   price: 0,
   interest_rate: 6.5,
@@ -127,6 +127,6 @@ AssetPurchaseFields.initialValues = {
   closing_costs_proportion: 4.0,
 };
 
-AssetPurchaseFields.fieldsKey = "house_purchases";
+HousePurchaseFields.fieldsKey = "house_purchases";
 
-export default AssetPurchaseFields;
+export default HousePurchaseFields;

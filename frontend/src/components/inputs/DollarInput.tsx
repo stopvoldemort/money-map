@@ -15,7 +15,6 @@ const DollarInput = ({ name, label, infoText }: { name: string, label: string, i
       className="form-control"
       placeholder="Value"
       style={{ maxWidth: "120px", minWidth: "80px" }}
-      min={0}
     />
     {infoText && (
       <InfoPopover text={infoText} />

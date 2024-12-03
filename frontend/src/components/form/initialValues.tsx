@@ -25,7 +25,7 @@ export const initialValues = {
       earliest_withdrawal_year: YEARS.START,
       investments: [
         {
-          name: "stocks",
+          name: INVESTMENT_VEHICLES.STOCKS,
           color: "steelblue",
           anchors: [
             { year: 2025, value: 70 },
@@ -41,7 +41,7 @@ export const initialValues = {
           ],
         },
         {
-          name: "bonds",
+          name: INVESTMENT_VEHICLES.BONDS,
           color: "lightgreen",
           anchors: [
             { year: 2025, value: 30 },
@@ -65,7 +65,7 @@ export const initialValues = {
       earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
         {
-          name: "stocks",
+          name: INVESTMENT_VEHICLES.STOCKS,
           color: "steelblue",
           anchors: [
             { year: 2025, value: 100 },
@@ -81,7 +81,7 @@ export const initialValues = {
           ],
         },
         {
-          name: "bonds",
+          name: INVESTMENT_VEHICLES.BONDS,
           color: "lightgreen",
           anchors: [
             { year: 2025, value: 0 },
@@ -105,7 +105,7 @@ export const initialValues = {
       earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
         {
-          name: "stocks",
+          name: INVESTMENT_VEHICLES.STOCKS,
           color: "steelblue",
           anchors: [
             { year: 2025, value: 100 },
@@ -121,7 +121,7 @@ export const initialValues = {
           ],
         },
         {
-          name: "bonds",
+          name: INVESTMENT_VEHICLES.BONDS,
           color: "lightgreen",
           anchors: [
             { year: 2025, value: 0 },
@@ -145,7 +145,7 @@ export const initialValues = {
       earliest_withdrawal_year: YEARS.START,
       investments: [
         {
-          name: "stocks",
+          name: INVESTMENT_VEHICLES.STOCKS,
           color: "steelblue",
           anchors: [
             { year: 2025, value: 70 },
@@ -161,7 +161,7 @@ export const initialValues = {
           ],
         },
         {
-          name: "bonds",
+          name: INVESTMENT_VEHICLES.BONDS,
           color: "lightgreen",
           anchors: [
             { year: 2025, value: 30 },
@@ -182,15 +182,15 @@ export const initialValues = {
   investment_vehicles: [
     {
       name: INVESTMENT_VEHICLES.STOCKS,
-      aagr: 0.0655,
-      dynamic_mean: 0.077,
-      dynamic_std_dev: 0.1175,
+      aagr: 6.55,
+      dynamic_mean: 7.7,
+      dynamic_std_dev: 11.75,
     },
     {
       name: INVESTMENT_VEHICLES.BONDS,
-      aagr: 0.0352,
-      dynamic_mean: 0.039,
-      dynamic_std_dev: 0.0855,
+      aagr: 3.52,
+      dynamic_mean: 3.9,
+      dynamic_std_dev: 8.55,
     },
   ],
 };

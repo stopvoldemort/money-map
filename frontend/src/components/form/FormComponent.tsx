@@ -14,7 +14,8 @@ import ScheduledDebtFields from "./ScheduledDebtFields";
 import OtherDebtFields from "./OtherDebtFields";
 import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
-import AssetPurchaseFields from "./AssetPurchaseFields";
+import HousePurchaseFields from "./HousePurchaseFields";
+import InvestmentVehiclesFields from "./InvestmentVehiclesFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -31,6 +32,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
     <Formik
       initialValues={initialValues}
       onSubmit={async (values) => {
+        console.log("TRYING TO SUBMIT")
         try {
           onUpdate(values);
         } catch (error) {
@@ -39,9 +41,12 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
       }}
     >
       {(formik) => (
-        <Form onSubmit={formik.handleSubmit}>
+        <Form onSubmit={(e) => {
+          e.preventDefault();
+          console.log("SUBMITTING")
+          formik.handleSubmit();
+        }}>
           <div className="d-flex justify-content-center position-relative mt-3">
-
             <Button variant="primary" type="submit" className="mt-3">
               See your money map
             </Button>
@@ -118,10 +123,10 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
             </Section>
             <Section title="Expected home & property purchases">
               <DynamicFields
-                name={AssetPurchaseFields.fieldsKey}
+                name={HousePurchaseFields.fieldsKey}
                 values={formik.values.house_purchases}
-                initialValues={AssetPurchaseFields.initialValues}
-                fieldsComponent={AssetPurchaseFields}
+                initialValues={HousePurchaseFields.initialValues}
+                fieldsComponent={HousePurchaseFields}
               />
             </Section>
             <Section title="Transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a 529 account. These will only occur if there's enough money in the source account to cover the transfer.">
@@ -136,7 +141,16 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Stock and bond returns, start and end years, etc. (TODO)">{[]}</Section>
+            <Section title="Stock and bond returns, start and end years, etc. (TODO)">
+              <FieldArray name="investment_vehicles">
+                {() => (
+                  <FieldsContainer>
+                    <InvestmentVehiclesFields index={0} />
+                    <InvestmentVehiclesFields index={1} />
+                  </FieldsContainer>
+                )}
+              </FieldArray>
+            </Section>
           </Accordion>
         </Form>
       )
