@@ -11,6 +11,16 @@ export interface NetWorthChartData {
     debt: number;
 }
 
+// Format number to millions
+const formatYAxis = (value: number) => {
+    if (Math.abs(value) >= 1000000) {
+        return `$${(value / 1000000).toFixed(1)}M`;
+    } else if (Math.abs(value) >= 1000) {
+        return `$${(value / 1000).toFixed(1)}K`;
+    }
+    return `$${value.toFixed(0)}`;
+};
+
 // Custom tooltip component
 // Only needed because the tooltip text was inheriting the opacity from the bar "fill" colors
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
@@ -30,17 +40,28 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
     return null;
 };
 
-const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
-    // Format number to millions
-    const formatYAxis = (value: number) => {
-        if (Math.abs(value) >= 1000000) {
-            return `$${(value / 1000000).toFixed(1)}M`;
-        } else if (Math.abs(value) >= 1000) {
-            return `$${(value / 1000).toFixed(1)}K`;
-        }
-        return `$${value.toFixed(0)}`;
-    };
+const CustomizedDot = (props: { cx: number; cy: number; payload: NetWorthChartData }) => {
+    const { cx, cy, payload } = props;
+    return (
+        <g key={payload.year}>
+            {payload.year % 5 === 0 ? (
+                <>
+                    <circle cx={cx} cy={cy} r={4} fill="black" />
+                    <text
+                        x={cx}
+                        y={cy - 10}
+                        textAnchor="middle"
+                        fill="black"
+                    >
+                        {formatYAxis(payload.net_worth)}
+                    </text>
+                </>
+            ) : null}
+        </g>
+    );
+}
 
+const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
     return (
         <ResponsiveContainer width="100%" height={400}>
             <ComposedChart
@@ -53,6 +74,14 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 <YAxis tickFormatter={formatYAxis} />
                 <Tooltip content={<CustomTooltip />} />
 
+                <Line
+                    type="monotone"
+                    dataKey="net_worth"
+                    stroke="#000000"
+                    strokeWidth={2}
+                    name="Net Worth"
+                    dot={CustomizedDot}
+                />
                 <Bar dataKey="bank_account" stackId="stack" fill="rgba(0, 128, 0, 0.2)" stroke="rgb(0, 128, 0)" strokeWidth={1} name="Bank accounts" />
                 <Bar dataKey="investment" stackId="stack" fill="rgba(0, 0, 255, 0.2)" stroke="rgb(0, 0, 255)" strokeWidth={1} name="Investment accounts" />
                 <Bar dataKey="retirement" stackId="stack" fill="rgba(65, 105, 225, 0.2)" stroke="rgb(65, 105, 225)" strokeWidth={1} name="Traditional IRA/401k accounts" />
@@ -60,15 +89,6 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 <Bar dataKey="five_two_nine" stackId="stack" fill="rgba(139, 69, 19, 0.2)" stroke="rgb(139, 69, 19)" strokeWidth={1} name="529 accounts" />
                 <Bar dataKey="assets" stackId="stack" fill="rgba(0, 100, 0, 0.2)" stroke="rgb(0, 100, 0)" strokeWidth={1} name="Assets" />
                 <Bar dataKey="debt" stackId="stack" fill="rgba(255, 0, 0, 0.2)" stroke="rgb(255, 0, 0)" strokeWidth={1} name="Debt" />
-
-                <Line
-                    type="monotone"
-                    dataKey="net_worth"
-                    stroke="#000000"
-                    strokeWidth={4}
-                    name="Net Worth"
-                    dot={false}
-                />
             </ComposedChart>
         </ResponsiveContainer>
     );
