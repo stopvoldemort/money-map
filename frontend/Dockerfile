@@ -1,7 +1,10 @@
 # frontend/Dockerfile
 
 # Use the official Node.js image
-FROM --platform=linux/amd64 node:16-alpine AS base
+FROM --platform=linux/amd64 node:20-alpine AS base
+
+# Install git
+RUN apk add --no-cache git
 
 # Set the working directory
 WORKDIR /app
@@ -17,6 +20,8 @@ COPY . .
 ARG ENV=development
 ENV NODE_ENV=$ENV
 
+ARG GIT_VERSION=dev
+ENV VITE_GIT_VERSION=$GIT_VERSION
 
 # Build the app and set up Nginx in production
 RUN if [ "$ENV" = "production" ]; then \
