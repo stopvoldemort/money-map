@@ -1,4 +1,5 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { TooltipProps } from 'recharts';
 
 export interface NetWorthChartData {
     year: number;
@@ -10,36 +11,68 @@ export interface NetWorthChartData {
     debt: number;
 }
 
+// Format number to millions
+const formatYAxis = (value: number) => {
+    if (Math.abs(value) >= 1000000) {
+        return `$${(value / 1000000).toFixed(1)}M`;
+    } else if (Math.abs(value) >= 1000) {
+        return `$${(value / 1000).toFixed(1)}K`;
+    }
+    return `$${value.toFixed(0)}`;
+};
+
+// Custom tooltip component
+// Only needed because the tooltip text was inheriting the opacity from the bar "fill" colors
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+    if (active && payload && payload.length) {
+        return (
+            <div style={{ backgroundColor: 'white', border: '1px solid #ccc', padding: '10px' }}>
+                <p>{`Year: ${label}`}</p>
+                {payload.map((entry, index) => (
+                    <p key={`item-${index}`} style={{ color: entry.stroke, opacity: 1 }}>
+                        {`${entry.name}: $${Math.round(entry.value ?? 0).toLocaleString()}`}
+                    </p>
+                ))}
+            </div>
+        );
+    }
+
+    return null;
+};
+
+const CustomizedDot = (props: { cx: number; cy: number; payload: NetWorthChartData }) => {
+    const { cx, cy, payload } = props;
+    return (
+        <g key={payload.year}>
+            {payload.year % 5 === 0 ? (
+                <>
+                    <circle cx={cx} cy={cy} r={4} fill="black" />
+                    <text
+                        x={cx}
+                        y={cy - 10}
+                        textAnchor="middle"
+                        fill="black"
+                    >
+                        {formatYAxis(payload.net_worth)}
+                    </text>
+                </>
+            ) : null}
+        </g>
+    );
+}
 
 const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
-    // Format number to millions
-    const formatYAxis = (value: number) => {
-        if (Math.abs(value) >= 1000000) {
-            return `$${(value / 1000000).toFixed(1)}M`;
-        } else if (Math.abs(value) >= 1000) {
-            return `$${(value / 1000).toFixed(1)}K`;
-        }
-        return `$${value.toFixed(0)}`;
-    };
-
-    // Format tooltip values to dollars
-    const formatTooltip = (value: number) => `$${Math.round(value).toLocaleString()}`;
-
     return (
         <ResponsiveContainer width="100%" height={400}>
-            <LineChart
+            <ComposedChart
                 data={data}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                barSize={20}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                    dataKey="year"
-                    label={{ value: 'Year', position: 'bottom' }}
-                />
-                <YAxis
-                    tickFormatter={formatYAxis}
-                />
-                <Tooltip formatter={formatTooltip} />
+                <XAxis dataKey="year" label={{ value: 'Year', position: 'bottom' }} />
+                <YAxis tickFormatter={formatYAxis} />
+                <Tooltip content={<CustomTooltip />} />
 
                 <Line
                     type="monotone"
@@ -47,58 +80,16 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                     stroke="#000000"
                     strokeWidth={2}
                     name="Net Worth"
-                    dot={false}
+                    dot={CustomizedDot}
                 />
-                <Line
-                    type="monotone"
-                    dataKey="bank_account"
-                    stroke="#008000"
-                    name="Bank accounts"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="investment"
-                    stroke="#0000FF"
-                    name="Investment accounts"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="retirement"
-                    stroke="#0000FF"
-                    name="Traditional IRA/401k accounts"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="roth_ira"
-                    stroke="#800080"
-                    name="Roth IRA/401k accounts"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="five_two_nine"
-                    stroke="#8B4513"
-                    name="529 accounts"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="assets"
-                    stroke="#008000"
-                    name="Assets"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="debt"
-                    stroke="#FF0000"
-                    name="Debt"
-                    dot={false}
-                />
-            </LineChart>
+                <Bar dataKey="bank_account" stackId="stack" fill="rgba(0, 128, 0, 0.2)" stroke="rgb(0, 128, 0)" strokeWidth={1} name="Bank accounts" />
+                <Bar dataKey="investment" stackId="stack" fill="rgba(0, 0, 255, 0.2)" stroke="rgb(0, 0, 255)" strokeWidth={1} name="Investment accounts" />
+                <Bar dataKey="retirement" stackId="stack" fill="rgba(65, 105, 225, 0.2)" stroke="rgb(65, 105, 225)" strokeWidth={1} name="Traditional IRA/401k accounts" />
+                <Bar dataKey="roth_ira" stackId="stack" fill="rgba(128, 0, 128, 0.2)" stroke="rgb(128, 0, 128)" strokeWidth={1} name="Roth IRA/401k accounts" />
+                <Bar dataKey="five_two_nine" stackId="stack" fill="rgba(139, 69, 19, 0.2)" stroke="rgb(139, 69, 19)" strokeWidth={1} name="529 accounts" />
+                <Bar dataKey="assets" stackId="stack" fill="rgba(0, 100, 0, 0.2)" stroke="rgb(0, 100, 0)" strokeWidth={1} name="Assets" />
+                <Bar dataKey="debt" stackId="stack" fill="rgba(255, 0, 0, 0.2)" stroke="rgb(255, 0, 0)" strokeWidth={1} name="Debt" />
+            </ComposedChart>
         </ResponsiveContainer>
     );
 };

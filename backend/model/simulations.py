@@ -98,7 +98,7 @@ class Simulations:
                     if account.account_type.name == AccountType.ROTH_IRA
                 )
             )
-            aggregator.debt.append(sum(d.amount for d in debts))
+            aggregator.debt.append(-sum(d.amount for d in debts))
             aggregator.income.append(
                 sum(income.amount for income in incomes if income.year == year)
             )

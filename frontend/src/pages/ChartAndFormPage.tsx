@@ -10,6 +10,7 @@ declare const FORM_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
   const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
+  const [formKey, setFormKey] = useState(0);
 
   const values = useMemo(() => {
     let values = initialValues;
@@ -19,7 +20,8 @@ const ChartAndFormPage: React.FC = () => {
       values = JSON.parse(savedFormJSON)
     }
     return values;
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formKey]); // We pass the formKey as a dependency so that changing it triggers a re-render
 
   const mutation = useMutation({
     mutationFn: async (formData: FormValuesType) => {
@@ -49,6 +51,12 @@ const ChartAndFormPage: React.FC = () => {
     mutation.mutate(formData);
   };
 
+  const handleClearForm = () => {
+    localStorage.removeItem(FORM_VERSION);
+    setFormKey(prev => prev + 1);
+    handleUpdate(initialValues);
+  };
+
   useEffect(() => {
     handleUpdate(values);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,6 +73,7 @@ const ChartAndFormPage: React.FC = () => {
         <FormComponent
           initialValues={values}
           onUpdate={handleUpdate}
+          onClear={handleClearForm}
         />
       </Row>
     </Container >

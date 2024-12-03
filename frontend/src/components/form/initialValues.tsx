@@ -14,14 +14,14 @@ export const initialValues = {
     {
       name: "Bank accounts",
       account_type: ACCOUNT_TYPES.BANK.value,
-      starting_balance: 0,
+      starting_balance: 10000,
       earliest_withdrawal_year: YEARS.START,
       investments: [],
     },
     {
       name: "Investment accounts",
       account_type: ACCOUNT_TYPES.INVESTMENT.value,
-      starting_balance: 0,
+      starting_balance: 10000,
       earliest_withdrawal_year: YEARS.START,
       investments: [
         {
@@ -61,7 +61,7 @@ export const initialValues = {
     {
       name: "Traditional IRA/401k accounts",
       account_type: ACCOUNT_TYPES.RETIREMENT.value,
-      starting_balance: 0,
+      starting_balance: 10000,
       earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
         {
@@ -101,7 +101,7 @@ export const initialValues = {
     {
       name: "Roth IRA/401k accounts",
       account_type: ACCOUNT_TYPES.ROTH_IRA.value,
-      starting_balance: 0,
+      starting_balance: 10000,
       earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
         {
@@ -141,7 +141,7 @@ export const initialValues = {
     {
       name: "529 accounts",
       account_type: ACCOUNT_TYPES.FIVE_TWO_NINE.value,
-      starting_balance: 0,
+      starting_balance: 10000,
       earliest_withdrawal_year: YEARS.START,
       investments: [
         {
