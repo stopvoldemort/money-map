@@ -19,13 +19,14 @@ import AssetPurchaseFields from "./AssetPurchaseFields";
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
   initialValues: FormValuesType;
+  onClear: () => void;
 }
 
 const Header = ({ title }: { title: string }) => (
   <h4 className="mb-3 mt-4 text-start fw-bold display-7">{title}</h4>
 );
 
-const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues }) => {
+const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, onClear }) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -39,9 +40,15 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues }
     >
       {(formik) => (
         <Form onSubmit={formik.handleSubmit}>
-          <Button variant="primary" type="submit" className="mt-3">
-            See your money map
-          </Button>
+          <div className="d-flex justify-content-center position-relative mt-3">
+
+            <Button variant="primary" type="submit" className="mt-3">
+              See your money map
+            </Button>
+            <Button variant="outline-danger" onClick={onClear} className="mt-3 position-absolute end-0">
+              Reset
+            </Button>
+          </div>
           <Header title="Current Assets and Liabilities" />
           <Accordion alwaysOpen>
             <Section title="Savings and investments">
