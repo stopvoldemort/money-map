@@ -9,7 +9,6 @@ import DynamicFields from "./DynamicFields";
 import FieldsContainer from "./FieldsContainer";
 import AccountFields from "./AccountFields";
 import { FieldArray } from "formik";
-import { initialValues } from "./initialValues";
 import { FormValuesType } from "./types";
 import ScheduledDebtFields from "./ScheduledDebtFields";
 import OtherDebtFields from "./OtherDebtFields";
@@ -19,13 +18,14 @@ import AssetPurchaseFields from "./AssetPurchaseFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
+  initialValues: FormValuesType;
 }
 
 const Header = ({ title }: { title: string }) => (
   <h4 className="mb-3 mt-4 text-start fw-bold display-7">{title}</h4>
 );
 
-const FormComponent: React.FC<FormComponentProps> = ({ onUpdate }) => {
+const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues }) => {
   return (
     <Formik
       initialValues={initialValues}
