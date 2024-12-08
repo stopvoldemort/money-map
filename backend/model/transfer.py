@@ -59,3 +59,6 @@ class Transfer:
 
     def is_debt_transfer(self):
         return isinstance(self.transfer_to, Debt)
+
+    def __repr__(self):
+        return f"{self.name}: {self.amount}, {self.transfer_from.name}, {self.transfer_to.name}"
