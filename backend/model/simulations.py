@@ -42,6 +42,15 @@ class Simulations:
         dynamic: bool = False,
     ) -> Aggregator:
         aggregator = Aggregator()
+        aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))
+        aggregator.retirement.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.RETIREMENT))
+        aggregator.roth_ira.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.ROTH_IRA))
+        aggregator.investment.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.INVESTMENT))
+        aggregator.five_two_nine.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.FIVE_TWO_NINE))
+        aggregator.bank_account.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.BANK))
+        aggregator.debt.append(-sum(d.amount for d in debts))
+        aggregator.assets.append(sum(asset.value for asset in assets))
+
         for year in years:
             accounts, expenses, incomes, transfers, debts, assets, gifts = (
                 YearSimulator.execute(
@@ -57,74 +66,14 @@ class Simulations:
                     dynamic=dynamic,
                 )
             )
-            aggregator.net_worth.append(
-                sum(acct.balance() for acct in accounts)
-                + sum(asset.value for asset in assets)
-                - sum(d.amount for d in debts)
-            )
-            aggregator.assets.append(sum(asset.value for asset in assets))
-            aggregator.five_two_nine.append(
-                sum(
-                    account.balance()
-                    for account in accounts
-                    if account.account_type.name == AccountType.FIVE_TWO_NINE
-                )
-            )
-            aggregator.bank_account.append(
-                sum(
-                    account.balance()
-                    for account in accounts
-                    if account.account_type.name == AccountType.BANK
-                )
-            )
-            aggregator.investment.append(
-                sum(
-                    account.balance()
-                    for account in accounts
-                    if account.account_type.name == AccountType.INVESTMENT
-                )
-            )
-            aggregator.retirement.append(
-                sum(
-                    account.balance()
-                    for account in accounts
-                    if account.account_type.name == AccountType.RETIREMENT
-                )
-            )
-            aggregator.roth_ira.append(
-                sum(
-                    account.balance()
-                    for account in accounts
-                    if account.account_type.name == AccountType.ROTH_IRA
-                )
-            )
+            aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))
+            aggregator.retirement.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.RETIREMENT))
+            aggregator.roth_ira.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.ROTH_IRA))
+            aggregator.investment.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.INVESTMENT))
+            aggregator.five_two_nine.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.FIVE_TWO_NINE))
+            aggregator.bank_account.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.BANK))
             aggregator.debt.append(-sum(d.amount for d in debts))
-            aggregator.income.append(
-                sum(income.amount for income in incomes if income.year == year)
-            )
-            aggregator.expenses.append(
-                sum(
-                    expense.starting_amount
-                    for expense in expenses
-                    if expense.year == year and not expense.tax_payment
-                )
-            )
-            aggregator.taxes.append(
-                sum(
-                    expense.starting_amount
-                    for expense in expenses
-                    if expense.year == year and expense.tax_payment
-                )
-            )
-            aggregator.investment_gains.append(
-                sum(
-                    [
-                        sum(a.annual_growth for a in accounts),
-                        sum(a.annual_growth for a in assets),
-                        sum(-d.annual_growth for d in debts),
-                    ]
-                )
-            )
+            aggregator.assets.append(sum(asset.value for asset in assets))
         return aggregator
 
     def execute(self) -> Aggregator:

@@ -65,7 +65,9 @@ class Handler:
         for scheduled_debt_input in self.data["scheduled_debts"]:
             first_year_of_loan = 2025
             loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
-            debt = Debt(**scheduled_debt_input, scheduled=True)
+            aagr = scheduled_debt_input.pop("aagr", 0)
+            aagr = percentize(aagr)
+            debt = Debt(**scheduled_debt_input, aagr=aagr, scheduled=True)
             transfers = ScheduledDebt.generate_transfers(
                 debt=debt,
                 loan_amount=debt.amount,

@@ -44,7 +44,7 @@ const CustomizedDot = (props: { cx: number; cy: number; payload: NetWorthChartDa
     const { cx, cy, payload } = props;
     return (
         <g key={payload.year}>
-            {payload.year % 5 === 0 ? (
+            {[2024, 2030, 2035, 2040, 2045, 2050, 2055, 2060, 2065, 2070].includes(payload.year) ? (
                 <>
                     <circle cx={cx} cy={cy} r={4} fill="black" />
                     <text
@@ -68,6 +68,7 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 data={data}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 barSize={20}
+                stackOffset="sign"
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" label={{ value: 'Year', position: 'bottom' }} />
@@ -82,13 +83,13 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                     name="Net Worth"
                     dot={CustomizedDot}
                 />
+                <Bar dataKey="debt" stackId="stack" fill="rgba(255, 0, 0, 0.2)" stroke="rgb(255, 0, 0)" strokeWidth={1} name="Debt" />
                 <Bar dataKey="bank_account" stackId="stack" fill="rgba(0, 128, 0, 0.2)" stroke="rgb(0, 128, 0)" strokeWidth={1} name="Bank accounts" />
                 <Bar dataKey="investment" stackId="stack" fill="rgba(0, 0, 255, 0.2)" stroke="rgb(0, 0, 255)" strokeWidth={1} name="Investment accounts" />
                 <Bar dataKey="retirement" stackId="stack" fill="rgba(65, 105, 225, 0.2)" stroke="rgb(65, 105, 225)" strokeWidth={1} name="Traditional IRA/401k accounts" />
                 <Bar dataKey="roth_ira" stackId="stack" fill="rgba(128, 0, 128, 0.2)" stroke="rgb(128, 0, 128)" strokeWidth={1} name="Roth IRA/401k accounts" />
                 <Bar dataKey="five_two_nine" stackId="stack" fill="rgba(139, 69, 19, 0.2)" stroke="rgb(139, 69, 19)" strokeWidth={1} name="529 accounts" />
                 <Bar dataKey="assets" stackId="stack" fill="rgba(0, 100, 0, 0.2)" stroke="rgb(0, 100, 0)" strokeWidth={1} name="Assets" />
-                <Bar dataKey="debt" stackId="stack" fill="rgba(255, 0, 0, 0.2)" stroke="rgb(255, 0, 0)" strokeWidth={1} name="Debt" />
             </ComposedChart>
         </ResponsiveContainer>
     );
