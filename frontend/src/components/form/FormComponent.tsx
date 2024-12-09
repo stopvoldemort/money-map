@@ -141,7 +141,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Stock and bond returns, start and end years, etc. (TODO)">
+            <Section title="Investment returns, start and end years, etc. (TODO)">
               <FieldArray name="investment_vehicles">
                 {() => (
                   <FieldsContainer>

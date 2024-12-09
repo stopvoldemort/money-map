@@ -20,7 +20,7 @@ class Aggregator:
         self.assets.append(another_aggregator.assets)
         return self
 
-    def static_frontend(self):
+    def for_frontend(self):
         result = []
         # Assuming all lists have the same length and represent data for consecutive years
         for i in range(len(self.net_worth[0])):
