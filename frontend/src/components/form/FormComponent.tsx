@@ -32,7 +32,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
     <Formik
       initialValues={initialValues}
       onSubmit={async (values) => {
-        console.log("TRYING TO SUBMIT")
         try {
           onUpdate(values);
         } catch (error) {
@@ -43,7 +42,6 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
       {(formik) => (
         <Form onSubmit={(e) => {
           e.preventDefault();
-          console.log("SUBMITTING")
           formik.handleSubmit();
         }}>
           <div className="d-flex justify-content-center position-relative mt-3">

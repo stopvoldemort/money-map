@@ -27,3 +27,6 @@ class Debt:
         new_amount = self.amount * ((1 + self.aagr / 12)) ** 12
         self.annual_growth = new_amount - self.amount
         self.amount = self.amount + self.annual_growth
+
+    def __repr__(self):
+        return f"{self.name}: {self.amount}, {self.aagr}, {self.scheduled}"

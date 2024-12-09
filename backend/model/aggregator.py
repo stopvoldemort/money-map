@@ -1,3 +1,9 @@
+import numpy as np
+
+from logger import get_logger
+
+logger = get_logger()
+
 class Aggregator:
     def __init__(self):
         self.net_worth = []
@@ -37,3 +43,26 @@ class Aggregator:
             }
             result.append(year_data)
         return result
+
+    def dynamic_frontend(self):
+        data = np.array(self.net_worth)
+        years = range(2024, 2071)
+        histograms = {}
+        for i, year in enumerate(years):
+            column_values = data[:, i]
+            counts, bins = np.histogram(column_values, bins='auto')
+            total_count = counts.sum()
+            percentages = (counts / total_count * 100).tolist()
+
+            # Transform bins and percentages into a list of dictionaries for each year
+            histogram_data = [
+                {
+                    "bin": f"{float(bins[j]):.2f} - {float(bins[j + 1]):.2f}",
+                    "percentage": percentages[j]
+                }
+                for j in range(len(percentages))
+            ]
+
+            histograms[year] = histogram_data
+
+        return histograms

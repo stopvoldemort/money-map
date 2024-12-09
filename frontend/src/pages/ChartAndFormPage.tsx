@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import { Container, Row } from "react-bootstrap";
 import ChartComponent, { NetWorthChartData } from "../components/results/ChartComponent";
+import DynamicChartComponent, { YearsDynamicChartData } from "../components/results/DynamicChartComponent";
 import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
 import { initialValues } from "../components/form/initialValues";
@@ -10,6 +11,7 @@ declare const FORM_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
   const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
+  const [dynamicChartData, setDynamicChartData] = useState<YearsDynamicChartData>({});
   const [formKey, setFormKey] = useState(0);
 
   const values = useMemo(() => {
@@ -23,7 +25,7 @@ const ChartAndFormPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formKey]); // We pass the formKey as a dependency so that changing it triggers a re-render
 
-  const mutation = useMutation({
+  const fetchDynamicData = useMutation({
     mutationFn: async (formData: FormValuesType) => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
       if (backendUrl === "") {
@@ -31,13 +33,30 @@ const ChartAndFormPage: React.FC = () => {
         console.log("FRONTEND ENV:", import.meta.env);
       }
       const { data } = await axios.post(
-        `${backendUrl}/api/simulations/run`,
+        `${backendUrl}/api/simulations/dynamic`,
+        formData
+      );
+      return data;
+    },
+    onSuccess: (data: YearsDynamicChartData) => {
+      setDynamicChartData(data);
+    },
+  });
+
+  const fetchStaticData = useMutation({
+    mutationFn: async (formData: FormValuesType) => {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
+      if (backendUrl === "") {
+        console.log("VITE_BACKEND_URL is not set");
+        console.log("FRONTEND ENV:", import.meta.env);
+      }
+      const { data } = await axios.post(
+        `${backendUrl}/api/simulations/static`,
         formData
       );
       return data;
     },
     onSuccess: (data: NetWorthChartData[]) => {
-      console.log("Response:", data);
       setChartData(data);
     },
     onError: (error: AxiosError) => {
@@ -46,9 +65,9 @@ const ChartAndFormPage: React.FC = () => {
   });
 
   const handleUpdate = (formData: FormValuesType) => {
-    console.log("Form Data:", formData);
     localStorage.setItem(FORM_VERSION, JSON.stringify(formData));
-    mutation.mutate(formData);
+    fetchStaticData.mutate(formData);
+    fetchDynamicData.mutate(formData);
   };
 
   const handleClearForm = () => {
@@ -67,6 +86,11 @@ const ChartAndFormPage: React.FC = () => {
       <Row className="my-5" style={{ height: "400px" }}>
         <ChartComponent
           data={chartData}
+        />
+      </Row>
+      <Row className="my-5" style={{ height: "400px" }}>
+        <DynamicChartComponent
+          data={dynamicChartData}
         />
       </Row>
       <Row className="my-5">

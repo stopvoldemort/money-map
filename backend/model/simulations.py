@@ -15,6 +15,11 @@ from requests.handler import Handler
 from model.config import Config
 
 
+from logger import get_logger
+
+logger = get_logger()
+
+
 class Simulations:
     def __init__(
         self,
@@ -81,6 +86,7 @@ class Simulations:
         years = list(range(self.first_year, self.last_year))
 
         number_of_simulations = 1
+        logger.info(f"Dynamic: {self.dynamic}")
         if self.dynamic:
             number_of_simulations = 1000
 
