@@ -44,7 +44,7 @@ const CustomizedDot = (props: { cx: number; cy: number; payload: NetWorthChartDa
     const { cx, cy, payload } = props;
     return (
         <g key={payload.year}>
-            {[2024, 2030, 2035, 2040, 2045, 2050, 2055, 2060, 2065, 2070].includes(payload.year) ? (
+            {payload.year % 4 === 0 ? (
                 <>
                     <circle cx={cx} cy={cy} r={4} fill="black" />
                     <text

@@ -9,6 +9,7 @@ export interface FormValuesType {
   other_debts: OtherDebtFieldsType[];
   transfers: TransferFieldsType[];
   house_purchases: AssetPurchaseFieldsType[];
+  config: ConfigFieldsType;
 }
 
 export interface AccountFieldsType {
@@ -47,16 +48,14 @@ export interface OtherIncomeFieldsType {
   amount: number;
   years: number[];
   federal_income_tax: boolean;
-  ny_income_tax: boolean;
-  nyc_income_tax: boolean;
+  state_income_tax: boolean;
+  local_income_tax: boolean;
   payroll_tax: boolean;
 }
 
 export interface InvestmentVehicleFieldsType {
   name: string;
   aagr: number;
-  dynamic_mean: number;
-  dynamic_std_dev: number;
 }
 
 export interface AssetFieldsType {
@@ -100,4 +99,11 @@ export interface AssetPurchaseFieldsType {
   annual_upkeep_cost: number;
   closing_costs_proportion: number;
   aagr: number;
+}
+
+export interface ConfigFieldsType {
+  first_year: number;
+  last_year: number;
+  state: string;
+  locality: string;
 }

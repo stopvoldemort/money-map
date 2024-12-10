@@ -1,6 +1,7 @@
 import { Col, Row, InputGroup } from "react-bootstrap";
 import { Field } from "formik";
 import YearsInput from "../inputs/YearsInput";
+import CollapsibleDetails from "./CollabsibleDetails";
 
 const OtherIncomeFields = ({ index }: { index: number }) => {
   return (
@@ -34,66 +35,68 @@ const OtherIncomeFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="my-1">
-        <Col>
-          <div className="form-check d-flex gap-2">
-            <Field
-              type="checkbox"
-              name={`${OtherIncomeFields.fieldsKey}.${index}.federal_income_tax`}
-              className="form-check-input"
-              id={`federal-tax-${index}`}
-            />
-            <label
-              className="form-check-label"
-              htmlFor={`federal-tax-${index}`}
-            >
-              Federal Income Tax
-            </label>
-          </div>
-        </Col>
-        <Col>
-          <div className="form-check d-flex gap-2">
-            <Field
-              type="checkbox"
-              name={`${OtherIncomeFields.fieldsKey}.${index}.ny_income_tax`}
-              className="form-check-input"
-              id={`ny-tax-${index}`}
-            />
-            <label className="form-check-label" htmlFor={`ny-tax-${index}`}>
-              NY Income Tax
-            </label>
-          </div>
-        </Col>
-        <Col>
-          <div className="form-check d-flex gap-2">
-            <Field
-              type="checkbox"
-              name={`${OtherIncomeFields.fieldsKey}.${index}.nyc_income_tax`}
-              className="form-check-input"
-              id={`nyc-tax-${index}`}
-            />
-            <label className="form-check-label" htmlFor={`nyc-tax-${index}`}>
-              NYC Income Tax
-            </label>
-          </div>
-        </Col>
-        <Col>
-          <div className="form-check d-flex gap-2">
-            <Field
-              type="checkbox"
-              name={`${OtherIncomeFields.fieldsKey}.${index}.payroll_tax`}
-              className="form-check-input"
-              id={`payroll-tax-${index}`}
-            />
-            <label
-              className="form-check-label"
-              htmlFor={`payroll-tax-${index}`}
-            >
-              Payroll Tax
-            </label>
-          </div>
-        </Col>
-      </Row>
+      <CollapsibleDetails label="Edit tax treatment">
+        <Row className="my-1">
+          <Col>
+            <div className="form-check d-flex gap-2">
+              <Field
+                type="checkbox"
+                name={`${OtherIncomeFields.fieldsKey}.${index}.federal_income_tax`}
+                className="form-check-input"
+                id={`federal-tax-${index}`}
+              />
+              <label
+                className="form-check-label"
+                htmlFor={`federal-tax-${index}`}
+              >
+                Federal Income Tax
+              </label>
+            </div>
+          </Col>
+          <Col>
+            <div className="form-check d-flex gap-2">
+              <Field
+                type="checkbox"
+                name={`${OtherIncomeFields.fieldsKey}.${index}.state_income_tax`}
+                className="form-check-input"
+                id={`state-tax-${index}`}
+              />
+              <label className="form-check-label" htmlFor={`state-tax-${index}`}>
+                State Income Tax
+              </label>
+            </div>
+          </Col>
+          <Col>
+            <div className="form-check d-flex gap-2">
+              <Field
+                type="checkbox"
+                name={`${OtherIncomeFields.fieldsKey}.${index}.local_income_tax`}
+                className="form-check-input"
+                id={`local-tax-${index}`}
+              />
+              <label className="form-check-label" htmlFor={`local-tax-${index}`}>
+                Local Income Tax
+              </label>
+            </div>
+          </Col>
+          <Col>
+            <div className="form-check d-flex gap-2">
+              <Field
+                type="checkbox"
+                name={`${OtherIncomeFields.fieldsKey}.${index}.payroll_tax`}
+                className="form-check-input"
+                id={`payroll-tax-${index}`}
+              />
+              <label
+                className="form-check-label"
+                htmlFor={`payroll-tax-${index}`}
+              >
+                Payroll Tax
+              </label>
+            </div>
+          </Col>
+        </Row>
+      </CollapsibleDetails>
     </>
   );
 };
@@ -103,8 +106,8 @@ OtherIncomeFields.initialValues = {
   amount: 0,
   years: [],
   federal_income_tax: true,
-  ny_income_tax: true,
-  nyc_income_tax: true,
+  state_income_tax: true,
+  local_income_tax: true,
   payroll_tax: true,
 };
 

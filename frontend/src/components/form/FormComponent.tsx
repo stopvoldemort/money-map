@@ -15,7 +15,7 @@ import OtherDebtFields from "./OtherDebtFields";
 import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
 import HousePurchaseFields from "./HousePurchaseFields";
-import InvestmentVehiclesFields from "./InvestmentVehiclesFields";
+import ConfigFields from "./ConfigFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -40,11 +40,11 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
         }
       }}
     >
-      {(formik) => (
+      {({ handleSubmit, values }) => (
         <Form onSubmit={(e) => {
           e.preventDefault();
           console.log("SUBMITTING")
-          formik.handleSubmit();
+          handleSubmit();
         }}>
           <div className="d-flex justify-content-center position-relative mt-3">
             <Button variant="primary" type="submit" className="mt-3">
@@ -56,7 +56,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
           </div>
           <Header title="Current Assets and Liabilities" />
           <Accordion alwaysOpen>
-            <Section title="Savings and investments">
+            <Section title="Savings and investments" summary={`(${values.accounts.length})`}>
               <FieldArray name="accounts">
                 {() => (
                   <FieldsContainer>
@@ -69,26 +69,26 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
                 )}
               </FieldArray>
             </Section>
-            <Section title="Other assets" infoText="Any other assets you have, like real estate.">
+            <Section title="Other assets" summary={`(${values.assets.length})`} infoText="Any other assets you have, like real estate.">
               <DynamicFields
                 name={AssetFields.fieldsKey}
-                values={formik.values.assets}
+                values={values.assets}
                 initialValues={AssetFields.initialValues}
                 fieldsComponent={AssetFields}
               />
             </Section>
-            <Section title="Long-term loans" infoText="Long-term loans are loans that are paid back through regular scheduled payments, like student loans or mortgages.">
+            <Section title="Long-term loans" summary={`(${values.scheduled_debts.length})`} infoText="Long-term loans are loans that are paid back through regular scheduled payments, like student loans or mortgages.">
               <DynamicFields
                 name={ScheduledDebtFields.fieldsKey}
-                values={formik.values.scheduled_debts}
+                values={values.scheduled_debts}
                 initialValues={ScheduledDebtFields.initialValues}
                 fieldsComponent={ScheduledDebtFields}
               />
             </Section>
-            <Section title="Other debts" infoText="Any other debts you have, like credit card debt or personal loans.">
+            <Section title="Other debts" summary={`(${values.other_debts.length})`} infoText="Any other debts you have, like credit card debt or personal loans.">
               <DynamicFields
                 name={OtherDebtFields.fieldsKey}
-                values={formik.values.other_debts}
+                values={values.other_debts}
                 initialValues={OtherDebtFields.initialValues}
                 fieldsComponent={OtherDebtFields}
               />
@@ -97,42 +97,42 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Future Income and Expenses" />
           <Accordion alwaysOpen>
-            <Section title="Expected salary">
+            <Section title="Expected salary" summary={`(${values.salaries.length})`}>
               <DynamicFields
                 name={SalaryFields.fieldsKey}
-                values={formik.values.salaries}
+                values={values.salaries}
                 initialValues={SalaryFields.initialValues}
                 fieldsComponent={SalaryFields}
               />
             </Section>
-            <Section title="Other income" infoText="Other income expected in the future, like social security.">
+            <Section title="Other income" summary={`(${values.other_incomes.length})`} infoText="Other income expected in the future, like social security.">
               <DynamicFields
                 name={OtherIncomeFields.fieldsKey}
-                values={formik.values.other_incomes}
+                values={values.other_incomes}
                 initialValues={OtherIncomeFields.initialValues}
                 fieldsComponent={OtherIncomeFields}
               />
             </Section>
-            <Section title="Expected expenses" infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc.">
+            <Section title="Expected expenses" summary={`(${values.expenses.length})`} infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc.">
               <DynamicFields
                 name={ExpenseFields.fieldsKey}
-                values={formik.values.expenses}
+                values={values.expenses}
                 initialValues={ExpenseFields.initialValues}
                 fieldsComponent={ExpenseFields}
               />
             </Section>
-            <Section title="Expected home & property purchases">
+            <Section title="Expected home & property purchases" summary={`(${values.house_purchases.length})`}>
               <DynamicFields
                 name={HousePurchaseFields.fieldsKey}
-                values={formik.values.house_purchases}
+                values={values.house_purchases}
                 initialValues={HousePurchaseFields.initialValues}
                 fieldsComponent={HousePurchaseFields}
               />
             </Section>
-            <Section title="Transfers between accounts" infoText="Transfers between your accounts, like from a bank account to a 529 account. These will only occur if there's enough money in the source account to cover the transfer.">
+            <Section title="Transfers between accounts" summary={`(${values.transfers.length})`} infoText="Transfers between your accounts, like from a bank account to a 529 account. These will only occur if there's enough money in the source account to cover the transfer.">
               <DynamicFields
                 name={TransferFields.fieldsKey}
-                values={formik.values.transfers}
+                values={values.transfers}
                 initialValues={TransferFields.initialValues}
                 fieldsComponent={TransferFields}
               />
@@ -141,15 +141,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Stock and bond returns, start and end years, etc. (TODO)">
-              <FieldArray name="investment_vehicles">
-                {() => (
-                  <FieldsContainer>
-                    <InvestmentVehiclesFields index={0} />
-                    <InvestmentVehiclesFields index={1} />
-                  </FieldsContainer>
-                )}
-              </FieldArray>
+            <Section title="Investment returns, start and end years, etc.">
+              <ConfigFields />
             </Section>
           </Accordion>
         </Form>
