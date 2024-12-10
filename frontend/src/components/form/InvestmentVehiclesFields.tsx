@@ -20,20 +20,6 @@ const InvestmentVehiclesFields = ({ index }: { index: number }) => {
           label={`${values.investment_vehicles[index].name} AAGR`}
         />
       </Col>
-      {/* <Col xs={12} md={4}>
-        <PercentInput
-          name={`${fieldsKey}.${index}.dynamic_mean`}
-          label="Dynamic mean"
-          infoText='TODO: Add a description'
-        />
-      </Col>
-      <Col xs={12} md={4}>
-        <PercentInput
-          name={`${fieldsKey}.${index}.dynamic_std_dev`}
-          label="Dynamic SD"
-          infoText='TODO: Add a description'
-        />
-      </Col> */}
     </Row>
   )
 }

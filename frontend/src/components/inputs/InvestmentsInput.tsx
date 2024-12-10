@@ -81,14 +81,14 @@ const InvestmentsInput: React.FC<InvestmentsInputProps> = ({
     <svg width={width} height={height} style={{ margin: '20px' }}>
       {/* Legend */}
       <g transform={`translate(${width - padding - 100}, ${padding})`}>
-        <rect x={0} y={0} width={10} height={10} fill="steelblue" />
-        <text x={15} y={10} fontSize={10}>
-          Stocks
-        </text>
-        <rect x={0} y={20} width={10} height={10} fill="green" />
-        <text x={15} y={30} fontSize={10}>
-          Bonds
-        </text>
+        {linesData.map((lineData, index) => (
+          <React.Fragment key={lineData.name}>
+            <rect x={0} y={index * 20} width={10} height={10} fill={lineData.color} />
+            <text x={15} y={index * 20 + 10} fontSize={10}>
+              {lineData.name}
+            </text>
+          </React.Fragment>
+        ))}
       </g>
       {/* X-Axis */}
       <line

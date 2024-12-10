@@ -15,7 +15,7 @@ const ChartAndFormPage: React.FC = () => {
   const values = useMemo(() => {
     let values = initialValues;
     const savedFormJSON = localStorage.getItem(FORM_VERSION)
-    if (savedFormJSON) {
+    if (savedFormJSON && FORM_VERSION !== "dev") {
       console.log("Using saved values")
       values = JSON.parse(savedFormJSON)
     }

@@ -35,9 +35,8 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 ### TODO:
 
 - IMPROVE THIS README
-- Users can choose start and end dates
+- Edit income tax brackets
 - Maybe stop caching form values in local storage
-- More investment vehicles (money market)
 - Add HSA accounts
 - Add a ceiling on bank accounts, after which money goes into investments.
 - User can configure what year they can start withdrawing from retirement accounts.

@@ -5,7 +5,7 @@ class TaxCalculator:
     def capital_gains_tax_rate(self):
         return 0.15
 
-    def calculate_ny_income_tax(self, income: float) -> float:
+    def calculate_state_income_tax(self, income: float) -> float:
         ny_tax_brackets = [
             [0.0, 0.0],
             [0.04, 17150.0],
@@ -48,7 +48,7 @@ class TaxCalculator:
             income, federal_standard_deduction, federal_tax_brackets
         )
 
-    def calculate_nyc_income_tax(self, income: float) -> float:
+    def calculate_local_income_tax(self, income: float) -> float:
         nyc_tax_brackets = [
             [0.0, 0.0],
             [0.03078, 21600.0],

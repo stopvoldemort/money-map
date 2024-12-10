@@ -83,29 +83,29 @@ class YearSimulator:
         )
 
         # state
-        ny_tax_eligible_income = sum(
-            income.amount for income in annual_incomes if income.ny_income_tax
+        state_tax_eligible_income = sum(
+            income.amount for income in annual_incomes if income.state_income_tax
         )
-        ny_tax_eligible_income -= sum(
+        state_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
             if isinstance(transfer.transfer_to, Account)
             and transfer.transfer_to.account_type.state_income_tax_deductible
         )
-        ny_income_taxes = tax_calculator.calculate_ny_income_tax(ny_tax_eligible_income)
+        state_income_taxes = tax_calculator.calculate_state_income_tax(state_tax_eligible_income)
 
         # local
-        nyc_tax_eligible_income = sum(
-            income.amount for income in annual_incomes if income.nyc_income_tax
+        local_tax_eligible_income = sum(
+            income.amount for income in annual_incomes if income.local_income_tax
         )
-        nyc_tax_eligible_income -= sum(
+        local_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
             if isinstance(transfer.transfer_to, Account)
             and transfer.transfer_to.account_type.local_income_tax_deductible
         )
-        nyc_income_taxes = tax_calculator.calculate_nyc_income_tax(
-            nyc_tax_eligible_income
+        local_income_taxes = tax_calculator.calculate_local_income_tax(
+            local_tax_eligible_income
         )
 
         asset_taxes = 0.0
@@ -117,8 +117,8 @@ class YearSimulator:
                 f"taxes for {year}",
                 payroll_taxes
                 + federal_income_taxes
-                + ny_income_taxes
-                + nyc_income_taxes
+                + state_income_taxes
+                + local_income_taxes
                 + asset_taxes,
                 year,
                 tax_payment=True,
@@ -160,16 +160,16 @@ class YearSimulator:
             - federal_income_taxes
         )
         extra_income_taxes += (
-            tax_calculator.calculate_ny_income_tax(
-                ny_tax_eligible_income + extra_income
+            tax_calculator.calculate_state_income_tax(
+                state_tax_eligible_income + extra_income
             )
-            - ny_income_taxes
+            - state_income_taxes
         )
         extra_income_taxes += (
-            tax_calculator.calculate_nyc_income_tax(
-                nyc_tax_eligible_income + extra_income
+            tax_calculator.calculate_local_income_tax(
+                local_tax_eligible_income + extra_income
             )
-            - nyc_income_taxes
+            - local_income_taxes
         )
 
         if capital_gains > 0:

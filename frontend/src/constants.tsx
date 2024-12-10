@@ -19,4 +19,5 @@ export const ACCOUNT_TYPES: { [key: string]: AccountType } = {
 export const INVESTMENT_VEHICLES = {
   STOCKS: "Stocks",
   BONDS: "Bonds",
+  MONEY_MARKET: "Money market",
 };

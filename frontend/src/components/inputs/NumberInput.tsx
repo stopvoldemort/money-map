@@ -3,18 +3,16 @@ import { InputGroup } from "react-bootstrap";
 import InfoPopover from "../form/InfoPopover";
 
 
-const TextInput = ({
+const NumberInput = ({
   name,
   label,
   infoText,
   suffixText,
-  disabled = false,
 }: {
   name: string;
   label: string;
   infoText?: string;
   suffixText?: string;
-  disabled?: boolean;
 }) => {
   return (
     <InputGroup>
@@ -22,11 +20,10 @@ const TextInput = ({
         {label}
       </span>
       <Field
-        type="text"
+        type="number"
         name={name}
         className="form-control"
         style={{ maxWidth: "200px", minWidth: "80px" }}
-        disabled={disabled}
       />
       {suffixText && (
         <InputGroup.Text>{suffixText}</InputGroup.Text>
@@ -38,4 +35,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default NumberInput;
