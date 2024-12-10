@@ -1,5 +1,6 @@
 class Aggregator:
-    def __init__(self):
+    def __init__(self, first_year: int):
+        self.first_year = first_year
         self.net_worth = []
         self.assets = []
         self.retirement = []
@@ -23,17 +24,17 @@ class Aggregator:
     def for_frontend(self):
         result = []
         # Assuming all lists have the same length and represent data for consecutive years
-        for i in range(len(self.net_worth[0])):
+        for i in range(len(self.net_worth)):
             year_data = {
-                "year": 2024 + i,  # Assuming starting year is 2024
-                "net_worth": self.net_worth[0][i],
-                "assets": self.assets[0][i],
-                "retirement": self.retirement[0][i],
-                "roth_ira": self.roth_ira[0][i],
-                "investment": self.investment[0][i],
-                "five_two_nine": self.five_two_nine[0][i],
-                "bank_account": self.bank_account[0][i],
-                "debt": self.debt[0][i]
+                "year": self.first_year + i,
+                "net_worth": self.net_worth[i],
+                "assets": self.assets[i],
+                "retirement": self.retirement[i],
+                "roth_ira": self.roth_ira[i],
+                "investment": self.investment[i],
+                "five_two_nine": self.five_two_nine[i],
+                "bank_account": self.bank_account[i],
+                "debt": self.debt[i]
             }
             result.append(year_data)
         return result

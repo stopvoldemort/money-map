@@ -14,7 +14,7 @@ const InvestmentVehiclesFields = ({ index }: { index: number }) => {
         type="hidden"
         name={`${fieldsKey}.${index}.name`}
       />
-      <Col xs={12} md={4}>
+      <Col>
         <PercentInput
           name={`${fieldsKey}.${index}.aagr`}
           label={`${values.investment_vehicles[index].name} AAGR`}

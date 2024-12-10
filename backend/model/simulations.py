@@ -18,19 +18,12 @@ from model.config import Config
 class Simulations:
     def __init__(
         self,
-        data: dict,
-        first_year: int,
-        last_year: int,
-        mode: str,
+        config: Config,
     ):
-        self.data = data
-        self.first_year = first_year
-        self.last_year = last_year
-        self.dynamic = mode == Config.DYNAMIC
+        self.config = config
 
-    def execute_simulation(
+    def execute(
         self,
-        years: List[int],
         investment_vehicles: List[InvestmentVehicle],
         accounts: List[Account],
         expenses: List[Expense],
@@ -39,9 +32,8 @@ class Simulations:
         debts: List[Debt],
         assets: List[Asset],
         gifts: List[Gift],
-        dynamic: bool = False,
     ) -> Aggregator:
-        aggregator = Aggregator()
+        aggregator = Aggregator(self.config.first_year)
         aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))
         aggregator.retirement.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.RETIREMENT))
         aggregator.roth_ira.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.ROTH_IRA))
@@ -51,7 +43,7 @@ class Simulations:
         aggregator.debt.append(-sum(d.amount for d in debts))
         aggregator.assets.append(sum(asset.value for asset in assets))
 
-        for year in years:
+        for year in range(self.config.first_year, self.config.last_year):
             accounts, expenses, incomes, transfers, debts, assets, gifts = (
                 YearSimulator.execute(
                     year=year,
@@ -63,7 +55,6 @@ class Simulations:
                     debts=debts,
                     assets=assets,
                     gifts=gifts,
-                    dynamic=dynamic,
                 )
             )
             aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))
@@ -74,29 +65,4 @@ class Simulations:
             aggregator.bank_account.append(sum(account.balance() for account in accounts if account.account_type.name == AccountType.BANK))
             aggregator.debt.append(-sum(d.amount for d in debts))
             aggregator.assets.append(sum(asset.value for asset in assets))
-        return aggregator
-
-    def execute(self) -> Aggregator:
-        aggregator = Aggregator()
-        years = list(range(self.first_year, self.last_year))
-
-        number_of_simulations = 1
-        if self.dynamic:
-            number_of_simulations = 1000
-
-        for i in range(0, number_of_simulations):
-            parsed = Handler(copy.deepcopy(self.data))
-            results = self.execute_simulation(
-                years,
-                investment_vehicles=parsed.investment_vehicles,
-                accounts=parsed.accounts,
-                expenses=parsed.expenses,
-                incomes=parsed.incomes,
-                transfers=parsed.transfers,
-                debts=parsed.debts,
-                assets=parsed.assets,
-                gifts=parsed.gifts,
-                dynamic=self.dynamic,
-            )
-            aggregator.append(results)
         return aggregator

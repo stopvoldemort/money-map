@@ -193,4 +193,8 @@ export const initialValues = {
       dynamic_std_dev: 8.55,
     },
   ],
+  config: {
+    first_year: YEARS.START,
+    last_year: YEARS.END,
+  },
 };

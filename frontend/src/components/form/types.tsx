@@ -9,6 +9,7 @@ export interface FormValuesType {
   other_debts: OtherDebtFieldsType[];
   transfers: TransferFieldsType[];
   house_purchases: AssetPurchaseFieldsType[];
+  config: ConfigFieldsType;
 }
 
 export interface AccountFieldsType {
@@ -100,4 +101,9 @@ export interface AssetPurchaseFieldsType {
   annual_upkeep_cost: number;
   closing_costs_proportion: number;
   aagr: number;
+}
+
+export interface ConfigFieldsType {
+  first_year: number;
+  last_year: number;
 }

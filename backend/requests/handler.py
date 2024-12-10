@@ -16,6 +16,7 @@ from requests.account_parser import account_parser
 from requests.salary_parser import parse_salary_input
 from requests.house_purchase_parser import parse_house_purchase
 from requests.investment_vehicle_parser import parse_investment_vehicle
+from requests.config_parser import parse_config
 from requests.utilities import percentize
 
 initial_form_data = {
@@ -131,6 +132,8 @@ class Handler:
             self.debts.append(house_debt)
             self.expenses.extend(house_expenses)
             self.transfers.extend(house_transfers)
+
+        self.config = parse_config(self.data["config"])
 
     def get_account_by_type(self, account_type):
         for account in self.accounts:

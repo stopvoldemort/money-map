@@ -15,7 +15,7 @@ import OtherDebtFields from "./OtherDebtFields";
 import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
 import HousePurchaseFields from "./HousePurchaseFields";
-import InvestmentVehiclesFields from "./InvestmentVehiclesFields";
+import ConfigFields from "./ConfigFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -141,15 +141,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Investment returns, start and end years, etc. (TODO)">
-              <FieldArray name="investment_vehicles">
-                {() => (
-                  <FieldsContainer>
-                    <InvestmentVehiclesFields index={0} />
-                    <InvestmentVehiclesFields index={1} />
-                  </FieldsContainer>
-                )}
-              </FieldArray>
+            <Section title="Investment returns, start and end years, etc.">
+              <ConfigFields />
             </Section>
           </Accordion>
         </Form>
