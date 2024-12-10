@@ -105,6 +105,9 @@ const ChartAndFormPage: React.FC = () => {
                 assumptions about what your future income and expenses will be.
                 Nothing you enter here will be saved.
               </p>
+              <p>
+                The tool is currently in development. The code is available on <a href="https://github.com/stopvoldemort/money-map" target="_blank" rel="noopener noreferrer">GitHub</a>.
+              </p>
             </Card.Body>
           </Card>
         </Row>
@@ -119,7 +122,7 @@ const ChartAndFormPage: React.FC = () => {
                 I hope that this tool will mean that you don't have to hire one either.
               </Card.Text>
               <Card.Text>
-                (Nothing against financial planners, of course.)
+                (Nothing against financial planners.)
               </Card.Text>
               <Card.Text>
                 Find me on{' '}
