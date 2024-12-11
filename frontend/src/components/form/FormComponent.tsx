@@ -16,6 +16,7 @@ import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
 import HousePurchaseFields from "./HousePurchaseFields";
 import ConfigFields from "./ConfigFields";
+import SocialSecurityFields from "./SocialSecurityFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -103,6 +104,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
                 values={values.salaries}
                 initialValues={SalaryFields.initialValues}
                 fieldsComponent={SalaryFields}
+              />
+            </Section>
+            <Section title="Expected social security" summary={`(${values.salaries.length})`}>
+              <DynamicFields
+                name={SocialSecurityFields.fieldsKey}
+                values={values.social_security}
+                initialValues={SocialSecurityFields.initialValues}
+                fieldsComponent={SocialSecurityFields}
               />
             </Section>
             <Section title="Other income" summary={`(${values.other_incomes.length})`} infoText="Other income expected in the future, like social security.">

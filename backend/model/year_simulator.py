@@ -8,7 +8,6 @@ from model.income import Income
 from model.transfer import Transfer
 from model.debt import Debt
 from model.asset import Asset
-from model.gift import Gift
 from model.payer import Payer
 from model.withdrawal_tax_type import WithdrawalTaxType
 
@@ -25,7 +24,6 @@ class YearSimulator:
         transfers: List[Transfer],
         debts: List[Debt],
         assets: List[Asset],
-        gifts: List[Gift],
         dynamic: bool = False,
     ) -> Tuple[
         List[Account],
@@ -34,7 +32,6 @@ class YearSimulator:
         List[Transfer],
         List[Debt],
         List[Asset],
-        List[Gift],
     ]:
         # SETUP
         withdrawals = []
@@ -44,16 +41,11 @@ class YearSimulator:
             iv.conditionally_reset_aagr(dynamic)
 
         annual_incomes = [income for income in incomes if income.year == year]
-        annual_gifts = [gift for gift in gifts if gift.year == year]
         annual_transfers = [transfer for transfer in transfers if transfer.year == year]
 
         # DEPOSIT INCOME
         for income in annual_incomes:
             income.deposit_in.deposit(income.amount)
-
-        # GIFTS
-        for gift in annual_gifts:
-            gift.receive()
 
         # TRANSFERS
         for transfer in annual_transfers:
@@ -203,4 +195,4 @@ class YearSimulator:
         for asset in assets:
             asset.apply_annual_growth()
 
-        return accounts, expenses, incomes, transfers, debts, assets, gifts
+        return accounts, expenses, incomes, transfers, debts, assets

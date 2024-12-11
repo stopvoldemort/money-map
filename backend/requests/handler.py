@@ -1,19 +1,14 @@
-from model.account import Account
 from model.account_type import AccountType
 from model.debt import Debt
 from model.asset import Asset
 from model.expense import Expense
 from model.income import Income
-from model.annual_investment_allocation import AnnualInvestmentAllocation
-from model.investment_proportion import InvestmentProportion
-from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
-from model.gift import Gift
 from model.scheduled_debt import ScheduledDebt
-from model.house_purchase import HousePurchase
 from logger import get_logger
 from requests.account_parser import account_parser
 from requests.salary_parser import parse_salary_input
+from requests.social_security_parser import parse_social_security_input
 from requests.house_purchase_parser import parse_house_purchase
 from requests.investment_vehicle_parser import parse_investment_vehicle
 from requests.config_parser import parse_config
@@ -27,9 +22,9 @@ initial_form_data = {
     "transfers": [],
     "other_debts": [],
     "assets": [],
-    "gifts": [],
     "scheduled_debts": [],
     "house_purchases": [],
+    "social_security": [],
 }
 
 
@@ -43,8 +38,10 @@ class Handler:
         self.transfers = []
         self.debts = []
         self.assets = []
-        self.gifts = []
         self.house_purchases = []
+
+
+        self.config = parse_config(self.data["config"])
 
         for investment_vehicle_input in self.data["investment_vehicles"]:
             self.investment_vehicles.append(
@@ -87,14 +84,6 @@ class Handler:
             tax_rate = percentize(tax_rate)
             self.assets.append(Asset(**asset_input, aagr=aagr, tax_rate=tax_rate))
 
-        for gift_input in self.data["gifts"]:
-            account = self.find_object_by_name(
-                self.accounts, gift_input.pop("account", None)
-            )
-            years = self.parse_years(gift_input.pop("years", []))
-            for year in years:
-                self.gifts.append(Gift(**gift_input, account=account, year=year))
-
         for expense_input in self.data["expenses"]:
             years = expense_input.pop("years", [])
             for year in years:
@@ -104,6 +93,10 @@ class Handler:
             incomes, transfers = parse_salary_input(salary_input, bank_account, retirement_account, roth_account)
             self.incomes.extend(incomes)
             self.transfers.extend(transfers)
+
+        for social_security_input in self.data["social_security"]:
+            incomes = parse_social_security_input(social_security_input, bank_account, self.config.last_year)
+            self.incomes.extend(incomes)
 
         for other_income_input in self.data["other_incomes"]:
             years = other_income_input.pop("years", [])
@@ -133,8 +126,6 @@ class Handler:
             self.expenses.extend(house_expenses)
             self.transfers.extend(house_transfers)
 
-        self.config = parse_config(self.data["config"])
-
     def get_account_by_type(self, account_type):
         for account in self.accounts:
             if account.account_type.name == account_type:
@@ -158,28 +149,3 @@ class Handler:
         raise ValueError(
             f"can't find object with name {object_type}"
         )  # Raise if no match is found
-
-    @staticmethod
-    def parse_years(input_string):
-        years = set()
-        input_string = input_string.replace(" ", "")  # Remove any spaces
-        parts = input_string.split(",")
-
-        for part in parts:
-            if "-" in part:
-                try:
-                    start, end = part.split("-")
-                    start, end = int(start), int(end)
-                    if start > end:
-                        start, end = end, start
-                    years.update(range(start, end + 1))
-                except ValueError:
-                    continue  # Skip invalid ranges
-            else:
-                try:
-                    year = int(part)
-                    years.add(year)
-                except ValueError:
-                    continue  # Skip invalid years
-
-        return sorted(years)

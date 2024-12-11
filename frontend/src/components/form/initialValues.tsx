@@ -4,6 +4,7 @@ import { ACCOUNT_TYPES, INVESTMENT_VEHICLES, YEARS } from "../../constants";
 export const initialValues = {
   expenses: [],
   salaries: [],
+  social_security: [],
   other_incomes: [],
   assets: [],
   house_purchases: [],

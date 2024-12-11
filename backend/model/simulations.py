@@ -6,7 +6,6 @@ from model.aggregator import Aggregator
 from model.asset import Asset
 from model.debt import Debt
 from model.expense import Expense
-from model.gift import Gift
 from model.income import Income
 from model.investment_vehicle import InvestmentVehicle
 from model.transfer import Transfer
@@ -31,7 +30,6 @@ class Simulations:
         transfers: List[Transfer],
         debts: List[Debt],
         assets: List[Asset],
-        gifts: List[Gift],
     ) -> Aggregator:
         aggregator = Aggregator(self.config.first_year)
         aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))
@@ -44,7 +42,7 @@ class Simulations:
         aggregator.assets.append(sum(asset.value for asset in assets))
 
         for year in range(self.config.first_year, self.config.last_year):
-            accounts, expenses, incomes, transfers, debts, assets, gifts = (
+            accounts, expenses, incomes, transfers, debts, assets = (
                 YearSimulator.execute(
                     year=year,
                     investment_vehicles=investment_vehicles,
@@ -54,7 +52,6 @@ class Simulations:
                     transfers=transfers,
                     debts=debts,
                     assets=assets,
-                    gifts=gifts,
                 )
             )
             aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))
