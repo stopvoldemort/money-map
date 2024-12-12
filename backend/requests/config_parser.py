@@ -6,5 +6,6 @@ def parse_config(config: dict) -> Config:
         first_year=max(config["first_year"], 2024),
         last_year=min(config["last_year"], 2070),
         retirement_withdrawal_year=config["retirement_withdrawal_year"],
-        unscheduled_debt_interest_rate=percentize(config["unscheduled_debt_interest_rate"])
+        unscheduled_debt_interest_rate=percentize(config["unscheduled_debt_interest_rate"]),
+        maximum_bank_account_balance=config["maximum_bank_account_balance"]
     )

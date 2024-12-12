@@ -54,6 +54,10 @@ class Handler:
         bank_account = self.get_account_by_type(AccountType.BANK)
         retirement_account = self.get_account_by_type(AccountType.RETIREMENT)
         roth_account = self.get_account_by_type(AccountType.ROTH_IRA)
+        investment_account = self.get_account_by_type(AccountType.INVESTMENT)
+
+        bank_account.maximum_balance = self.config.maximum_bank_account_balance
+        bank_account.syphon_excess_to = investment_account
 
         for debt_input in self.data["other_debts"]:
             aagr = debt_input.pop("aagr", 0)

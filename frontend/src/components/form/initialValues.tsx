@@ -263,5 +263,6 @@ export const initialValues = {
     locality: "NYC",
     retirement_withdrawal_year: 2039,
     unscheduled_debt_interest_rate: 15.5,
+    maximum_bank_account_balance: 20000,
   },
 };

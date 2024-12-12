@@ -1,5 +1,5 @@
+from __future__ import annotations
 from typing import Tuple, Optional
-from model.account import Account
 from model.debt import Debt
 from model.expense import Expense
 from model.withdrawal import Withdrawal
@@ -11,8 +11,8 @@ class Transfer:
         name: str,
         amount: float,
         year: int,
-        transfer_from: Account,
-        transfer_to: Account | Debt,
+        transfer_from, # Account
+        transfer_to, # Account | Debt
         required: bool = False,
     ):
         self.name = name

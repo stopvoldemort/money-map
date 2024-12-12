@@ -132,6 +132,12 @@ class YearSimulator:
         w = Payer.attempt_to_pay_payables(year, unscheduled_debts, accounts)
         withdrawals.extend(w)
 
+        #####   REBALANCE EXCESS  ######
+        for account in accounts:
+            withdrawal = account.rebalance(year)
+            if withdrawal is not None:
+                withdrawals.append(withdrawal)
+
         #####   NEXT YEAR'S TAXES  ######
         extra_income_taxes = 0.0
         extra_income = 0.0
