@@ -86,7 +86,7 @@ class Handler:
             aagr = percentize(aagr)
             tax_rate = asset_input.pop("tax_rate", 0)
             tax_rate = percentize(tax_rate)
-            self.assets.append(Asset(**asset_input, aagr=aagr, tax_rate=tax_rate))
+            self.assets.append(Asset(**asset_input, aagr=aagr, tax_rate=tax_rate, deposit_sales_proceeds_in=bank_account))
 
         for expense_input in self.data["expenses"]:
             years = expense_input.pop("years", [])

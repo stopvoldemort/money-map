@@ -38,6 +38,13 @@ class YearSimulator:
         extra_taxes = 0.0
         tax_calculator = TaxCalculator()
 
+
+        for asset in assets:
+            if asset.sell_on == year:
+                income, expense = asset.sell()
+                incomes.append(income)
+                expenses.append(expense)
+
         annual_incomes = [income for income in incomes if income.year == year]
         annual_transfers = [transfer for transfer in transfers if transfer.year == year]
 
@@ -51,6 +58,7 @@ class YearSimulator:
             withdrawals.append(withdrawal)
             if expense is not None:
                 expenses.append(expense)
+
 
         # CALCULATE TAXES
         payroll_taxes = 0.0

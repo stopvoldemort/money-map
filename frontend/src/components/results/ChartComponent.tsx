@@ -89,7 +89,7 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 <Bar dataKey="retirement" stackId="stack" fill="rgba(65, 105, 225, 0.2)" stroke="rgb(65, 105, 225)" strokeWidth={1} name="Traditional IRA/401k accounts" />
                 <Bar dataKey="roth_ira" stackId="stack" fill="rgba(128, 0, 128, 0.2)" stroke="rgb(128, 0, 128)" strokeWidth={1} name="Roth IRA/401k accounts" />
                 <Bar dataKey="five_two_nine" stackId="stack" fill="rgba(139, 69, 19, 0.2)" stroke="rgb(139, 69, 19)" strokeWidth={1} name="529 accounts" />
-                <Bar dataKey="assets" stackId="stack" fill="rgba(0, 100, 0, 0.2)" stroke="rgb(0, 100, 0)" strokeWidth={1} name="Assets" />
+                <Bar dataKey="assets" stackId="stack" fill="rgba(255, 140, 0, 0.2)" stroke="rgb(255, 140, 0)" strokeWidth={1} name="Assets" />
             </ComposedChart>
         </ResponsiveContainer>
     );
