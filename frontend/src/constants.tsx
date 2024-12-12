@@ -1,7 +1,6 @@
 export const YEARS = {
   START: 2025,
   END: 2070,
-  RETIREMENT_START: 2039,
 };
 
 interface AccountType {

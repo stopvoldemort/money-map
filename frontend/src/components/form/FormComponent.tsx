@@ -122,7 +122,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
                 fieldsComponent={OtherIncomeFields}
               />
             </Section>
-            <Section title="Expected expenses" summary={`(${values.expenses.length})`} infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc.">
+            <Section title="Expected expenses" summary={`(${values.expenses.length})`} infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc. Don't include taxes, as they'll be calculated for you.">
               <DynamicFields
                 name={ExpenseFields.fieldsKey}
                 values={values.expenses}

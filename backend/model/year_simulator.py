@@ -10,7 +10,7 @@ from model.debt import Debt
 from model.asset import Asset
 from model.payer import Payer
 from model.withdrawal_tax_type import WithdrawalTaxType
-
+from model.config import Config
 
 class YearSimulator:
     @classmethod
@@ -24,7 +24,7 @@ class YearSimulator:
         transfers: List[Transfer],
         debts: List[Debt],
         assets: List[Asset],
-        dynamic: bool = False,
+        config: Config,
     ) -> Tuple[
         List[Account],
         List[Expense],
@@ -37,8 +37,6 @@ class YearSimulator:
         withdrawals = []
         extra_taxes = 0.0
         tax_calculator = TaxCalculator()
-        for iv in investment_vehicles:
-            iv.conditionally_reset_aagr(dynamic)
 
         annual_incomes = [income for income in incomes if income.year == year]
         annual_transfers = [transfer for transfer in transfers if transfer.year == year]
@@ -124,9 +122,8 @@ class YearSimulator:
         withdrawals.extend(w)
 
         unpaid_expenses = sum(expense.amount for expense in annual_expenses)
-        # TODO: The aagr of unpaid expenses should live somewhere rather than be hardcoded here
         if unpaid_expenses > 1.0:
-            debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, 0.10))
+            debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, config.unscheduled_debt_interest_rate))
 
         #####   PAY UNSCHEDULED DEBT  ######
         unscheduled_debts = [

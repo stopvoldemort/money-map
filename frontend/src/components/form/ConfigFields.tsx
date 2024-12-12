@@ -5,6 +5,7 @@ import InvestmentVehiclesFields from "./InvestmentVehiclesFields";
 import { YEARS } from "../../constants";
 import TextInput from "../inputs/TextInput";
 import NumberInput from "../inputs/NumberInput";
+import PercentInput from "../inputs/PercentInput";
 
 
 const ConfigFields = () => {
@@ -32,10 +33,18 @@ const ConfigFields = () => {
       </Row >
       <Row className="my-4">
         <Col>
-          <TextInput name="config.state" label="State" infoText="The state you live in (for calculating state income tax). Currently only supports NY." disabled />
+          <TextInput name="config.state" label="State" infoText="The state in which you pay state income tax. Currently only supports NY." disabled />
         </Col>
         <Col>
-          <TextInput name="config.locality" label="Locality" infoText="The locality you live in (for calculating local income tax). Currently only supports NYC." disabled />
+          <TextInput name="config.locality" label="Locality" infoText="The locality in which you pay local income tax. Currently only supports NYC." disabled />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <NumberInput name="config.retirement_withdrawal_year" label="Retirement withdrawal year" infoText="The year you can start withdrawing from your retirement accounts without penalty. For the sake of this simulation, it's assumed that you won't withdraw from your retirement accounts before this year." />
+        </Col>
+        <Col>
+          <PercentInput name="config.unscheduled_debt_interest_rate" label="Unscheduled debt interest rate" infoText="The interest rate on any debt you accumulate as the simulation progresses. For example, if you have an expense or a scheduled debt payment, but not enough money in your accounts to cover it, that will be added to your unscheduled debt." />
         </Col>
       </Row>
     </FieldsContainer>

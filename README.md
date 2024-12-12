@@ -37,6 +37,7 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 - IMPROVE THIS README
 - Edit income tax brackets
 - Maybe stop caching form values in local storage
+- Fix "Clear form" button so it actually clears the form
 - Add HSA accounts
 - Add a ceiling on bank accounts, after which money goes into investments.
 - User can configure what year they can start withdrawing from retirement accounts.

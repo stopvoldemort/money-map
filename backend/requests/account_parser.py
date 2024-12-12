@@ -1,11 +1,18 @@
 from model.account import Account
+from model.account_type import AccountType
 from model.annual_investment_allocation import AnnualInvestmentAllocation
 from model.investment_proportion import InvestmentProportion
 
-def account_parser(account_input):
+def account_parser(account_input, retirement_withdrawal_year):
   investments_input = account_input.pop("investments", [])
   annual_investment_allocations = parse_investments(investments_input)
-  return Account(**account_input, annual_investment_allocations=annual_investment_allocations)
+  account = Account(**account_input, annual_investment_allocations=annual_investment_allocations)
+  if account.account_type.name == AccountType.RETIREMENT or account.account_type.name == AccountType.ROTH_IRA:
+    account.earliest_withdrawal_year = retirement_withdrawal_year
+  else:
+    account.earliest_withdrawal_year = 0
+
+  return account
 
 
 # Example of #parse_investments

@@ -113,4 +113,6 @@ export interface ConfigFieldsType {
   last_year: number;
   state: string;
   locality: string;
+  retirement_withdrawal_year: number;
+  unscheduled_debt_interest_rate: number;
 }

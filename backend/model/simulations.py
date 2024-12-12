@@ -52,6 +52,7 @@ class Simulations:
                     transfers=transfers,
                     debts=debts,
                     assets=assets,
+                    config=self.config,
                 )
             )
             aggregator.net_worth.append(sum(acct.balance() for acct in accounts) + sum(asset.value for asset in assets) - sum(d.amount for d in debts))

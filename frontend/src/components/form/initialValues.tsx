@@ -79,7 +79,6 @@ export const initialValues = {
       name: "Traditional IRA/401k accounts",
       account_type: ACCOUNT_TYPES.RETIREMENT.value,
       starting_balance: 10000,
-      earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
         {
           name: INVESTMENT_VEHICLES.STOCKS,
@@ -135,7 +134,6 @@ export const initialValues = {
       name: "Roth IRA/401k accounts",
       account_type: ACCOUNT_TYPES.ROTH_IRA.value,
       starting_balance: 10000,
-      earliest_withdrawal_year: YEARS.RETIREMENT_START,
       investments: [
         {
           name: INVESTMENT_VEHICLES.STOCKS,
@@ -263,5 +261,7 @@ export const initialValues = {
     last_year: YEARS.END,
     state: "NY",
     locality: "NYC",
+    retirement_withdrawal_year: 2039,
+    unscheduled_debt_interest_rate: 15.5,
   },
 };

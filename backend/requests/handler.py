@@ -49,7 +49,7 @@ class Handler:
             )
 
         for account_input in self.data["accounts"]:
-            self.accounts.append(account_parser(account_input))
+            self.accounts.append(account_parser(account_input, retirement_withdrawal_year=self.config.retirement_withdrawal_year))
 
         bank_account = self.get_account_by_type(AccountType.BANK)
         retirement_account = self.get_account_by_type(AccountType.RETIREMENT)
@@ -61,7 +61,7 @@ class Handler:
             self.debts.append(Debt(**debt_input, aagr=aagr))
 
         for scheduled_debt_input in self.data["scheduled_debts"]:
-            first_year_of_loan = 2025
+            first_year_of_loan = self.config.first_year
             loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
             aagr = scheduled_debt_input.pop("aagr", 0)
             aagr = percentize(aagr)
