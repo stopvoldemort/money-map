@@ -84,6 +84,7 @@ const ChartAndFormPage: React.FC = () => {
         </Row>
         <Row className="my-5">
           <FormComponent
+            key={formKey}
             initialValues={values}
             onUpdate={handleUpdate}
             onClear={handleClearForm}
