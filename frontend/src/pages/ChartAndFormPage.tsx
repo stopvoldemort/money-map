@@ -85,7 +85,7 @@ const ChartAndFormPage: React.FC = () => {
           />
         </Row>
         <Row className="my-5" id="how-it-works">
-          <Card>
+          <Card className="px-0">
             <Card.Header as="h2">How It Works</Card.Header>
             <Card.Body className="text-start">
               <p>My Money Map helps you visualize your financial future by:</p>
@@ -108,7 +108,7 @@ const ChartAndFormPage: React.FC = () => {
         </Row>
 
         <Row className="my-5" id="about-me">
-          <Card>
+          <Card className="px-0">
             <Card.Header as="h2">About Me</Card.Header>
             <Card.Body className="text-start">
               <Card.Text>
