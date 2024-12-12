@@ -1,5 +1,6 @@
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TooltipProps } from 'recharts';
+import { YEARS } from '../../constants';
 
 export interface NetWorthChartData {
     year: number;
@@ -44,7 +45,7 @@ const CustomizedDot = (props: { cx: number; cy: number; payload: NetWorthChartDa
     const { cx, cy, payload } = props;
     return (
         <g key={payload.year}>
-            {payload.year % 4 === 0 ? (
+            {(payload.year - YEARS.START) % 5 === 0 ? (
                 <>
                     <circle cx={cx} cy={cy} r={4} fill="black" />
                     <text

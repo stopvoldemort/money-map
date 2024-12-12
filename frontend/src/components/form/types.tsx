@@ -71,7 +71,7 @@ export interface AssetFieldsType {
   aagr: number;
   tax_rate: number;
   sell_on: number;
-  sales_tax_amount: number;
+  sales_taxes_amount: number;
 }
 
 export interface ScheduledDebtFieldsType {
