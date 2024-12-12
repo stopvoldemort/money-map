@@ -36,7 +36,6 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 
 - IMPROVE THIS README
 - Edit income tax brackets
-- Maybe stop caching form values in local storage
 - Add HSA accounts
 - Users can set their local and state tax brackets, rather than always using NY/NYC's
 - Let Income, Expense, and maybe other classes grow over time (i.e., have a AAGR)
