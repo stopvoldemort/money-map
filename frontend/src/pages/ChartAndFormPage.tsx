@@ -65,7 +65,7 @@ const ChartAndFormPage: React.FC = () => {
   return (
     <>
       <Navbar>
-        <Navbar.Brand><Nav.Link href="/">Your Money Map</Nav.Link></Navbar.Brand>
+        <Navbar.Brand><Nav.Link href="/">My Money Map</Nav.Link></Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav.Link className="mx-2" href="#how-it-works">How it works</Nav.Link>
@@ -73,7 +73,7 @@ const ChartAndFormPage: React.FC = () => {
         </Navbar.Collapse>
       </Navbar>
       <Row className="my-5">
-        <h1>Welcome to Your Money Map</h1>
+        <h1>My Money Map</h1>
         <p>A tool to help you understand your finances and plan for the future.</p>
       </Row>
       <Container fluid>
@@ -84,6 +84,7 @@ const ChartAndFormPage: React.FC = () => {
         </Row>
         <Row className="my-5">
           <FormComponent
+            key={formKey}
             initialValues={values}
             onUpdate={handleUpdate}
             onClear={handleClearForm}
@@ -93,7 +94,7 @@ const ChartAndFormPage: React.FC = () => {
           <Card>
             <Card.Header as="h2">How It Works</Card.Header>
             <Card.Body className="text-start">
-              <p>Your Money Map helps you visualize your financial future by:</p>
+              <p>My Money Map helps you visualize your financial future by:</p>
               <ul>
                 <li>Simulating investment growth across different account types</li>
                 <li>Projecting retirement savings</li>

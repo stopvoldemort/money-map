@@ -16,6 +16,7 @@ import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
 import HousePurchaseFields from "./HousePurchaseFields";
 import ConfigFields from "./ConfigFields";
+import SocialSecurityFields from "./SocialSecurityFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -105,6 +106,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
                 fieldsComponent={SalaryFields}
               />
             </Section>
+            <Section title="Expected social security" summary={`(${values.salaries.length})`}>
+              <DynamicFields
+                name={SocialSecurityFields.fieldsKey}
+                values={values.social_security}
+                initialValues={SocialSecurityFields.initialValues}
+                fieldsComponent={SocialSecurityFields}
+              />
+            </Section>
             <Section title="Other income" summary={`(${values.other_incomes.length})`} infoText="Other income expected in the future, like social security.">
               <DynamicFields
                 name={OtherIncomeFields.fieldsKey}
@@ -113,7 +122,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
                 fieldsComponent={OtherIncomeFields}
               />
             </Section>
-            <Section title="Expected expenses" summary={`(${values.expenses.length})`} infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc.">
+            <Section title="Expected expenses" summary={`(${values.expenses.length})`} infoText="Includes any and all expenses expected in the future, like rent, food, car repairs, etc. Don't include taxes, as they'll be calculated for you.">
               <DynamicFields
                 name={ExpenseFields.fieldsKey}
                 values={values.expenses}

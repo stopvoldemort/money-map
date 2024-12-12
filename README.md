@@ -38,9 +38,6 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 - Edit income tax brackets
 - Maybe stop caching form values in local storage
 - Add HSA accounts
-- Add a ceiling on bank accounts, after which money goes into investments.
-- User can configure what year they can start withdrawing from retirement accounts.
 - Users can set their local and state tax brackets, rather than always using NY/NYC's
-- Assets can be sold
 - Let Income, Expense, and maybe other classes grow over time (i.e., have a AAGR)
 - Incorporate 401k/IRA required withdrawals

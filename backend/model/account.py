@@ -1,10 +1,11 @@
+from __future__ import annotations
 from typing import List
 import math
 from model.investment_vehicle import InvestmentVehicle
 from model.account_type import AccountType
 from model.annual_investment_allocation import AnnualInvestmentAllocation
 from model.withdrawal import Withdrawal
-
+from model.transfer import Transfer
 
 class Account:
     def __init__(
@@ -14,14 +15,17 @@ class Account:
         starting_balance: float,
         annual_investment_allocations: List[AnnualInvestmentAllocation] = [],
         earliest_withdrawal_year: int = 0,
+        maximum_balance: float = float("inf"),
+        syphon_excess_to: Account = None,
     ):
         self.name = name
         self.account_type = AccountType(account_type)
         self.annual_investment_allocations = annual_investment_allocations
         self.earliest_withdrawal_year = earliest_withdrawal_year
         self.principal = starting_balance
+        self.maximum_balance = maximum_balance
+        self.syphon_excess_to = syphon_excess_to
         self.gains = 0.0
-
         # This is used to track the growth of the account over the year
         self.annual_growth = 0.0
 
@@ -63,3 +67,17 @@ class Account:
             tax_type=self.account_type.withdrawal_tax_treatment,
             capital_gains=gains_reduction,
         )
+
+    def rebalance(self, year: int) -> Withdrawal:
+        if self.balance() > self.maximum_balance:
+            transfer = Transfer(
+                name=f"rebalance {self.name} to {self.syphon_excess_to.name}",
+                year=year,
+                transfer_from=self,
+                transfer_to=self.syphon_excess_to,
+                amount=self.balance() - self.maximum_balance,
+            )
+            # We don't need to do anything with the expense, since we know there is enough money
+            withdrawal, _expense = transfer.execute()
+            return withdrawal
+        return None

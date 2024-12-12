@@ -11,7 +11,7 @@ CORS(app)
 def run_simulation():
     json_data = request.json
     parsed = Handler(json_data)
-    simulation = Simulations(parsed.config).execute(parsed.investment_vehicles, parsed.accounts, parsed.expenses, parsed.incomes, parsed.transfers, parsed.debts, parsed.assets, parsed.gifts)
+    simulation = Simulations(parsed.config).execute(parsed.investment_vehicles, parsed.accounts, parsed.expenses, parsed.incomes, parsed.transfers, parsed.debts, parsed.assets)
     return jsonify(simulation.for_frontend())
 
 

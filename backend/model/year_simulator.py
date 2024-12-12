@@ -8,10 +8,9 @@ from model.income import Income
 from model.transfer import Transfer
 from model.debt import Debt
 from model.asset import Asset
-from model.gift import Gift
 from model.payer import Payer
 from model.withdrawal_tax_type import WithdrawalTaxType
-
+from model.config import Config
 
 class YearSimulator:
     @classmethod
@@ -25,8 +24,7 @@ class YearSimulator:
         transfers: List[Transfer],
         debts: List[Debt],
         assets: List[Asset],
-        gifts: List[Gift],
-        dynamic: bool = False,
+        config: Config,
     ) -> Tuple[
         List[Account],
         List[Expense],
@@ -34,26 +32,25 @@ class YearSimulator:
         List[Transfer],
         List[Debt],
         List[Asset],
-        List[Gift],
     ]:
         # SETUP
         withdrawals = []
         extra_taxes = 0.0
         tax_calculator = TaxCalculator()
-        for iv in investment_vehicles:
-            iv.conditionally_reset_aagr(dynamic)
+
+
+        for asset in assets:
+            if asset.sell_on == year:
+                income, expense = asset.sell()
+                incomes.append(income)
+                expenses.append(expense)
 
         annual_incomes = [income for income in incomes if income.year == year]
-        annual_gifts = [gift for gift in gifts if gift.year == year]
         annual_transfers = [transfer for transfer in transfers if transfer.year == year]
 
         # DEPOSIT INCOME
         for income in annual_incomes:
             income.deposit_in.deposit(income.amount)
-
-        # GIFTS
-        for gift in annual_gifts:
-            gift.receive()
 
         # TRANSFERS
         for transfer in annual_transfers:
@@ -61,6 +58,7 @@ class YearSimulator:
             withdrawals.append(withdrawal)
             if expense is not None:
                 expenses.append(expense)
+
 
         # CALCULATE TAXES
         payroll_taxes = 0.0
@@ -132,9 +130,8 @@ class YearSimulator:
         withdrawals.extend(w)
 
         unpaid_expenses = sum(expense.amount for expense in annual_expenses)
-        # TODO: The aagr of unpaid expenses should live somewhere rather than be hardcoded here
         if unpaid_expenses > 1.0:
-            debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, 0.10))
+            debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, config.unscheduled_debt_interest_rate))
 
         #####   PAY UNSCHEDULED DEBT  ######
         unscheduled_debts = [
@@ -142,6 +139,12 @@ class YearSimulator:
         ]
         w = Payer.attempt_to_pay_payables(year, unscheduled_debts, accounts)
         withdrawals.extend(w)
+
+        #####   REBALANCE EXCESS  ######
+        for account in accounts:
+            withdrawal = account.rebalance(year)
+            if withdrawal is not None:
+                withdrawals.append(withdrawal)
 
         #####   NEXT YEAR'S TAXES  ######
         extra_income_taxes = 0.0
@@ -203,4 +206,4 @@ class YearSimulator:
         for asset in assets:
             asset.apply_annual_growth()
 
-        return accounts, expenses, incomes, transfers, debts, assets, gifts
+        return accounts, expenses, incomes, transfers, debts, assets

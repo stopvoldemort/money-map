@@ -14,9 +14,3 @@ class InvestmentVehicle:
         self.aagr = aagr
         self.dynamic_mean = dynamic_mean
         self.dynamic_std_dev = dynamic_std_dev
-
-    def conditionally_reset_aagr(self, dynamic: bool):
-        if dynamic and not math.isclose(self.dynamic_mean, 0):
-            self.aagr = self.dynamic_mean + self.dynamic_std_dev * random.normalvariate(
-                0, 1
-            )

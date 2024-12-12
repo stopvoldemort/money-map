@@ -3,6 +3,7 @@ export interface FormValuesType {
   investment_vehicles: InvestmentVehicleFieldsType[];
   expenses: ExpenseFieldsType[];
   salaries: SalaryFieldsType[];
+  social_security: SocialSecurityFieldsType[];
   other_incomes: OtherIncomeFieldsType[];
   assets: AssetFieldsType[];
   scheduled_debts: ScheduledDebtFieldsType[];
@@ -43,6 +44,12 @@ export interface SalaryFieldsType {
   employer_retirement_contribution: number;
 }
 
+export interface SocialSecurityFieldsType {
+  name: string;
+  amount: number;
+  from_year: number;
+}
+
 export interface OtherIncomeFieldsType {
   name: string;
   amount: number;
@@ -63,6 +70,8 @@ export interface AssetFieldsType {
   value: number;
   aagr: number;
   tax_rate: number;
+  sell_on: number;
+  sales_tax_amount: number;
 }
 
 export interface ScheduledDebtFieldsType {
@@ -106,4 +115,7 @@ export interface ConfigFieldsType {
   last_year: number;
   state: string;
   locality: string;
+  retirement_withdrawal_year: number;
+  unscheduled_debt_interest_rate: number;
+  maximum_bank_account_balance: number;
 }
