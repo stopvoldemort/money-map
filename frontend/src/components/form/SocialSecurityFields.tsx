@@ -5,7 +5,7 @@ import { YEARS } from "../../constants";
 const SocialSecurityFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Row className="my-1">
+      <Row className="my-2">
         <Col>
           <Field
             name={`${SocialSecurityFields.fieldsKey}.${index}.name`}
@@ -15,19 +15,18 @@ const SocialSecurityFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="my-1">
-        <Col>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
           <InputGroup>
             <InputGroup.Text>$</InputGroup.Text>
             <Field
               type="number"
               name={`${SocialSecurityFields.fieldsKey}.${index}.amount`}
               className="form-control"
-              placeholder="Annual Amount"
             />
           </InputGroup>
         </Col>
-        <Col>
+        <Col xs={12} md={6} className="my-2">
           <InputGroup>
             <span className="d-inline-flex align-items-center mx-2">
               Start collecting at

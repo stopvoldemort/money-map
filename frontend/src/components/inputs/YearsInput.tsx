@@ -4,7 +4,6 @@ import { YEARS } from "../../constants";
 import { FieldInputProps } from "formik";
 import InfoPopover from "../form/InfoPopover";
 const YearsInput = (props: FieldInputProps<number[]>) => {
-  console.log(props);
   // Generate the list of years
   const years: number[] = [];
   for (let year = YEARS.START; year <= YEARS.END; year++) {

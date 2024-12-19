@@ -8,14 +8,16 @@ const DollarInput = ({ name, label, infoText, maxWidth = "120px" }: { name: stri
     <span className="d-inline-flex align-items-center mx-2">
       {label}
     </span>
-    <InputGroup.Text>$</InputGroup.Text>
-    <Field
-      type="number"
-      name={name}
-      className="form-control"
-      placeholder="Value"
-      style={{ maxWidth: maxWidth, minWidth: "80px" }}
-    />
+    <div className="d-flex">
+      <InputGroup.Text>$</InputGroup.Text>
+      <Field
+        type="number"
+        name={name}
+        className="form-control"
+        placeholder="Value"
+        style={{ maxWidth: maxWidth, minWidth: "80px" }}
+      />
+    </div>
     {infoText && (
       <InfoPopover text={infoText} />
     )}
