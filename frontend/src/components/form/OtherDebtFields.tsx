@@ -6,7 +6,7 @@ import PercentInput from "../inputs/PercentInput";
 const OtherDebtFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Row className="my-1">
+      <Row className="my-2">
         <Col>
           <Field
             name={`${OtherDebtFields.fieldsKey}.${index}.name`}
@@ -15,17 +15,17 @@ const OtherDebtFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="my-1">
-        <Col>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
           <DollarInput
             name={`${OtherDebtFields.fieldsKey}.${index}.amount`}
             label="Amount"
           />
         </Col>
-        <Col>
+        <Col xs={12} md={6} className="my-2">
           <PercentInput
             name={`${OtherDebtFields.fieldsKey}.${index}.aagr`}
-            label="Real interest rate"
+            label="Interest rate"
             step={0.01}
           />
         </Col>

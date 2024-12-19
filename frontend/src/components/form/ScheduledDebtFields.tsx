@@ -1,12 +1,13 @@
-import { Col, InputGroup, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Field } from "formik";
 import DollarInput from "../inputs/DollarInput";
 import PercentInput from "../inputs/PercentInput";
+import NumberInput from "../inputs/NumberInput";
 
 const ScheduledDebtFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Row className="my-1">
+      <Row className="my-2">
         <Col>
           <Field
             name={`${ScheduledDebtFields.fieldsKey}.${index}.name`}
@@ -16,34 +17,25 @@ const ScheduledDebtFields = ({ index }: { index: number }) => {
         </Col>
       </Row>
       <Row className="my-1">
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <DollarInput
             name={`${ScheduledDebtFields.fieldsKey}.${index}.amount`}
             label="Amount"
+            maxWidth="150px"
           />
         </Col>
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <PercentInput
             name={`${ScheduledDebtFields.fieldsKey}.${index}.aagr`}
-            label="Real Interest Rate"
+            label="Interest rate"
             step={0.01}
           />
         </Col>
-        <Col>
-          <InputGroup>
-            <span className="d-inline-flex align-items-center mx-2">
-              Remaining Loan Term
-            </span>
-            <Field
-              type="number"
-              name={`${ScheduledDebtFields.fieldsKey}.${index}.remaining_loan_term`}
-              className="form-control"
-              max={100}
-              min={0}
-              style={{ maxWidth: "120px", minWidth: "60px" }}
-            />
-            <InputGroup.Text>(years)</InputGroup.Text>
-          </InputGroup>
+        <Col xs={12} md={4} className="my-2">
+          <NumberInput
+            name={`${ScheduledDebtFields.fieldsKey}.${index}.remaining_loan_term`}
+            label="Remaining years"
+          />
         </Col>
       </Row>
     </>

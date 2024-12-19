@@ -9,7 +9,7 @@ const AssetFields = ({ index }: { index: number }) => {
   return (
     <>
       <Row>
-        <Col xs={12} className="my-1">
+        <Col xs={12} className="my-2">
           <Field
             name={`${AssetFields.fieldsKey}.${index}.name`}
             className="form-control"
@@ -17,21 +17,21 @@ const AssetFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row>
-        <Col xs={12} md={4} className="my-3">
+      <Row className="mb-2">
+        <Col xs={12} md={4} className="my-2">
           <DollarInput
             name={`${AssetFields.fieldsKey}.${index}.value`}
             label="Value"
             infoText="The current value of the asset"
           />
         </Col>
-        <Col xs={12} md={4} className="my-3">
+        <Col xs={12} md={4} className="my-2">
           <PercentInput
             name={`${AssetFields.fieldsKey}.${index}.aagr`}
             label="AAGR"
             infoText="How much you expect the asset's value to grow each year"
           /></Col>
-        <Col xs={12} md={4} className="my-3">
+        <Col xs={12} md={4} className="my-2">
           <PercentInput
             name={`${AssetFields.fieldsKey}.${index}.tax_rate`}
             label="Tax rate"
@@ -42,7 +42,7 @@ const AssetFields = ({ index }: { index: number }) => {
       </Row>
       <CollapsibleDetails label="Edit sale details">
         <Row>
-          <Col xs={12} className="mt-2">
+          <Col xs={12} md={6} className="my-2">
             <NumberInput
               name={`${AssetFields.fieldsKey}.${index}.sell_on`}
               label="Sell on"
@@ -50,7 +50,7 @@ const AssetFields = ({ index }: { index: number }) => {
               infoText="The year you want to sell the asset. If you don't intend to sell, leave it at 0"
             />
           </Col>
-          <Col xs={12} className="mt-2">
+          <Col xs={12} md={6} className="my-2">
             <DollarInput
               name={`${AssetFields.fieldsKey}.${index}.sales_taxes_amount`}
               label="Sale taxes"

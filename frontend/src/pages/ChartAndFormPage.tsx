@@ -66,17 +66,17 @@ const ChartAndFormPage: React.FC = () => {
           <Nav.Link className="mx-2" href="#about-me">About me</Nav.Link>
         </Navbar.Collapse>
       </Navbar>
-      <Row className="my-5">
+      <Row className="my-3">
         <h1>My Money Map</h1>
         <p>A tool to help you understand your finances and plan for the future.</p>
       </Row>
       <Container fluid>
-        <Row className="my-5" style={{ height: "400px" }}>
+        <Row style={{ height: "400px", marginLeft: "-3rem", marginRight: "-3rem" }}>
           <ChartComponent
             data={chartData}
           />
         </Row>
-        <Row className="my-5">
+        <Row className="my-3">
           <FormComponent
             key={formKey}
             initialValues={values}
@@ -115,9 +115,6 @@ const ChartAndFormPage: React.FC = () => {
                 I'm a software engineer who had some questions about his finances (could I afford a home?
                 how much should I save for retirement?), but didn't want to hire a financial planner.
                 I hope that this tool will mean that you don't have to hire one either.
-              </Card.Text>
-              <Card.Text>
-                (Nothing against financial planners.)
               </Card.Text>
               <Card.Text>
                 Find me on{' '}

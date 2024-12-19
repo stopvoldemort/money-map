@@ -3,7 +3,7 @@ import { InputGroup } from "react-bootstrap";
 import InfoPopover from "../form/InfoPopover";
 
 
-const DollarInput = ({ name, label, infoText }: { name: string, label: string, infoText?: string }) => (
+const DollarInput = ({ name, label, infoText, maxWidth = "120px" }: { name: string, label: string, infoText?: string, maxWidth?: string }) => (
   <InputGroup>
     <span className="d-inline-flex align-items-center mx-2">
       {label}
@@ -14,7 +14,7 @@ const DollarInput = ({ name, label, infoText }: { name: string, label: string, i
       name={name}
       className="form-control"
       placeholder="Value"
-      style={{ maxWidth: "120px", minWidth: "80px" }}
+      style={{ maxWidth: maxWidth, minWidth: "80px" }}
     />
     {infoText && (
       <InfoPopover text={infoText} />
