@@ -35,7 +35,8 @@ This is very much a work-in-progress, so there are lots of quirks and limitation
 ### TODO:
 
 - IMPROVE THIS README
-- Years component loses selection when unmounted and remounted
+- Make more mobile-friendly
+- Add validation for required fields
 - Edit income tax brackets
 - Add HSA accounts
 - Users can set their local and state tax brackets, rather than always using NY/NYC's

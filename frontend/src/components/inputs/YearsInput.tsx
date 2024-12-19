@@ -4,6 +4,7 @@ import { YEARS } from "../../constants";
 import { FieldInputProps } from "formik";
 import InfoPopover from "../form/InfoPopover";
 const YearsInput = (props: FieldInputProps<number[]>) => {
+  console.log(props);
   // Generate the list of years
   const years: number[] = [];
   for (let year = YEARS.START; year <= YEARS.END; year++) {
@@ -11,7 +12,7 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
   }
 
   // State to keep track of selected years
-  const [selectedYears, setSelectedYears] = useState<number[]>([]);
+  const [selectedYears, setSelectedYears] = useState<number[]>(props.value || []);
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [lastClickedYear, setLastClickedYear] = useState<number | null>(null);
