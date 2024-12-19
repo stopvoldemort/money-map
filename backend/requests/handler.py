@@ -5,7 +5,6 @@ from model.expense import Expense
 from model.income import Income
 from model.transfer import Transfer
 from model.scheduled_debt import ScheduledDebt
-from logger import get_logger
 from requests.account_parser import account_parser
 from requests.salary_parser import parse_salary_input
 from requests.social_security_parser import parse_social_security_input
@@ -67,16 +66,18 @@ class Handler:
         for scheduled_debt_input in self.data["scheduled_debts"]:
             first_year_of_loan = self.config.first_year
             loan_term_years = scheduled_debt_input.pop("remaining_loan_term", None)
-            aagr = scheduled_debt_input.pop("aagr", 0)
-            aagr = percentize(aagr)
-            debt = Debt(**scheduled_debt_input, aagr=aagr, scheduled=True)
-            transfers = ScheduledDebt.generate_transfers(
-                debt=debt,
-                loan_amount=debt.amount,
-                annual_interest_rate=debt.aagr,
+            loan_amount = scheduled_debt_input.pop("amount", 0)
+            name = scheduled_debt_input.pop("name", "")
+            aagr = percentize(scheduled_debt_input.pop("aagr", 0))
+            debt, transfers = ScheduledDebt.generate_debt_and_debt_payments(
+                name=name,
+                total_amount=loan_amount,
+                down_payment_proportion=0,
+                annual_interest_rate=aagr,
                 first_year_of_loan=first_year_of_loan,
                 loan_term_years=loan_term_years,
                 pay_from_account=bank_account,
+                inflation_rate=self.config.inflation_rate,
             )
             self.debts.append(debt)
             self.transfers.extend(transfers)
@@ -124,7 +125,11 @@ class Handler:
                 )
 
         for house_purchase_input in self.data["house_purchases"]:
-            house_asset, house_debt, house_expenses, house_transfers = parse_house_purchase(house_purchase_input, bank_account)
+            house_asset, house_debt, house_expenses, house_transfers = parse_house_purchase(
+                house_purchase_input,
+                bank_account,
+                self.config.inflation_rate
+            )
             self.assets.append(house_asset)
             self.debts.append(house_debt)
             self.expenses.extend(house_expenses)
@@ -134,7 +139,6 @@ class Handler:
         for account in self.accounts:
             if account.account_type.name == account_type:
                 return account
-        get_logger().warning(f"can't find account with type {account_type}")
 
     @staticmethod
     def find_object_by_name(objects, target_name):

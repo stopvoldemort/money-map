@@ -118,4 +118,5 @@ export interface ConfigFieldsType {
   retirement_withdrawal_year: number;
   unscheduled_debt_interest_rate: number;
   maximum_bank_account_balance: number;
+  inflation_rate: number;
 }

@@ -38,6 +38,11 @@ class YearSimulator:
         extra_taxes = 0.0
         tax_calculator = TaxCalculator()
 
+        # APPLY ANNUAL GROWTH
+        # Important that this happens before the transfers are executed, or the debt
+        # will be paid off too quickly
+        for debt in debts:
+            debt.apply_annual_growth(config.inflation_rate)
 
         for asset in assets:
             if asset.sell_on == year:
@@ -199,9 +204,6 @@ class YearSimulator:
         # APPLY ANNUAL GROWTH
         for account in accounts:
             account.apply_annual_growth(year, investment_vehicles)
-
-        for debt in debts:
-            debt.apply_annual_growth()
 
         for asset in assets:
             asset.apply_annual_growth()

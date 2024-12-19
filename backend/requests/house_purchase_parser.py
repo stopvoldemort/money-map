@@ -1,7 +1,7 @@
 from model.house_purchase import HousePurchase
 from requests.utilities import percentize
 
-def parse_house_purchase(house_purchase_input, bank_account):
+def parse_house_purchase(house_purchase_input, bank_account, inflation_rate):
     return HousePurchase(
         name=house_purchase_input["name"],
         home_price=house_purchase_input["price"],
@@ -14,5 +14,6 @@ def parse_house_purchase(house_purchase_input, bank_account):
         annual_insurance_rate=percentize(house_purchase_input["annual_insurance_rate"]),
         annual_upkeep_cost=house_purchase_input["annual_upkeep_cost"],
         closing_costs_proportion=percentize(house_purchase_input["closing_costs_proportion"]),
+        inflation_rate=inflation_rate,
         from_account=bank_account,
     ).execute()

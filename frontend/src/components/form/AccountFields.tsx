@@ -11,7 +11,7 @@ const AccountFields = ({ index }: { index: number }) => {
 
   return (
     <>
-      <Row className="mb-4">
+      <Row className="my-3">
         <InputGroup>
           <div className="form-label text-start" id={`account-name-${index}`} style={{ fontWeight: "500" }}>
             {values.accounts[index].name}
@@ -34,7 +34,7 @@ const AccountFields = ({ index }: { index: number }) => {
             as={Form.Control}
           />
         </InputGroup>
-        <div className="mt-3">
+        <div className="mt-2">
           {values.accounts[index].investments.length > 0 && (
             <CollapsibleDetails label="Edit investment strategy">
               <Field

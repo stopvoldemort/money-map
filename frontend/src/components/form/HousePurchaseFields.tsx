@@ -96,7 +96,6 @@ const HousePurchaseFields = ({ index }: { index: number }) => {
               name={`${HousePurchaseFields.fieldsKey}.${index}.property_tax_rate`}
               label="Tax rate"
               step={0.01}
-              infoText="Likely only applicable if the asset is subject to property taxes."
             />
           </Col>
           <Col>
