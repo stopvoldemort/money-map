@@ -1,12 +1,14 @@
-import { Col, Row, InputGroup } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Field } from "formik";
 import YearsInput from "../inputs/YearsInput";
+import CheckboxInput from "../inputs/CheckboxInput";
+import DollarInput from "../inputs/DollarInput";
 
 const ExpenseFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Row className="my-1">
-        <Col>
+      <Row>
+        <Col className="my-2">
           <Field
             name={`${ExpenseFields.fieldsKey}.${index}.name`}
             className="form-control"
@@ -15,39 +17,24 @@ const ExpenseFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="my-1">
-        <Col>
-          <InputGroup>
-            <InputGroup.Text>$</InputGroup.Text>
-            <Field
-              type="number"
-              name={`${ExpenseFields.fieldsKey}.${index}.amount`}
-              className="form-control"
-              placeholder="Amount"
-            />
-          </InputGroup>
+      <Row>
+        <Col xs={12} md={4} className="my-2">
+          <DollarInput
+            name={`${ExpenseFields.fieldsKey}.${index}.amount`}
+            label="Amount"
+          />
         </Col>
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <Field
             name={`${ExpenseFields.fieldsKey}.${index}.years`}
             as={YearsInput}
           />
         </Col>
-        <Col>
-          <div className="form-check d-flex gap-2">
-            <Field
-              type="checkbox"
-              name={`${ExpenseFields.fieldsKey}.${index}.five_two_nine_eligible`}
-              className="form-check-input"
-              id={`five-two-nine-${index}`}
-            />
-            <label
-              className="form-check-label"
-              htmlFor={`five-two-nine-${index}`}
-            >
-              529 Eligible
-            </label>
-          </div>
+        <Col xs={12} md={4} className="my-2">
+          <CheckboxInput
+            name={`${ExpenseFields.fieldsKey}.${index}.five_two_nine_eligible`}
+            label="529 Eligible"
+          />
         </Col>
       </Row>
     </>

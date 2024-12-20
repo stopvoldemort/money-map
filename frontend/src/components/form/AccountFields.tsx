@@ -36,7 +36,10 @@ const AccountFields = ({ index }: { index: number }) => {
         </InputGroup>
         <div className="mt-2">
           {values.accounts[index].investments.length > 0 && (
-            <CollapsibleDetails label="Edit investment strategy">
+            <CollapsibleDetails
+              label="Edit investment strategy"
+              mobileLabel="Investment strategy (not mobile-friendly)"
+            >
               <Field
                 name={`${fieldsKey}.${index}.investments`}
                 as={InvestmentsInput}

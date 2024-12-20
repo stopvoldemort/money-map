@@ -98,8 +98,12 @@ const ChartAndFormPage: React.FC = () => {
               <p>
                 Click to expand the sections above to enter your current financial info and
                 assumptions about what your future income and expenses will be.
-                Nothing you enter here will be saved.
+                Nothing you enter here will be saved. Note that:
               </p>
+              <ul>
+                <li>You can ignore inflation when entering your values, unless directed otherwise. My Money Map calculates everything in current dollars.</li>
+                <li>My Money Map accounts for taxes.</li>
+              </ul>
               <p>
                 The tool is currently in development. The code is available on <a href="https://github.com/stopvoldemort/money-map" target="_blank" rel="noopener noreferrer">GitHub</a>.
               </p>

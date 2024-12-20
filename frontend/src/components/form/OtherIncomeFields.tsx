@@ -2,6 +2,7 @@ import { Col, Row, InputGroup } from "react-bootstrap";
 import { Field } from "formik";
 import YearsInput from "../inputs/YearsInput";
 import CollapsibleDetails from "./CollabsibleDetails";
+import CheckboxInput from "../inputs/CheckboxInput";
 
 const OtherIncomeFields = ({ index }: { index: number }) => {
   return (
@@ -16,8 +17,8 @@ const OtherIncomeFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="my-1">
-        <Col>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
           <InputGroup>
             <InputGroup.Text>$</InputGroup.Text>
             <Field
@@ -28,7 +29,7 @@ const OtherIncomeFields = ({ index }: { index: number }) => {
             />
           </InputGroup>
         </Col>
-        <Col>
+        <Col xs={12} md={6} className="my-2">
           <Field
             name={`${OtherIncomeFields.fieldsKey}.${index}.years`}
             as={YearsInput}
@@ -36,64 +37,32 @@ const OtherIncomeFields = ({ index }: { index: number }) => {
         </Col>
       </Row>
       <CollapsibleDetails label="Edit tax treatment">
-        <Row className="my-1">
-          <Col>
-            <div className="form-check d-flex gap-2">
-              <Field
-                type="checkbox"
-                name={`${OtherIncomeFields.fieldsKey}.${index}.federal_income_tax`}
-                className="form-check-input"
-                id={`federal-tax-${index}`}
-              />
-              <label
-                className="form-check-label"
-                htmlFor={`federal-tax-${index}`}
-              >
-                Federal Income Tax
-              </label>
-            </div>
+        <Row>
+          <Col xs={12} md={6} className="my-2">
+            <CheckboxInput
+              label="Federal Income Tax"
+              name={`${OtherIncomeFields.fieldsKey}.${index}.federal_income_tax`}
+            />
           </Col>
-          <Col>
-            <div className="form-check d-flex gap-2">
-              <Field
-                type="checkbox"
-                name={`${OtherIncomeFields.fieldsKey}.${index}.state_income_tax`}
-                className="form-check-input"
-                id={`state-tax-${index}`}
-              />
-              <label className="form-check-label" htmlFor={`state-tax-${index}`}>
-                State Income Tax
-              </label>
-            </div>
+          <Col xs={12} md={6} className="my-2">
+            <CheckboxInput
+              label="State Income Tax"
+              name={`${OtherIncomeFields.fieldsKey}.${index}.state_income_tax`}
+            />
           </Col>
-          <Col>
-            <div className="form-check d-flex gap-2">
-              <Field
-                type="checkbox"
-                name={`${OtherIncomeFields.fieldsKey}.${index}.local_income_tax`}
-                className="form-check-input"
-                id={`local-tax-${index}`}
-              />
-              <label className="form-check-label" htmlFor={`local-tax-${index}`}>
-                Local Income Tax
-              </label>
-            </div>
+        </Row>
+        <Row>
+          <Col xs={12} md={6} className="my-2">
+            <CheckboxInput
+              name={`${OtherIncomeFields.fieldsKey}.${index}.local_income_tax`}
+              label="Local Income Tax"
+            />
           </Col>
-          <Col>
-            <div className="form-check d-flex gap-2">
-              <Field
-                type="checkbox"
-                name={`${OtherIncomeFields.fieldsKey}.${index}.payroll_tax`}
-                className="form-check-input"
-                id={`payroll-tax-${index}`}
-              />
-              <label
-                className="form-check-label"
-                htmlFor={`payroll-tax-${index}`}
-              >
-                Payroll Tax
-              </label>
-            </div>
+          <Col xs={12} md={6} className="my-2">
+            <CheckboxInput
+              name={`${OtherIncomeFields.fieldsKey}.${index}.payroll_tax`}
+              label="Payroll Tax"
+            />
           </Col>
         </Row>
       </CollapsibleDetails>

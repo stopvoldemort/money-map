@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ChevronRight, ChevronDown } from 'react-bootstrap-icons';
 import { Collapse } from 'react-bootstrap';
 
-const CollapsibleDetails = ({ label, children }: { label: string, children: React.ReactNode }) => {
+const CollapsibleDetails = ({ label, mobileLabel, children }: { label: string, mobileLabel?: string, children: React.ReactNode }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return <div>
@@ -13,7 +13,8 @@ const CollapsibleDetails = ({ label, children }: { label: string, children: Reac
       style={{ cursor: 'pointer' }}
     >
       {showDetails ? <ChevronDown /> : <ChevronRight />}
-      <span className="ms-1 small">{label}</span>
+      <span className="ms-1 small d-block d-sm-none">{mobileLabel || label}</span>
+      <span className="ms-1 small d-none d-sm-block">{label}</span>
     </div>
     <Collapse in={showDetails}>
       <div>

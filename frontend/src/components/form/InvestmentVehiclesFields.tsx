@@ -9,7 +9,7 @@ const InvestmentVehiclesFields = ({ index }: { index: number }) => {
   const fieldsKey = "investment_vehicles";
 
   return (
-    <Row className='mb-4'>
+    <Row>
       <Field
         type="hidden"
         name={`${fieldsKey}.${index}.name`}

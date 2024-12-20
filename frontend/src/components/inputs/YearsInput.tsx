@@ -68,50 +68,50 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
     setLastClickedYear(year);
   };
 
-  // Render the year buttons grouped by decades
+  // Render the year buttons grouped by half decade
   const renderYearButtons = () => {
-    const startDecade = Math.floor(YEARS.START / 10) * 10;
-    const endDecade = Math.floor(YEARS.END / 10) * 10;
-    const decades: number[][] = [];
+    const startDecade = Math.floor(YEARS.START / 5) * 5;
+    const endDecade = Math.floor(YEARS.END / 5) * 5;
+    const halfDecade: number[][] = [];
 
-    // Generate full decades
+    // Generate half decade
     for (
       let decadeStart = startDecade;
       decadeStart <= endDecade;
-      decadeStart += 10
+      decadeStart += 5
     ) {
-      const decade = Array.from({ length: 10 }, (_, i) => decadeStart + i);
-      decades.push(decade);
+      const decade = Array.from({ length: 5 }, (_, i) => decadeStart + i);
+      halfDecade.push(decade);
     }
 
-    return decades.map((decade, decadeIndex) => (
+    return halfDecade.map((decade, decadeIndex) => (
       <Row key={decadeIndex} className="gx-1" style={{ marginBottom: "2px" }}>
-        {decade.map((year) => {
-          const isSelected = selectedYears.includes(year);
-          const isDisabled = year < YEARS.START || year > YEARS.END;
-          return (
-            <Col
-              key={year}
-              style={{
-                width: "10%",
-                flex: "0 0 10%",
-                paddingLeft: "1px",
-                paddingRight: "1px",
-              }}
-            >
-              <Button
-                variant={isSelected ? "primary" : "outline-primary"}
-                onClick={(event) => toggleYear(year, event)}
-                aria-pressed={isSelected}
-                className="w-100 p-0"
-                disabled={isDisabled}
+        {
+          decade.map((year) => {
+            const isSelected = selectedYears.includes(year);
+            const isDisabled = year < YEARS.START || year > YEARS.END;
+            return (
+              <Col
+                key={year}
+                style={{
+                  paddingLeft: "1px",
+                  paddingRight: "1px",
+                }}
               >
-                {year}
-              </Button>
-            </Col>
-          );
-        })}
-      </Row>
+                <Button
+                  variant={isSelected ? "primary" : "outline-primary"}
+                  onClick={(event) => toggleYear(year, event)}
+                  aria-pressed={isSelected}
+                  className="w-100 p-0"
+                  disabled={isDisabled}
+                >
+                  {year}
+                </Button>
+              </Col>
+            );
+          })
+        }
+      </Row >
     ));
   };
 
@@ -157,7 +157,7 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
       <Collapse in={isExpanded}>
         <div
           className="position-absolute bg-white shadow rounded p-2"
-          style={{ zIndex: 1000, width: "600px", left: "-200px" }}
+          style={{ zIndex: 1000, width: "300px", left: "0" }}
         >
           <div className="d-flex justify-content-end mb-2">
             <span
