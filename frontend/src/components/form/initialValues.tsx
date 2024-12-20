@@ -245,11 +245,11 @@ export const initialValues = {
   investment_vehicles: [
     {
       name: INVESTMENT_VEHICLES.STOCKS,
-      aagr: 6.5,
+      aagr: 5.5,
     },
     {
       name: INVESTMENT_VEHICLES.BONDS,
-      aagr: 3.5,
+      aagr: 2.5,
     },
     {
       name: INVESTMENT_VEHICLES.MONEY_MARKET,
