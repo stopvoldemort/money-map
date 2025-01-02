@@ -29,6 +29,7 @@ const ScheduledDebtFields = ({ index }: { index: number }) => {
             name={`${ScheduledDebtFields.fieldsKey}.${index}.aagr`}
             label="Interest rate"
             step={0.01}
+            infoText="The interest rate on the debt. It does NOT need to be adjusted for inflation."
           />
         </Col>
         <Col xs={12} md={4} className="my-2">

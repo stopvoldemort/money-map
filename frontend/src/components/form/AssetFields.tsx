@@ -29,7 +29,7 @@ const AssetFields = ({ index }: { index: number }) => {
           <PercentInput
             name={`${AssetFields.fieldsKey}.${index}.aagr`}
             label="AAGR"
-            infoText="How much you expect the asset's value to grow each year"
+            infoText="How much you expect the asset's value to grow each year, adjusted for inflation."
           /></Col>
         <Col xs={12} md={4} className="my-2">
           <PercentInput

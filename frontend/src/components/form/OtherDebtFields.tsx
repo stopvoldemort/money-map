@@ -27,6 +27,7 @@ const OtherDebtFields = ({ index }: { index: number }) => {
             name={`${OtherDebtFields.fieldsKey}.${index}.aagr`}
             label="Interest rate"
             step={0.01}
+            infoText="The interest rate on the debt, adjusted for inflation."
           />
         </Col>
       </Row>
