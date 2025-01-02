@@ -1,49 +1,43 @@
-import { Col, Row, InputGroup } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Field } from "formik";
 import PercentInput from "../inputs/PercentInput";
 import DollarInput from "../inputs/DollarInput";
 import { YEARS } from "../../constants";
 import CollapsibleDetails from "./CollabsibleDetails";
+import NumberInput from "../inputs/NumberInput";
 
 const HousePurchaseFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Row className="my-1">
-        <Col>
+      <Row>
+        <Col xs={12} md={8} className="my-2">
           <Field
             name={`${HousePurchaseFields.fieldsKey}.${index}.name`}
             className="form-control"
             placeholder="Name"
           />
         </Col>
-        <Col>
-          <InputGroup>
-            <span className="d-inline-flex align-items-center mx-2">
-              Year of purchase
-            </span>
-            <Field
-              name={`${HousePurchaseFields.fieldsKey}.${index}.year_of_purchase`}
-              className="form-control"
-              type="number"
-              max={YEARS.END}
-            />
-          </InputGroup>
+        <Col xs={12} md={4} className="my-2">
+          <NumberInput
+            name={`${HousePurchaseFields.fieldsKey}.${index}.year_of_purchase`}
+            label="Year of purchase"
+          />
         </Col>
       </Row>
-      <Row className="my-2">
-        <Col>
+      <Row>
+        <Col xs={12} md={4} className="my-2">
           <DollarInput
             name={`${HousePurchaseFields.fieldsKey}.${index}.price`}
             label="Price"
           />
         </Col>
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <PercentInput
             name={`${HousePurchaseFields.fieldsKey}.${index}.interest_rate`}
             label="Interest rate"
           />
         </Col>
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <PercentInput
             name={`${HousePurchaseFields.fieldsKey}.${index}.down_payment_proportion`}
             label="Down payment"
@@ -51,56 +45,46 @@ const HousePurchaseFields = ({ index }: { index: number }) => {
         </Col>
       </Row>
       <CollapsibleDetails label="Edit details">
-        <Row className="mt-2">
-          <Col>
-            <InputGroup>
-              <span className="d-inline-flex align-items-center mx-2">
-                Loan term
-              </span>
-              <Field
-                type="number"
-                name={`${HousePurchaseFields.fieldsKey}.${index}.loan_term_years`}
-                className="form-control"
-                max={100}
-                min={0}
-                style={{ maxWidth: "120px", minWidth: "60px" }}
-              />
-              <InputGroup.Text>(years)</InputGroup.Text>
-            </InputGroup>
+        <Row>
+          <Col xs={12} md={4} className="my-2">
+            <NumberInput
+              name={`${HousePurchaseFields.fieldsKey}.${index}.loan_term_years`}
+              label="Loan term"
+              maxWidth="120px"
+              suffixText="(years)"
+            />
           </Col>
-          <Col>
+          <Col xs={12} md={4} className="my-2">
             <PercentInput
               name={`${HousePurchaseFields.fieldsKey}.${index}.closing_costs_proportion`}
               label="Closing costs"
             />
           </Col>
-          <Col>
+          <Col xs={12} md={4} className="my-2">
             <PercentInput
               name={`${HousePurchaseFields.fieldsKey}.${index}.annual_insurance_rate`}
-              label="Annual insurance rate"
+              label="Insurance rate"
               step={0.01}
-              infoText="For example, the cost of homeowner's insurance"
+              infoText="The annual cost of homeowner's insurance"
             />
           </Col>
-        </Row >
-        <Row className="mt-2">
-          <Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={4} className="my-2">
             <DollarInput
               name={`${HousePurchaseFields.fieldsKey}.${index}.annual_upkeep_cost`}
               label="Annual upkeep cost"
-              infoText="For example, the cost of maintenance"
+              infoText="For example, the cost of maintenance, or condo fees."
             />
           </Col>
-          <Col>
+          <Col xs={12} md={4} className="my-2">
             <PercentInput
               name={`${HousePurchaseFields.fieldsKey}.${index}.property_tax_rate`}
               label="Tax rate"
               step={0.01}
-              infoText="Likely only applicable if the asset is subject to property taxes."
             />
           </Col>
-          <Col>
-            {/* TODO: Let assets depreciate */}
+          <Col xs={12} md={4} className="my-2">
             <PercentInput
               name={`${HousePurchaseFields.fieldsKey}.${index}.aagr`}
               label="Annual appreciation"

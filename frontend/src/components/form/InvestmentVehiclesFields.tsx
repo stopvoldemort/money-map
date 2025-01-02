@@ -9,7 +9,7 @@ const InvestmentVehiclesFields = ({ index }: { index: number }) => {
   const fieldsKey = "investment_vehicles";
 
   return (
-    <Row className='mb-4'>
+    <Row>
       <Field
         type="hidden"
         name={`${fieldsKey}.${index}.name`}
@@ -17,7 +17,8 @@ const InvestmentVehiclesFields = ({ index }: { index: number }) => {
       <Col>
         <PercentInput
           name={`${fieldsKey}.${index}.aagr`}
-          label={`${values.investment_vehicles[index].name} AAGR`}
+          label={`${values.investment_vehicles[index].name} real AAGR`}
+          infoText="The average annual growth rate, adjusted for inflation."
         />
       </Col>
     </Row>

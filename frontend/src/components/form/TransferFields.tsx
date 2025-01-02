@@ -16,22 +16,22 @@ const TransferFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="mt-3" >
-        <Col>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
           <DollarInput
             name={`${TransferFields.fieldsKey}.${index}.amount`}
             label="Amount"
           />
         </Col>
-        <Col>
+        <Col xs={12} md={6} className="my-2">
           <Field
             name={`${TransferFields.fieldsKey}.${index}.years`}
             as={YearsInput}
           />
         </Col>
       </Row>
-      <Row className="mt-1">
-        <Col>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
           <InputGroup>
             <span className="d-inline-flex align-items-center mx-2">
               From
@@ -49,7 +49,7 @@ const TransferFields = ({ index }: { index: number }) => {
             </Field>
           </InputGroup>
         </Col>
-        <Col>
+        <Col xs={12} md={6} className="my-2">
           <InputGroup>
             <span className="d-inline-flex align-items-center mx-2">
               To

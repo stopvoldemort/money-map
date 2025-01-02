@@ -245,11 +245,11 @@ export const initialValues = {
   investment_vehicles: [
     {
       name: INVESTMENT_VEHICLES.STOCKS,
-      aagr: 6.5,
+      aagr: 5.5,
     },
     {
       name: INVESTMENT_VEHICLES.BONDS,
-      aagr: 3.5,
+      aagr: 2.5,
     },
     {
       name: INVESTMENT_VEHICLES.MONEY_MARKET,
@@ -258,11 +258,12 @@ export const initialValues = {
   ],
   config: {
     first_year: YEARS.START,
-    last_year: YEARS.END,
+    last_year: 2055,
     state: "NY",
     locality: "NYC",
     retirement_withdrawal_year: 2039,
     unscheduled_debt_interest_rate: 15.5,
     maximum_bank_account_balance: 20000,
+    inflation_rate: 2.0,
   },
 };

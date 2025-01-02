@@ -14,7 +14,7 @@ class Debt:
         self.five_two_nine_eligible = five_two_nine_eligible
 
         # This is used to track the growth of the account over the year
-        self.annual_growth = 0.0
+        self.growth = 0.0
 
     def pay(self, payment_amount: float):
         self.amount -= payment_amount
@@ -22,8 +22,12 @@ class Debt:
     def add(self, amount: float) -> float:
         self.amount += amount
 
-    # TODO: Calculate based on the month rather than the year
-    def apply_annual_growth(self):
-        new_amount = self.amount * ((1 + self.aagr / 12)) ** 12
-        self.annual_growth = new_amount - self.amount
-        self.amount = self.amount + self.annual_growth
+    def apply_annual_growth(self, inflation_rate: float):
+        self.growth = self.amount * self.aagr
+        self.amount += self.growth
+
+        self.amount = self.amount / (1 + inflation_rate)
+
+
+    def __repr__(self):
+        return f"{self.name}: {self.amount}, {self.aagr}, {self.scheduled}"

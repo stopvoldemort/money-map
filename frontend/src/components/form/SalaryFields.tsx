@@ -7,7 +7,7 @@ import CollapsibleDetails from "./CollabsibleDetails";
 const SalaryFields = ({ index }: { index: number }) => {
   return (
     <>
-      <Row className="my-1">
+      <Row className="my-2">
         <Col>
           <Field
             name={`${SalaryFields.fieldsKey}.${index}.name`}
@@ -17,8 +17,8 @@ const SalaryFields = ({ index }: { index: number }) => {
           />
         </Col>
       </Row>
-      <Row className="my-1">
-        <Col>
+      <Row>
+        <Col xs={12} md={4} className="my-2">
           <InputGroup>
             <InputGroup.Text>$</InputGroup.Text>
             <Field
@@ -29,7 +29,7 @@ const SalaryFields = ({ index }: { index: number }) => {
             />
           </InputGroup>
         </Col>
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <InputGroup>
             <span className="d-inline-flex align-items-center mx-2">
               From
@@ -45,7 +45,7 @@ const SalaryFields = ({ index }: { index: number }) => {
             <InputGroup.Text>(year)</InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col>
+        <Col xs={12} md={4} className="my-2">
           <InputGroup>
             <span className="d-inline-flex align-items-center mx-2">
               To
@@ -65,19 +65,19 @@ const SalaryFields = ({ index }: { index: number }) => {
       <div className="mt-3">
         <CollapsibleDetails label="Retirement contributions">
           <Row>
-            <Col>
+            <Col xs={12} md={4} className="my-2">
               <DollarInput
                 name={`${SalaryFields.fieldsKey}.${index}.retirement_contribution`}
                 label="Employee 401k"
               />
             </Col>
-            <Col>
+            <Col xs={12} md={4} className="my-2">
               <DollarInput
                 name={`${SalaryFields.fieldsKey}.${index}.roth_contribution`}
                 label="Employee Roth 401k"
               />
             </Col>
-            <Col>
+            <Col xs={12} md={4} className="my-2">
               <DollarInput
                 name={`${SalaryFields.fieldsKey}.${index}.employer_retirement_contribution`}
                 label="Employer 401k"

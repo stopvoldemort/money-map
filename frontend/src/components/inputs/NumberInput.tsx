@@ -8,11 +8,13 @@ const NumberInput = ({
   label,
   infoText,
   suffixText,
+  maxWidth = "200px",
 }: {
   name: string;
   label: string;
   infoText?: string;
   suffixText?: string;
+  maxWidth?: string;
 }) => {
   return (
     <InputGroup>
@@ -23,7 +25,7 @@ const NumberInput = ({
         type="number"
         name={name}
         className="form-control"
-        style={{ maxWidth: "200px", minWidth: "80px" }}
+        style={{ maxWidth: maxWidth, minWidth: "80px" }}
       />
       {suffixText && (
         <InputGroup.Text>{suffixText}</InputGroup.Text>

@@ -22,6 +22,7 @@ class HousePurchase:
         from_account: Account,
         down_payment_proportion: float,
         property_tax_rate: float,
+        inflation_rate: float,
     ):
         self.name = name
         self.home_price = home_price
@@ -35,7 +36,7 @@ class HousePurchase:
         self.from_account = from_account
         self.down_payment_proportion = down_payment_proportion
         self.property_tax_rate = property_tax_rate
-
+        self.inflation_rate = inflation_rate
     # Return values:
     # - Assets
     #   - The value of the house
@@ -51,10 +52,7 @@ class HousePurchase:
     #   - The house price, which increases by the AAGR
     def execute(self) -> Tuple[Asset, Debt, List[Expense], List[Transfer]]:
         house = Asset(self.name, self.home_price, self.aagr, self.property_tax_rate)
-        debt = Debt(f"{self.name} mortgage", self.home_price, self.annual_interest_rate, scheduled=True)
-
         expenses = []
-        transfers = []
 
         # EXPENSES
         expenses.append(
@@ -67,25 +65,15 @@ class HousePurchase:
             taxes = Expense(f"{self.name} taxes", self.home_price * self.property_tax_rate, y)
             expenses.extend([upkeep, insurance, taxes])
 
-        # TRANSFERS
-        down_payment = Transfer(
-            "down payment",
-            self.home_price * self.down_payment_proportion,
-            self.first_year,
-            transfer_from=self.from_account,
-            transfer_to=debt,
-            required=True,
-        )
-        transfers.append(down_payment)
-
-        annual_payments = ScheduledDebt.generate_transfers(
-            debt=debt,
-            loan_amount=self.home_price - down_payment.amount,
+        debt, transfers = ScheduledDebt.generate_debt_and_debt_payments(
+            name=self.name,
+            total_amount=self.home_price,
+            down_payment_proportion=self.down_payment_proportion,
             annual_interest_rate=self.annual_interest_rate,
             first_year_of_loan=self.first_year,
             loan_term_years=self.loan_term_years,
             pay_from_account=self.from_account,
+            inflation_rate=self.inflation_rate,
         )
-        transfers.extend(annual_payments)
 
         return house, debt, expenses, transfers

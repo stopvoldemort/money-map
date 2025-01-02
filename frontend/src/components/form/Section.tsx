@@ -4,12 +4,12 @@ import InfoPopover from './InfoPopover';
 
 const CustomHeader = ({ title, summary, infoText }: { title: string, summary?: string, infoText?: string }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
       <div>
         {title}
         {infoText && (<InfoPopover text={infoText} />)}
       </div>
-      {summary && <span className="text-muted text-end mx-5">{summary}</span>}
+      {summary && <span className="text-muted text-end mx-3">{summary}</span>}
     </div>
   )
 }

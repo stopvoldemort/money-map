@@ -106,7 +106,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
                 fieldsComponent={SalaryFields}
               />
             </Section>
-            <Section title="Expected social security" summary={`(${values.salaries.length})`}>
+            <Section title="Expected social security" summary={`(${values.social_security.length})`}>
               <DynamicFields
                 name={SocialSecurityFields.fieldsKey}
                 values={values.social_security}
