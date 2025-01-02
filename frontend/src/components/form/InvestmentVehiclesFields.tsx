@@ -17,7 +17,8 @@ const InvestmentVehiclesFields = ({ index }: { index: number }) => {
       <Col>
         <PercentInput
           name={`${fieldsKey}.${index}.aagr`}
-          label={`${values.investment_vehicles[index].name} AAGR`}
+          label={`${values.investment_vehicles[index].name} Real AAGR`}
+          infoText="The average annual growth rate, adjusted for inflation."
         />
       </Col>
     </Row>
