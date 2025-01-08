@@ -259,12 +259,35 @@ export const initialValues = {
   config: {
     first_year: YEARS.START,
     last_year: 2055,
-    state: "NY",
-    locality: "NYC",
     retirement_withdrawal_year: 2039,
     unscheduled_debt_interest_rate: 15.5,
     maximum_bank_account_balance: 20000,
     inflation_rate: 2.0,
+    federal_tax_brackets: [
+      {
+        upper_bound: 23200,
+        rate: 10.0,
+      }, {
+        upper_bound: 94300,
+        rate: 12.0,
+      }, {
+        upper_bound: 201050,
+        rate: 22.0,
+      }, {
+        upper_bound: 383900,
+        rate: 24.0,
+      }, {
+        upper_bound: 487450,
+        rate: 32.0,
+      }, {
+        upper_bound: 731200,
+        rate: 35.0,
+      }, {
+        upper_bound: 999999999,
+        rate: 37.0,
+      },
+    ],
+    federal_standard_deduction: 29200,
     local_tax_brackets: [
       {
         upper_bound: 21600,

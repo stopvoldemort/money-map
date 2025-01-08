@@ -12,9 +12,6 @@ from model.payer import Payer
 from model.withdrawal_tax_type import WithdrawalTaxType
 from model.config import Config
 
-from logger import get_logger
-logger = get_logger()
-
 class YearSimulator:
     @classmethod
     def execute(
@@ -40,6 +37,8 @@ class YearSimulator:
         withdrawals = []
         extra_taxes = 0.0
         tax_calculator = TaxCalculator(
+            federal_tax_brackets=config.federal_tax_brackets,
+            federal_standard_deduction=config.federal_standard_deduction,
             state_tax_brackets=config.state_tax_brackets,
             state_standard_deduction=config.state_standard_deduction,
             local_tax_brackets=config.local_tax_brackets,
@@ -119,11 +118,6 @@ class YearSimulator:
         local_income_taxes = tax_calculator.calculate_local_income_tax(
             local_tax_eligible_income
         )
-
-        logger.info(f"local_income_taxes: {local_income_taxes}")
-        logger.info(f"state_income_taxes: {state_income_taxes}")
-        logger.info(f"federal_income_taxes: {federal_income_taxes}")
-        logger.info(f"payroll_taxes: {payroll_taxes}")
 
         asset_taxes = 0.0
         for asset in assets:

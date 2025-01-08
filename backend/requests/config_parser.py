@@ -18,8 +18,10 @@ def parse_config(config: dict) -> Config:
         unscheduled_debt_interest_rate=percentize(config["unscheduled_debt_interest_rate"]),
         maximum_bank_account_balance=config["maximum_bank_account_balance"],
         inflation_rate=percentize(config["inflation_rate"]),
-        state_tax_brackets=parse_tax_brackets(config["state_tax_brackets"]),
+        federal_standard_deduction=config["federal_standard_deduction"],
+        federal_tax_brackets=parse_tax_brackets(config["federal_tax_brackets"]),
         state_standard_deduction=config["state_standard_deduction"],
-        local_tax_brackets=parse_tax_brackets(config["local_tax_brackets"]),
+        state_tax_brackets=parse_tax_brackets(config["state_tax_brackets"]),
         local_standard_deduction=config["local_standard_deduction"],
+        local_tax_brackets=parse_tax_brackets(config["local_tax_brackets"]),
     )

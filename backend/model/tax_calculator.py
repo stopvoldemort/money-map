@@ -1,7 +1,5 @@
 from typing import List
 
-from logger import get_logger
-
 class TaxBracket:
     def __init__(self, rate: float, lower_bound: float, upper_bound: float):
         self.rate = rate
@@ -10,32 +8,27 @@ class TaxBracket:
 
 
 class TaxCalculator:
-    def __init__(self, state_tax_brackets: List[TaxBracket], state_standard_deduction: float, local_tax_brackets: List[TaxBracket], local_standard_deduction: float):
+    def __init__(
+        self,
+        state_tax_brackets: List[TaxBracket],
+        state_standard_deduction: float,
+        local_tax_brackets: List[TaxBracket],
+        local_standard_deduction: float,
+        federal_tax_brackets: List[TaxBracket],
+        federal_standard_deduction: float,
+    ):
         self.state_tax_brackets = state_tax_brackets
         self.state_standard_deduction = state_standard_deduction
         self.local_tax_brackets = local_tax_brackets
         self.local_standard_deduction = local_standard_deduction
-        self.federal_tax_brackets = [
-            TaxBracket(0.1, 0.0, 23200.0),
-            TaxBracket(0.12, 23200.0, 94300.0),
-            TaxBracket(0.22, 94301.0, 201050.0),
-            TaxBracket(0.24, 201051.0, 383900.0),
-            TaxBracket(0.32, 383901.0, 487450.0),
-            TaxBracket(0.35, 487451.0, 731200.0),
-            TaxBracket(0.37, 731201.0, float("inf")),
-        ]
-        self.federal_standard_deduction = 29200.0
+        self.federal_tax_brackets = federal_tax_brackets
+        self.federal_standard_deduction = federal_standard_deduction
         self.payroll_tax_brackets = [
             TaxBracket(0.0765, 0.0, 168600.0),
             TaxBracket(0.0235, 168601.0, 200000.0),
             TaxBracket(0.009, 200001.0, float("inf")),
         ]
         self.payroll_standard_deduction = 0.0
-
-        # get_logger().info(f"state_tax_brackets: {self.state_tax_brackets}")
-        # get_logger().info(f"state_standard_deduction: {self.state_standard_deduction}")
-        # get_logger().info(f"local_tax_brackets: {self.local_tax_brackets}")
-        # get_logger().info(f"local_standard_deduction: {self.local_standard_deduction}")
 
     def capital_gains_tax_rate(self):
         return 0.15
