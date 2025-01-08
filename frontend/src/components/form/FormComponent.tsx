@@ -150,8 +150,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Investment returns, start and end years, etc.">
-              <ConfigFields />
+            <Section title="Investment returns, tax rates, etc.">
+              <ConfigFields values={values.config} />
             </Section>
           </Accordion>
         </Form>

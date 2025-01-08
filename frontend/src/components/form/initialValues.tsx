@@ -265,5 +265,52 @@ export const initialValues = {
     unscheduled_debt_interest_rate: 15.5,
     maximum_bank_account_balance: 20000,
     inflation_rate: 2.0,
+    local_tax_brackets: [
+      {
+        upper_bound: 21600,
+        rate: 3.078,
+      }, {
+        upper_bound: 45000,
+        rate: 3.762,
+      }, {
+        upper_bound: 90000,
+        rate: 3.819,
+      }, {
+        upper_bound: 999999999,
+        rate: 3.876,
+      },
+    ],
+    local_standard_deduction: 16050.0,
+    state_standard_deduction: 16050.0,
+    state_tax_brackets: [
+      {
+        upper_bound: 17150,
+        rate: 4.0,
+      }, {
+        upper_bound: 23600,
+        rate: 4.5,
+      }, {
+        upper_bound: 27900,
+        rate: 5.25,
+      }, {
+        upper_bound: 161550,
+        rate: 5.5,
+      }, {
+        upper_bound: 323200,
+        rate: 6.0,
+      }, {
+        upper_bound: 2155350,
+        rate: 6.85,
+      }, {
+        upper_bound: 5000000,
+        rate: 9.65,
+      }, {
+        upper_bound: 25000000,
+        rate: 10.3,
+      }, {
+        upper_bound: 999999999,
+        rate: 10.9,
+      },
+    ],
   },
 };

@@ -6,9 +6,13 @@ import { YEARS } from "../../constants";
 import TextInput from "../inputs/TextInput";
 import NumberInput from "../inputs/NumberInput";
 import PercentInput from "../inputs/PercentInput";
+import TaxBracketInput from "../inputs/TaxBracketInput";
+import DynamicFields from "./DynamicFields";
+import { ConfigFieldsType } from "./types";
+import CollapsibleDetails from "./CollabsibleDetails";
 
 
-const ConfigFields = () => {
+const ConfigFields = ({ values }: { values: ConfigFieldsType }) => {
   return <>
     <FieldsContainer>
       <Row>
@@ -58,6 +62,36 @@ const ConfigFields = () => {
           <NumberInput name="config.maximum_bank_account_balance" label="Maximum bank balance" infoText="The maximum balance you can have in your bank account. If you exceed this balance at the end of the year, the excess will be transferred to your investment account." />
         </Col>
       </Row>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
+          <NumberInput name="config.state_standard_deduction" label="State standard deduction" infoText="The standard deduction for the state in which you pay state income tax. The default values are for a married household filing jointly in NY." />
+        </Col>
+      </Row>
+      <CollapsibleDetails label="State tax brackets" infoText="The tax brackets for the state in which you pay state income tax. The default values are for a married household filing jointly in NY. You can find your state's tax brackets here: https://taxfoundation.org/data/all/state/state-income-tax-rates-2024/">
+        <Row className="p-2 m-2 bg-white rounded border border-outline-secondary">
+          <DynamicFields
+            name="config.state_tax_brackets"
+            values={values.state_tax_brackets}
+            initialValues={TaxBracketInput.initialValues}
+            fieldsComponent={TaxBracketInput}
+          />
+        </Row>
+      </CollapsibleDetails>
+      <Row>
+        <Col xs={12} md={6} className="my-2">
+          <NumberInput name="config.local_standard_deduction" label="Local standard deduction" infoText="The standard deduction for the locality in which you pay local income tax. The default values are for NYC." />
+        </Col>
+      </Row>
+      <CollapsibleDetails label="Local tax brackets" infoText="The tax brackets for the locality in which you pay local income tax. The default values are for NYC.">
+        <Row className="p-2 m-2 bg-white rounded border border-outline-secondary">
+          <DynamicFields
+            name="config.local_tax_brackets"
+            values={values.local_tax_brackets}
+            initialValues={TaxBracketInput.initialValues}
+            fieldsComponent={TaxBracketInput}
+          />
+        </Row>
+      </CollapsibleDetails>
     </FieldsContainer>
   </>
 }
