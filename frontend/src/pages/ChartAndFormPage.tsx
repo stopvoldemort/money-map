@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { Container, Row, Navbar, Nav, Card } from "react-bootstrap";
+import { Container, Row, Navbar, Nav, Card, Alert } from "react-bootstrap";
 import ChartComponent, { NetWorthChartData } from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
@@ -10,6 +10,7 @@ declare const FORM_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
   const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
 
   console.log(`Using form version ${FORM_VERSION}`)
@@ -22,10 +23,6 @@ const ChartAndFormPage: React.FC = () => {
   const mutation = useMutation({
     mutationFn: async (formData: FormValuesType) => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
-      if (backendUrl === "") {
-        console.log("VITE_BACKEND_URL is not set");
-        console.log("FRONTEND ENV:", import.meta.env);
-      }
       const { data } = await axios.post(
         `${backendUrl}/api/simulations/run`,
         formData
@@ -33,16 +30,22 @@ const ChartAndFormPage: React.FC = () => {
       return data;
     },
     onSuccess: (data: NetWorthChartData[]) => {
-      console.log("Response:", data);
+      if (import.meta.env.DEV) {
+        console.log("Response:", data);
+      }
       setChartData(data);
+      setErrorMessage(null);
     },
     onError: (error: AxiosError) => {
       console.error("Error making request:", error);
+      setErrorMessage("An error occurred while running the simulation.");
     },
   });
 
   const handleUpdate = (formData: FormValuesType) => {
-    console.log("Form Data:", formData);
+    if (import.meta.env.DEV) {
+      console.log("Form Data:", formData);
+    }
     mutation.mutate(formData);
   };
 
@@ -76,6 +79,9 @@ const ChartAndFormPage: React.FC = () => {
             data={chartData}
           />
         </Row>
+        {errorMessage && <Row className="my-3">
+          <Alert variant="danger">{errorMessage}</Alert>
+        </Row>}
         <Row className="my-3">
           <FormComponent
             key={formKey}
