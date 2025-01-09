@@ -22,6 +22,7 @@ const ExpenseFields = ({ index }: { index: number }) => {
           <DollarInput
             name={`${ExpenseFields.fieldsKey}.${index}.amount`}
             label="Amount"
+            maxWidth="160px"
           />
         </Col>
         <Col xs={12} md={4} className="my-2">
@@ -34,6 +35,7 @@ const ExpenseFields = ({ index }: { index: number }) => {
           <CheckboxInput
             name={`${ExpenseFields.fieldsKey}.${index}.five_two_nine_eligible`}
             label="529 Eligible"
+            infoText="Check if this expense is related to paying for college."
           />
         </Col>
       </Row>

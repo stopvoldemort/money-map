@@ -28,10 +28,22 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
     if (active && payload && payload.length) {
         return (
             <div style={{ backgroundColor: 'white', border: '1px solid #ccc', padding: '10px' }}>
-                <p>{`Year: ${label}`}</p>
+                <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{`${label}`}</p>
                 {payload.map((entry, index) => (
-                    <p key={`item-${index}`} style={{ color: entry.stroke, opacity: 1 }}>
-                        {`${entry.name}: $${Math.round(entry.value ?? 0).toLocaleString()}`}
+                    <p
+                        key={`item-${index}`}
+                        style={{
+                            color: entry.stroke,
+                            opacity: 1,
+                            padding: 0,
+                            margin: 0,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            fontWeight: entry.name === 'Net Worth' ? 'bold' : 'normal'
+                        }}
+                    >
+                        <span>{entry.name}  </span>
+                        <span className="ms-5">${Math.round(entry.value ?? 0).toLocaleString()}</span>
                     </p>
                 ))}
             </div>
@@ -86,10 +98,10 @@ const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
                 />
                 <Bar dataKey="debt" stackId="stack" fill="rgba(255, 0, 0, 0.2)" stroke="rgb(255, 0, 0)" strokeWidth={1} name="Debt" />
                 <Bar dataKey="bank_account" stackId="stack" fill="rgba(0, 128, 0, 0.2)" stroke="rgb(0, 128, 0)" strokeWidth={1} name="Bank accounts" />
-                <Bar dataKey="investment" stackId="stack" fill="rgba(0, 0, 255, 0.2)" stroke="rgb(0, 0, 255)" strokeWidth={1} name="Investment accounts" />
-                <Bar dataKey="retirement" stackId="stack" fill="rgba(65, 105, 225, 0.2)" stroke="rgb(65, 105, 225)" strokeWidth={1} name="Traditional IRA/401k accounts" />
-                <Bar dataKey="roth_ira" stackId="stack" fill="rgba(128, 0, 128, 0.2)" stroke="rgb(128, 0, 128)" strokeWidth={1} name="Roth IRA/401k accounts" />
-                <Bar dataKey="five_two_nine" stackId="stack" fill="rgba(139, 69, 19, 0.2)" stroke="rgb(139, 69, 19)" strokeWidth={1} name="529 accounts" />
+                <Bar dataKey="investment" stackId="stack" fill="rgba(0, 0, 255, 0.2)" stroke="rgb(0, 0, 255)" strokeWidth={1} name="Taxable investments" />
+                <Bar dataKey="retirement" stackId="stack" fill="rgba(65, 105, 225, 0.2)" stroke="rgb(65, 105, 225)" strokeWidth={1} name="Retirement: traditional" />
+                <Bar dataKey="roth_ira" stackId="stack" fill="rgba(128, 0, 128, 0.2)" stroke="rgb(128, 0, 128)" strokeWidth={1} name="Retirement: Roth" />
+                <Bar dataKey="five_two_nine" stackId="stack" fill="rgba(139, 69, 19, 0.2)" stroke="rgb(139, 69, 19)" strokeWidth={1} name="College (529 plans)" />
                 <Bar dataKey="assets" stackId="stack" fill="rgba(255, 140, 0, 0.2)" stroke="rgb(255, 140, 0)" strokeWidth={1} name="Assets" />
             </ComposedChart>
         </ResponsiveContainer>

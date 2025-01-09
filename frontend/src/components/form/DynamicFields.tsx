@@ -12,6 +12,7 @@ import {
   TransferFieldsType,
   AssetPurchaseFieldsType,
   SocialSecurityFieldsType,
+  TaxBracketFieldsType,
 } from "./types";
 
 const DynamicFields = ({
@@ -21,9 +22,9 @@ const DynamicFields = ({
   fieldsComponent,
 }: {
   name: string;
-  values: OtherIncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[] | ScheduledDebtFieldsType[] | OtherDebtFieldsType[] | SalaryFieldsType[] | TransferFieldsType[] | AssetPurchaseFieldsType[] | SocialSecurityFieldsType[];
-  initialValues: OtherIncomeFieldsType | ExpenseFieldsType | AssetFieldsType | ScheduledDebtFieldsType | OtherDebtFieldsType | SalaryFieldsType | TransferFieldsType | AssetPurchaseFieldsType | SocialSecurityFieldsType;
-  fieldsComponent: React.FC<{ index: number }>;
+  values: OtherIncomeFieldsType[] | ExpenseFieldsType[] | AssetFieldsType[] | ScheduledDebtFieldsType[] | OtherDebtFieldsType[] | SalaryFieldsType[] | TransferFieldsType[] | AssetPurchaseFieldsType[] | SocialSecurityFieldsType[] | TaxBracketFieldsType[];
+  initialValues: OtherIncomeFieldsType | ExpenseFieldsType | AssetFieldsType | ScheduledDebtFieldsType | OtherDebtFieldsType | SalaryFieldsType | TransferFieldsType | AssetPurchaseFieldsType | SocialSecurityFieldsType | TaxBracketFieldsType;
+  fieldsComponent: React.FC<{ index: number, name: string }>;
 }) => {
   const FieldsComponent = fieldsComponent;
   return (
@@ -48,7 +49,7 @@ const DynamicFields = ({
               >
                 ×
               </Button>
-              <FieldsComponent index={index} />
+              <FieldsComponent index={index} name={name} />
             </FieldsContainer>
           ))}
           <div className="text-start">

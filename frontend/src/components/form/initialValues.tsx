@@ -133,7 +133,7 @@ export const initialValues = {
     {
       name: "Roth IRA/401k accounts",
       account_type: ACCOUNT_TYPES.ROTH_IRA.value,
-      starting_balance: 10000,
+      starting_balance: 0,
       investments: [
         {
           name: INVESTMENT_VEHICLES.STOCKS,
@@ -188,7 +188,7 @@ export const initialValues = {
     {
       name: "529 accounts",
       account_type: ACCOUNT_TYPES.FIVE_TWO_NINE.value,
-      starting_balance: 10000,
+      starting_balance: 0,
       earliest_withdrawal_year: YEARS.START,
       investments: [
         {
@@ -259,11 +259,81 @@ export const initialValues = {
   config: {
     first_year: YEARS.START,
     last_year: 2055,
-    state: "NY",
-    locality: "NYC",
     retirement_withdrawal_year: 2039,
     unscheduled_debt_interest_rate: 15.5,
     maximum_bank_account_balance: 20000,
     inflation_rate: 2.0,
+    federal_tax_brackets: [
+      {
+        upper_bound: 23200,
+        rate: 10.0,
+      }, {
+        upper_bound: 94300,
+        rate: 12.0,
+      }, {
+        upper_bound: 201050,
+        rate: 22.0,
+      }, {
+        upper_bound: 383900,
+        rate: 24.0,
+      }, {
+        upper_bound: 487450,
+        rate: 32.0,
+      }, {
+        upper_bound: 731200,
+        rate: 35.0,
+      }, {
+        upper_bound: 999999999,
+        rate: 37.0,
+      },
+    ],
+    federal_standard_deduction: 29200,
+    local_tax_brackets: [
+      {
+        upper_bound: 21600,
+        rate: 3.078,
+      }, {
+        upper_bound: 45000,
+        rate: 3.762,
+      }, {
+        upper_bound: 90000,
+        rate: 3.819,
+      }, {
+        upper_bound: 999999999,
+        rate: 3.876,
+      },
+    ],
+    local_standard_deduction: 16050.0,
+    state_standard_deduction: 16050.0,
+    state_tax_brackets: [
+      {
+        upper_bound: 17150,
+        rate: 4.0,
+      }, {
+        upper_bound: 23600,
+        rate: 4.5,
+      }, {
+        upper_bound: 27900,
+        rate: 5.25,
+      }, {
+        upper_bound: 161550,
+        rate: 5.5,
+      }, {
+        upper_bound: 323200,
+        rate: 6.0,
+      }, {
+        upper_bound: 2155350,
+        rate: 6.85,
+      }, {
+        upper_bound: 5000000,
+        rate: 9.65,
+      }, {
+        upper_bound: 25000000,
+        rate: 10.3,
+      }, {
+        upper_bound: 999999999,
+        rate: 10.9,
+      },
+    ],
   },
 };

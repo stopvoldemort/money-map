@@ -36,7 +36,14 @@ class YearSimulator:
         # SETUP
         withdrawals = []
         extra_taxes = 0.0
-        tax_calculator = TaxCalculator()
+        tax_calculator = TaxCalculator(
+            federal_tax_brackets=config.federal_tax_brackets,
+            federal_standard_deduction=config.federal_standard_deduction,
+            state_tax_brackets=config.state_tax_brackets,
+            state_standard_deduction=config.state_standard_deduction,
+            local_tax_brackets=config.local_tax_brackets,
+            local_standard_deduction=config.local_standard_deduction,
+        )
 
         # APPLY ANNUAL GROWTH
         # Important that this happens before the transfers are executed, or the debt
@@ -66,6 +73,7 @@ class YearSimulator:
 
 
         # CALCULATE TAXES
+        # payroll
         payroll_taxes = 0.0
         for income in annual_incomes:
             if income.payroll_tax:

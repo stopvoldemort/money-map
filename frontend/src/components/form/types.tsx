@@ -113,10 +113,19 @@ export interface AssetPurchaseFieldsType {
 export interface ConfigFieldsType {
   first_year: number;
   last_year: number;
-  state: string;
-  locality: string;
   retirement_withdrawal_year: number;
   unscheduled_debt_interest_rate: number;
   maximum_bank_account_balance: number;
   inflation_rate: number;
+  federal_tax_brackets: TaxBracketFieldsType[];
+  federal_standard_deduction: number;
+  state_tax_brackets: TaxBracketFieldsType[];
+  state_standard_deduction: number;
+  local_tax_brackets: TaxBracketFieldsType[];
+  local_standard_deduction: number;
+}
+
+export interface TaxBracketFieldsType {
+  upper_bound: number;
+  rate: number;
 }
