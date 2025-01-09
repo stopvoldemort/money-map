@@ -103,11 +103,11 @@ const ChartAndFormPage: React.FC = () => {
               </ul>
               <p>
                 Click to expand the sections above to enter your current financial info and
-                assumptions about what your future income and expenses will be.
-                Nothing you enter here will be saved. Note that:
+                assumptions about what your future income and expenses will be. Note that:
               </p>
               <ul>
-                <li>You can ignore inflation when entering your values, unless directed otherwise. My Money Map calculates everything in current dollars.</li>
+                <li><strong>Nothing you enter here will be saved</strong>, either by Money Map or even in your browser.</li>
+                <li>You can ignore inflation when entering your values, unless directed otherwise. My Money Map calculates everything in current dollars. This means, for example, that Money Map will assume that your income and any recurring expenses will grow with inflation.</li>
                 <li>My Money Map accounts for taxes.</li>
               </ul>
               <p>
