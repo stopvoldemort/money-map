@@ -133,7 +133,7 @@ export const initialValues = {
     {
       name: "Roth IRA/401k accounts",
       account_type: ACCOUNT_TYPES.ROTH_IRA.value,
-      starting_balance: 10000,
+      starting_balance: 0,
       investments: [
         {
           name: INVESTMENT_VEHICLES.STOCKS,
@@ -188,7 +188,7 @@ export const initialValues = {
     {
       name: "529 accounts",
       account_type: ACCOUNT_TYPES.FIVE_TWO_NINE.value,
-      starting_balance: 10000,
+      starting_balance: 0,
       earliest_withdrawal_year: YEARS.START,
       investments: [
         {

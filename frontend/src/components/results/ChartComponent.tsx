@@ -28,10 +28,22 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
     if (active && payload && payload.length) {
         return (
             <div style={{ backgroundColor: 'white', border: '1px solid #ccc', padding: '10px' }}>
-                <p>{`Year: ${label}`}</p>
+                <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{`${label}`}</p>
                 {payload.map((entry, index) => (
-                    <p key={`item-${index}`} style={{ color: entry.stroke, opacity: 1 }}>
-                        {`${entry.name}: $${Math.round(entry.value ?? 0).toLocaleString()}`}
+                    <p
+                        key={`item-${index}`}
+                        style={{
+                            color: entry.stroke,
+                            opacity: 1,
+                            padding: 0,
+                            margin: 0,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            fontWeight: entry.name === 'Net Worth' ? 'bold' : 'normal'
+                        }}
+                    >
+                        <span>{entry.name}  </span>
+                        <span className="ms-5">${Math.round(entry.value ?? 0).toLocaleString()}</span>
                     </p>
                 ))}
             </div>
