@@ -15,8 +15,10 @@ import OtherDebtFields from "./OtherDebtFields";
 import SalaryFields from "./SalaryFields";
 import TransferFields from "./TransferFields";
 import HousePurchaseFields from "./HousePurchaseFields";
-import ConfigFields from "./ConfigFields";
 import SocialSecurityFields from "./SocialSecurityFields";
+import InvestmentReturnFields from "./InvestmentReturnFields";
+import GeneralConfigFields from "./GeneralConfigFields";
+import IncomeTaxFields from "./IncomeTaxFields";
 
 interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
@@ -150,8 +152,14 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
 
           <Header title="Configuration" />
           <Accordion alwaysOpen>
-            <Section title="Investment returns, tax rates, etc.">
-              <ConfigFields values={values.config} />
+            <Section title="General">
+              <GeneralConfigFields />
+            </Section>
+            <Section title="Investment returns">
+              <InvestmentReturnFields />
+            </Section>
+            <Section title="Income tax rates" infoText="Configure the federal, state, and local income tax brackets and standard deductions. The default values are for a married household filing jointly in New York City.">
+              <IncomeTaxFields values={values.config} />
             </Section>
           </Accordion>
         </Form>
