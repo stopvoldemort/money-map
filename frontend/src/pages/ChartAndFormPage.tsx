@@ -10,10 +10,13 @@ declare const FORM_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
   const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
 
-  console.log(`Using form version ${FORM_VERSION}`)
+  if (import.meta.env.DEV) {
+    console.log(`Using form version ${FORM_VERSION}`)
+  }
 
   const values = useMemo(() => {
     return initialValues
@@ -23,6 +26,7 @@ const ChartAndFormPage: React.FC = () => {
   const mutation = useMutation({
     mutationFn: async (formData: FormValuesType) => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
+      setLoading(true);
       const { data } = await axios.post(
         `${backendUrl}/api/simulations/run`,
         formData
@@ -33,11 +37,15 @@ const ChartAndFormPage: React.FC = () => {
       if (import.meta.env.DEV) {
         console.log("Response:", data);
       }
+      setLoading(false);
       setChartData(data);
       setErrorMessage(null);
     },
     onError: (error: AxiosError) => {
-      console.error("Error making request:", error);
+      if (import.meta.env.DEV) {
+        console.error("Error making request:", error);
+      }
+      setLoading(false);
       setErrorMessage("An error occurred while running the simulation.");
     },
   });
@@ -88,6 +96,7 @@ const ChartAndFormPage: React.FC = () => {
             initialValues={values}
             onUpdate={handleUpdate}
             onClear={handleClearForm}
+            loading={loading}
           />
         </Row>
         <Row className="my-5" id="how-it-works">

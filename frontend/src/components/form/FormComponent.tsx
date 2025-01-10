@@ -24,13 +24,14 @@ interface FormComponentProps {
   onUpdate: (data: FormValuesType) => void;
   initialValues: FormValuesType;
   onClear: () => void;
+  loading: boolean;
 }
 
 const Header = ({ title }: { title: string }) => (
   <h4 className="mb-3 mt-4 text-start fw-bold display-7">{title}</h4>
 );
 
-const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, onClear }) => {
+const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, onClear, loading }) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -48,8 +49,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onUpdate, initialValues, 
           handleSubmit();
         }}>
           <div className="d-flex justify-content-center position-relative mt-3">
-            <Button variant="primary" type="submit" className="mt-3">
-              See your money map
+            <Button variant="primary" type="submit" className="mt-3" disabled={loading} style={{ width: "190px" }}>
+              {loading ? "Loading..." : "See your money map"}
             </Button>
             <Button variant="outline-danger" onClick={onClear} className="mt-3 position-absolute end-0">
               Reset
