@@ -9,17 +9,11 @@ class Aggregator:
         self.five_two_nine = []
         self.bank_account = []
         self.debt = []
-
-    def append(self, another_aggregator: "Aggregator") -> "Aggregator":
-        self.net_worth.append(another_aggregator.net_worth)
-        self.retirement.append(another_aggregator.retirement)
-        self.roth_ira.append(another_aggregator.roth_ira)
-        self.investment.append(another_aggregator.investment)
-        self.five_two_nine.append(another_aggregator.five_two_nine)
-        self.bank_account.append(another_aggregator.bank_account)
-        self.debt.append(another_aggregator.debt)
-        self.assets.append(another_aggregator.assets)
-        return self
+        self.debt_interest = []
+        self.expenses = []
+        self.taxes = []
+        self.incomes = []
+        self.capital_gains = []
 
     def for_frontend(self):
         data = []
@@ -34,7 +28,12 @@ class Aggregator:
                 "investment": self.investment[i],
                 "five_two_nine": self.five_two_nine[i],
                 "bank_account": self.bank_account[i],
-                "debt": self.debt[i]
+                "debt": self.debt[i],
+                "debt_interest": self.debt_interest[i],
+                "expenses": self.expenses[i],
+                "taxes": self.taxes[i],
+                "incomes": self.incomes[i],
+                "capital_gains": self.capital_gains[i]
             }
             data.append(year_data)
         return data

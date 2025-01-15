@@ -48,7 +48,7 @@ class ScheduledDebt:
             annual_payment_current_dollars = annual_payment / deflator
             transfers.append(
                 Transfer(
-                    name=f"{debt.name} scheduled payment {year}",
+                    name=f"{year} scheduled payment for {debt.name}",
                     amount=annual_payment_current_dollars,
                     year=year,
                     transfer_from=pay_from_account,

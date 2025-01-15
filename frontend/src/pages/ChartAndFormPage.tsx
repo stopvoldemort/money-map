@@ -8,7 +8,6 @@ import { FormValuesType } from "../components/form/types";
 import { initialValues } from "../components/form/initialValues";
 import NetIncomeChartComponent from "../components/results/NetIncomeChartComponent";
 import { NET_WORTH_CHART_TYPE, NET_INCOME_CHART_TYPE } from "../constants";
-import { dummyNetIncomeValues } from "../components/results/dummyNetIncomeValues";
 import { ChartData } from "../components/results/shared";
 declare const FORM_VERSION: string;
 
@@ -98,15 +97,10 @@ const ChartAndFormPage: React.FC = () => {
         </ToggleButtonGroup>
         <Row style={{ height: "400px", marginLeft: "-3rem", marginRight: "-3rem" }}>
           {chartType === NET_WORTH_CHART_TYPE && (
-            <ChartComponent
-              data={chartData}
-            />
+            <ChartComponent data={chartData} />
           )}
           {chartType === NET_INCOME_CHART_TYPE && (
-            <NetIncomeChartComponent
-              // data={chartData}
-              data={dummyNetIncomeValues}
-            />
+            <NetIncomeChartComponent data={chartData} />
           )}
         </Row>
         {errorMessage && <Row className="my-3">

@@ -1,3 +1,4 @@
+import currency from "currency.js";
 
 export interface ChartElement {
   name: string;
@@ -27,4 +28,8 @@ export const formatYAxis = (value: number) => {
     return `$${(value / 1000).toFixed(0)}K`;
   }
   return `$${value.toFixed(0)}`;
+};
+
+export const formatDollars = (value: number) => {
+  return currency(value, { precision: 0 }).format();
 };
