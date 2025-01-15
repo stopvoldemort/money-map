@@ -13,8 +13,8 @@ class Debt:
         self.scheduled = scheduled
         self.five_two_nine_eligible = five_two_nine_eligible
 
-        # This is used to track the growth of the account over the year
-        self.growth = 0.0
+        # This is used to track the growth of the debt over the year
+        self.annual_growth = 0.0
 
     def pay(self, payment_amount: float):
         self.amount -= payment_amount
@@ -23,8 +23,8 @@ class Debt:
         self.amount += amount
 
     def apply_annual_growth(self, inflation_rate: float):
-        self.growth = self.amount * self.aagr
-        self.amount += self.growth
+        self.annual_growth = self.amount * self.aagr
+        self.amount += self.annual_growth
 
         self.amount = self.amount / (1 + inflation_rate)
 

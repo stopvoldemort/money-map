@@ -37,6 +37,11 @@ To deploy the app to GCP:
 ### TODO:
 
 - IMPROVE THIS README
+- Net Income Chart:
+  - Tooltip:
+    - On the net worth chart, order the line items in the tooltip to match the bar segments
+  - Backend:
+    - It's incorrect to account for a transfer that comes from a non-bank account as an "expense"
 - Add validation for required fields
 - Add HSA accounts
 - Let recurring income, expenses, transfers, etc. increase over time, rather than assume they grow at the rate of inflation

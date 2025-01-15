@@ -62,7 +62,12 @@ class HousePurchase:
         for y in range(self.first_year, 2070 + 1):
             upkeep = Expense(f"{self.name} upkeep", self.annual_upkeep_cost, y)
             insurance = Expense(f"{self.name} insurance", self.home_price * self.annual_insurance_rate, y)
-            taxes = Expense(f"{self.name} taxes", self.home_price * self.property_tax_rate, y)
+            taxes = Expense(
+                name=f"{self.name} taxes",
+                amount=self.home_price * self.property_tax_rate,
+                year=y,
+                tax_payment=True,
+            )
             expenses.extend([upkeep, insurance, taxes])
 
         debt, transfers = ScheduledDebt.generate_debt_and_debt_payments(

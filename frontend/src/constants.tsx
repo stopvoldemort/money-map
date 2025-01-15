@@ -20,3 +20,6 @@ export const INVESTMENT_VEHICLES = {
   BONDS: "Bonds",
   MONEY_MARKET: "Money market",
 };
+
+export const NET_WORTH_CHART_TYPE = "net_worth";
+export const NET_INCOME_CHART_TYPE = "net_income";

@@ -123,18 +123,13 @@ class YearSimulator:
         for asset in assets:
             asset_taxes += asset.annual_tax_bill()
 
-        expenses.append(
-            Expense(
-                f"taxes for {year}",
-                payroll_taxes
-                + federal_income_taxes
-                + state_income_taxes
-                + local_income_taxes
-                + asset_taxes,
-                year,
-                tax_payment=True,
-            )
-        )
+        expenses.extend([
+            Expense("Payroll taxes", payroll_taxes, year, tax_payment=True),
+            Expense("Federal income taxes", federal_income_taxes, year, tax_payment=True),
+            Expense("State income taxes", state_income_taxes, year, tax_payment=True),
+            Expense("Local income taxes", local_income_taxes, year, tax_payment=True),
+            Expense("Asset taxes", asset_taxes, year, tax_payment=True)
+        ])
         annual_expenses = [e for e in expenses if e.year == year]
 
         #####   PAY EXPENSES  ######
@@ -144,7 +139,7 @@ class YearSimulator:
 
         unpaid_expenses = sum(expense.amount for expense in annual_expenses)
         if unpaid_expenses > 1.0:
-            debts.append(Debt(f"unpaid expenses for {year}", unpaid_expenses, config.unscheduled_debt_interest_rate))
+            debts.append(Debt(f"Unpaid expenses for {year}", unpaid_expenses, config.unscheduled_debt_interest_rate))
 
         #####   PAY UNSCHEDULED DEBT  ######
         unscheduled_debts = [
@@ -192,7 +187,7 @@ class YearSimulator:
             capital_gains_tax = capital_gains * tax_calculator.capital_gains_tax_rate()
             expenses.append(
                 Expense(
-                    f"capital gains tax for {year}",
+                    f"Capital gains tax for {year}",
                     capital_gains_tax,
                     year + 1,
                     tax_payment=True,
@@ -202,7 +197,7 @@ class YearSimulator:
         if extra_income_taxes > 0:
             expenses.append(
                 Expense(
-                    f"extra income taxes for {year}",
+                    f"Extra income taxes for {year}",
                     extra_taxes,
                     year + 1,
                     tax_payment=True,

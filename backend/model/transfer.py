@@ -36,7 +36,7 @@ class Transfer:
         if self.transfer_from.balance() < self.amount and self.required:
             withdrawal_amount = self.transfer_from.balance()
             expense = Expense(
-                f"insufficient funds for {self.name}",
+                f"Insufficient funds for {self.name} (Note: This is a bug. It should be a transfer, not an expense)",
                 self.amount - withdrawal_amount,
                 self.year,
             )

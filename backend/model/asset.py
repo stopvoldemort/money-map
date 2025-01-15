@@ -37,9 +37,10 @@ class Asset:
         )
 
         expense = Expense(
-            name=f"sales taxes on {self.name}",
+            name=f"Sales taxes on {self.name}",
             amount=self.sales_taxes_amount,
             year=self.sell_on,
+            tax_payment=True,
         )
 
         self.value = 0.0
