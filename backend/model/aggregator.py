@@ -22,7 +22,7 @@ class Aggregator:
         return self
 
     def for_frontend(self):
-        result = []
+        data = []
         # Assuming all lists have the same length and represent data for consecutive years
         for i in range(len(self.net_worth)):
             year_data = {
@@ -36,5 +36,5 @@ class Aggregator:
                 "bank_account": self.bank_account[i],
                 "debt": self.debt[i]
             }
-            result.append(year_data)
-        return result
+            data.append(year_data)
+        return data

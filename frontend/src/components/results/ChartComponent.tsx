@@ -1,6 +1,7 @@
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TooltipProps } from 'recharts';
 import { YEARS } from '../../constants';
+import { formatYAxis } from './shared';
 
 export interface NetWorthChartData {
     year: number;
@@ -12,15 +13,6 @@ export interface NetWorthChartData {
     debt: number;
 }
 
-// Format number to millions
-const formatYAxis = (value: number) => {
-    if (Math.abs(value) >= 1000000) {
-        return `$${(value / 1000000).toFixed(1)}M`;
-    } else if (Math.abs(value) >= 1000) {
-        return `$${(value / 1000).toFixed(0)}K`;
-    }
-    return `$${value.toFixed(0)}`;
-};
 
 // Custom tooltip component
 // Only needed because the tooltip text was inheriting the opacity from the bar "fill" colors

@@ -2,16 +2,20 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import { Container, Row, Navbar, Nav, Card, Alert, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
-import ChartComponent, { NetWorthChartData } from "../components/results/ChartComponent";
+import ChartComponent from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
 import { initialValues } from "../components/form/initialValues";
 import NetIncomeChartComponent from "../components/results/NetIncomeChartComponent";
 import { NET_WORTH_CHART_TYPE, NET_INCOME_CHART_TYPE } from "../constants";
+import { dummyNetIncomeValues } from "../components/results/dummyNetIncomeValues";
+import { ChartData } from "../components/results/shared";
 declare const FORM_VERSION: string;
 
+
+
 const ChartAndFormPage: React.FC = () => {
-  const [chartData, setChartData] = useState<NetWorthChartData[]>([]);
+  const [chartData, setChartData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formKey, setFormKey] = useState(0);
@@ -35,7 +39,7 @@ const ChartAndFormPage: React.FC = () => {
       );
       return data;
     },
-    onSuccess: (data: NetWorthChartData[]) => {
+    onSuccess: (data: ChartData[]) => {
       if (import.meta.env.DEV) {
         console.log("Response:", data);
       }
@@ -100,7 +104,8 @@ const ChartAndFormPage: React.FC = () => {
           )}
           {chartType === NET_INCOME_CHART_TYPE && (
             <NetIncomeChartComponent
-              data={chartData}
+              // data={chartData}
+              data={dummyNetIncomeValues}
             />
           )}
         </Row>
