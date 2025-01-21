@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, TooltipProps, Bar, Line } from "recharts";
-import { ChartElement, ChartData, formatDollars, formatYAxis } from "./shared";
+import { ChartElement, ScenarioResults, formatDollars, formatYAxis } from "./shared";
 import { YEARS } from "../../constants";
 
 
@@ -98,7 +98,7 @@ const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<number, str
   }
 };
 
-function prepareNetIncomeChartData(data: ChartData[]): NetIncomeChartData[] {
+function prepareNetIncomeChartData(data: ScenarioResults[]): NetIncomeChartData[] {
   return data.map((d) => {
     const totalExpenses = d.expenses.reduce((sum, item) => sum + item.value, 0);
     const totalTaxes = d.taxes?.reduce((sum, item) => sum + item.value, 0) || 0;
@@ -140,7 +140,7 @@ const CustomizedDot = (props: { cx: number; cy: number; payload: NetIncomeChartD
   );
 }
 
-const NetIncomeChart = ({ data }: { data: ChartData[] }) => {
+const NetIncomeChart = ({ data }: { data: ScenarioResults[] }) => {
   const [hoveredBar, setHoveredBar] = useState<string | null>(null);
 
   const chartData = prepareNetIncomeChartData(data);

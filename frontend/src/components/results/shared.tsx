@@ -5,7 +5,7 @@ export interface ChartElement {
   value: number;
 }
 
-export interface ChartData {
+export interface ScenarioResults {
   year: number;
   net_worth: number;
   five_two_nine: number;

@@ -9,12 +9,14 @@ const TextInput = ({
   infoText,
   suffixText,
   disabled = false,
+  maxWidth = "200px",
 }: {
   name: string;
   label: string;
   infoText?: string;
   suffixText?: string;
   disabled?: boolean;
+  maxWidth?: string;
 }) => {
   return (
     <InputGroup>
@@ -25,7 +27,7 @@ const TextInput = ({
         type="text"
         name={name}
         className="form-control"
-        style={{ maxWidth: "200px", minWidth: "80px" }}
+        style={{ maxWidth: maxWidth, minWidth: "80px" }}
         disabled={disabled}
       />
       {suffixText && (
