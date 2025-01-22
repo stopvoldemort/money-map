@@ -21,7 +21,7 @@ import GeneralConfigFields from "./GeneralConfigFields";
 import IncomeTaxFields from "./IncomeTaxFields";
 import TextInput from "../inputs/TextInput";
 import { Scenario, useScenarioContext } from "../../context/scenarioConstants";
-import { blankValues } from "./blankValues";
+import { initialValues } from "./initialValues";
 
 interface FormComponentProps {
   onSubmit: (data: FormValuesType) => void;
@@ -51,7 +51,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
 
   return (
     <Formik
-      initialValues={activeScenario ? activeScenario.values : blankValues}
+      initialValues={activeScenario ? activeScenario.values : initialValues}
       enableReinitialize
       onSubmit={async (values) => {
         try {
@@ -99,7 +99,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
           }}>
             <Row>
               <Col xs={12} md={4}>
-                <DropdownButton variant="outline-primary" className="mt-3" title={`Scenario: ${activeScenario ? activeScenario.values.name : "Create a new scenario"}`}>
+                <DropdownButton variant={activeScenarioId ? "outline-success" : "success"} className="mt-3" title={activeScenario ? `Scenario: ${activeScenario.values.name}` : "Create a new scenario"}>
                   <Dropdown.Header><b>Current scenarios</b></Dropdown.Header>
                   {scenarios.map((scenario: ScenarioFieldsType) => (
                     <Dropdown.Item

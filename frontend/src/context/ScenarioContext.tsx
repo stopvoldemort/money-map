@@ -1,18 +1,13 @@
 import { cloneDeep } from "lodash";
 import { v4 as uuidv4 } from "uuid";
-import { personalData } from "../../private/personal_data";
 import { initialValues } from "../components/form/initialValues";
 import { FormValuesType } from "../components/form/types";
 import { Scenario, ScenarioContext } from "./scenarioConstants";
 import { useState, ReactNode } from "react";
-import { initialValues as defaultValues } from "../components/form/initialValues";
 
 export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [scenarios, setScenarios] = useState<Scenario[]>([{
-    id: "123",
-    values: personalData
-  }, {
-    id: "456",
+    id: uuidv4(),
     values: initialValues
   }]);
 
@@ -43,7 +38,7 @@ export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const newBlankScenario = () => {
     const newID = uuidv4();
-    const newValues = cloneDeep(defaultValues);
+    const newValues = cloneDeep(initialValues);
     newValues.name = `Blank scenario ${blankScenarioCount}`;
     addScenario({
       id: newID,

@@ -74,13 +74,13 @@ const ChartAndFormPage: React.FC = () => {
       <Container fluid>
         <div className="d-flex justify-content-center position-relative mt-3">
           <ToggleButtonGroup type="radio" name="options" defaultValue={NET_WORTH_CHART_TYPE} className="mb-2">
-            <ToggleButton variant="outline-primary" id="tbg-radio-1" value={NET_WORTH_CHART_TYPE} onClick={() => setChartType(NET_WORTH_CHART_TYPE)}>
+            <ToggleButton variant="outline-secondary" id="tbg-radio-1" value={NET_WORTH_CHART_TYPE} onClick={() => setChartType(NET_WORTH_CHART_TYPE)}>
               Net Worth
             </ToggleButton>
-            <ToggleButton variant="outline-primary" id="tbg-radio-2" value={NET_INCOME_CHART_TYPE} onClick={() => setChartType(NET_INCOME_CHART_TYPE)}>
+            <ToggleButton variant="outline-secondary" id="tbg-radio-2" value={NET_INCOME_CHART_TYPE} onClick={() => setChartType(NET_INCOME_CHART_TYPE)}>
               Net Income
             </ToggleButton>
-            <ToggleButton variant="outline-primary" id="tbg-radio-3" value={COMPARE_SCENARIOS_CHART_TYPE} onClick={() => setChartType(COMPARE_SCENARIOS_CHART_TYPE)}>
+            <ToggleButton variant="outline-secondary" id="tbg-radio-3" value={COMPARE_SCENARIOS_CHART_TYPE} onClick={() => setChartType(COMPARE_SCENARIOS_CHART_TYPE)}>
               Compare Scenarios
             </ToggleButton>
           </ToggleButtonGroup>
