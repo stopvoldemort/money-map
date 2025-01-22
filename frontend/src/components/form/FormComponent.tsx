@@ -94,6 +94,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
         return (
           <Form onSubmit={(e) => {
             e.preventDefault();
+            conditionallyUpdateScenario(values);
             handleSubmit();
           }}>
             <Row>

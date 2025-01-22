@@ -1,7 +1,7 @@
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TooltipProps } from 'recharts';
 import { YEARS } from '../../constants';
-import { formatDollars, formatYAxis } from './shared';
+import { formatDollars, formatYAxis, ScenarioResults } from './shared';
 
 export interface NetWorthChartData {
     year: number;
@@ -68,11 +68,18 @@ const CustomizedDot = (props: { cx: number; cy: number; payload: NetWorthChartDa
     );
 }
 
-const NetWorthChart = ({ data }: { data: NetWorthChartData[] }) => {
+const NetWorthChart = ({ data, activeScenarioId }: { data: ScenarioResults[], activeScenarioId: string | null }) => {
+    const activeScenario = data.find(scenario => scenario.id === activeScenarioId);
+
+
+    if (!activeScenario) {
+        return <div>No active scenario</div>;
+    }
+
     return (
         <ResponsiveContainer width="100%" height={400}>
             <ComposedChart
-                data={data}
+                data={activeScenario.year_results}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 barSize={20}
                 stackOffset="sign"

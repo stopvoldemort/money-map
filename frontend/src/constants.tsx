@@ -23,3 +23,4 @@ export const INVESTMENT_VEHICLES = {
 
 export const NET_WORTH_CHART_TYPE = "net_worth";
 export const NET_INCOME_CHART_TYPE = "net_income";
+export const COMPARE_SCENARIOS_CHART_TYPE = "compare_scenarios";
