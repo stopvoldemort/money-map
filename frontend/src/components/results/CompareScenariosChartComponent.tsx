@@ -1,4 +1,4 @@
-import { CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { formatDollars, formatYAxis, ScenarioResults } from './shared';
 
 const colors = [
@@ -9,6 +9,37 @@ const colors = [
   "rgba(255, 140, 0)",
   "rgba(255, 0, 0)"
 ]
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{ backgroundColor: 'white', border: '1px solid #ccc', padding: '10px', minWidth: '250px' }}>
+        <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{`${label}`}</p>
+        {payload.map((entry, index) => (
+          entry.value !== 0 && (
+            <p
+              key={`item-${index}`}
+              style={{
+                color: entry.stroke,
+                opacity: 1,
+                padding: 0,
+                margin: 0,
+                display: 'flex',
+                justifyContent: 'space-between',
+                fontWeight: entry.name === 'Net Worth' ? 'bold' : 'normal'
+              }}
+            >
+              <span>{entry.name}</span>
+              <span className="ms-5">{formatDollars(entry.value ?? 0)}</span>
+            </p>
+          )
+        ))}
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const CompareScenariosChartComponent = ({ data }: { data: ScenarioResults[] }) => {
   const chartData = data[0]?.year_results.map((_, index) => {
@@ -31,7 +62,7 @@ const CompareScenariosChartComponent = ({ data }: { data: ScenarioResults[] }) =
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
         <YAxis tickFormatter={(value) => formatYAxis(value)} />
-        <Tooltip formatter={(value: number) => formatDollars(value)} />
+        <Tooltip content={<CustomTooltip />} />
         <Legend />
         {data.map((scenario, index) => (
           <Line

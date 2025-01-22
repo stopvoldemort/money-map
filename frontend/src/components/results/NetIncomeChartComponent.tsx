@@ -21,7 +21,7 @@ export interface NetIncomeChartData {
 
 const TooltipContent = ({ label, year, total, netIncome, items, color }: { label: string, year: number, total: number, netIncome: number, items: ChartElement[], color: string }) => {
   return (
-    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', width: '400px' }}>
+    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px' }}>
       <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{year}</p>
       <p style={{ padding: 0, margin: 0 }}>{`Net Income: ${formatDollars(netIncome)}`}</p>
       <p style={{

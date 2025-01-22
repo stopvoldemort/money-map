@@ -14,12 +14,10 @@ export interface NetWorthChartData {
 }
 
 
-// Custom tooltip component
-// Only needed because the tooltip text was inheriting the opacity from the bar "fill" colors
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
         return (
-            <div style={{ backgroundColor: 'white', border: '1px solid #ccc', padding: '10px' }}>
+            <div style={{ backgroundColor: 'white', border: '1px solid #ccc', padding: '10px', minWidth: '250px' }}>
                 <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{`${label}`}</p>
                 {payload.map((entry, index) => (
                     entry.value !== 0 && (
