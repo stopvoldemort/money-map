@@ -130,7 +130,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
             {activeScenarioId && (
               <>
                 <Row className="mt-5">
-                  <TextInput name="name" label="Name" maxWidth="400px" />
+                  <TextInput name="name" label="Scenario name" maxWidth="400px" />
                 </Row>
                 <Header title="Current Assets and Liabilities" />
                 <Accordion alwaysOpen>
