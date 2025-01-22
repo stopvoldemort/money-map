@@ -78,7 +78,7 @@ const ChartAndFormPage: React.FC = () => {
               Net Worth
             </ToggleButton>
             <ToggleButton variant="outline-secondary" id="tbg-radio-2" value={NET_INCOME_CHART_TYPE} onClick={() => setChartType(NET_INCOME_CHART_TYPE)}>
-              Net Income
+              Net Income (Beta)
             </ToggleButton>
             <ToggleButton variant="outline-secondary" id="tbg-radio-3" value={COMPARE_SCENARIOS_CHART_TYPE} onClick={() => setChartType(COMPARE_SCENARIOS_CHART_TYPE)}>
               Compare Scenarios
