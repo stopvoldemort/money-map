@@ -1,4 +1,10 @@
+export interface ScenarioFieldsType {
+  id: string;
+  values: FormValuesType;
+}
+
 export interface FormValuesType {
+  name: string;
   accounts: AccountFieldsType[];
   investment_vehicles: InvestmentVehicleFieldsType[];
   expenses: ExpenseFieldsType[];

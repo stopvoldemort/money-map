@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, TooltipProps, Bar, Line } from "recharts";
-import { ChartElement, ChartData, formatDollars, formatYAxis } from "./shared";
+import { ChartElement, ScenarioResults, ScenarioYearResults, formatDollars, formatYAxis } from "./shared";
 import { YEARS } from "../../constants";
 
 
@@ -21,7 +21,7 @@ export interface NetIncomeChartData {
 
 const TooltipContent = ({ label, year, total, netIncome, items, color }: { label: string, year: number, total: number, netIncome: number, items: ChartElement[], color: string }) => {
   return (
-    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', width: '400px' }}>
+    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px' }}>
       <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{year}</p>
       <p style={{ padding: 0, margin: 0 }}>{`Net Income: ${formatDollars(netIncome)}`}</p>
       <p style={{
@@ -98,7 +98,7 @@ const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<number, str
   }
 };
 
-function prepareNetIncomeChartData(data: ChartData[]): NetIncomeChartData[] {
+function prepareNetIncomeChartData(data: ScenarioYearResults[]): NetIncomeChartData[] {
   return data.map((d) => {
     const totalExpenses = d.expenses.reduce((sum, item) => sum + item.value, 0);
     const totalTaxes = d.taxes?.reduce((sum, item) => sum + item.value, 0) || 0;
@@ -140,10 +140,16 @@ const CustomizedDot = (props: { cx: number; cy: number; payload: NetIncomeChartD
   );
 }
 
-const NetIncomeChart = ({ data }: { data: ChartData[] }) => {
+const NetIncomeChart = ({ data, activeScenarioId }: { data: ScenarioResults[], activeScenarioId: string | null }) => {
   const [hoveredBar, setHoveredBar] = useState<string | null>(null);
 
-  const chartData = prepareNetIncomeChartData(data);
+  const activeScenario = data.find(scenario => scenario.id === activeScenarioId);
+
+  if (!activeScenario) {
+    return <div>No active scenario</div>;
+  }
+
+  const chartData = prepareNetIncomeChartData(activeScenario.year_results);
 
   return (
     <ResponsiveContainer width="100%" height={400}>

@@ -1,49 +1,44 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Container, Row, Navbar, Nav, Card, Alert, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import ChartComponent from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
-import { FormValuesType } from "../components/form/types";
-import { initialValues } from "../components/form/initialValues";
 import NetIncomeChartComponent from "../components/results/NetIncomeChartComponent";
-import { NET_WORTH_CHART_TYPE, NET_INCOME_CHART_TYPE } from "../constants";
-import { ChartData } from "../components/results/shared";
+import { NET_WORTH_CHART_TYPE, NET_INCOME_CHART_TYPE, COMPARE_SCENARIOS_CHART_TYPE } from "../constants";
+import { ScenarioResults } from "../components/results/shared";
+import { Scenario, useScenarioContext } from "../context/scenarioConstants";
+import CompareScenariosChartComponent from "../components/results/CompareScenariosChartComponent";
+
 declare const FORM_VERSION: string;
 
-
-
 const ChartAndFormPage: React.FC = () => {
-  const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [scenarioResults, setScenarioResults] = useState<ScenarioResults[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [formKey, setFormKey] = useState(0);
   const [chartType, setChartType] = useState(NET_WORTH_CHART_TYPE);
+  const { activeScenarioId, scenarios } = useScenarioContext();
+
   if (import.meta.env.DEV) {
     console.log(`Using form version ${FORM_VERSION}`)
   }
 
-  const values = useMemo(() => {
-    return initialValues
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formKey]); // We pass the formKey as a dependency so that changing it triggers a re-render
-
   const mutation = useMutation({
-    mutationFn: async (formData: FormValuesType) => {
+    mutationFn: async (scenarios: Scenario[]) => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
       setLoading(true);
       const { data } = await axios.post(
         `${backendUrl}/api/simulations/run`,
-        formData
+        scenarios
       );
       return data;
     },
-    onSuccess: (data: ChartData[]) => {
+    onSuccess: (data: ScenarioResults[]) => {
       if (import.meta.env.DEV) {
         console.log("Response:", data);
       }
       setLoading(false);
-      setChartData(data);
+      setScenarioResults(data);
       setErrorMessage(null);
     },
     onError: (error: AxiosError) => {
@@ -55,22 +50,12 @@ const ChartAndFormPage: React.FC = () => {
     },
   });
 
-  const handleUpdate = (formData: FormValuesType) => {
+  const handleSubmit = () => {
     if (import.meta.env.DEV) {
-      console.log("Form Data:", formData);
+      console.log("Submitting scenario data:", scenarios);
     }
-    mutation.mutate(formData);
+    mutation.mutate(scenarios);
   };
-
-  const handleClearForm = () => {
-    setFormKey(prev => prev + 1);
-    handleUpdate(initialValues);
-  };
-
-  useEffect(() => {
-    handleUpdate(values);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -87,32 +72,40 @@ const ChartAndFormPage: React.FC = () => {
         <p>A tool to help you understand your finances and plan for the future.</p>
       </Row>
       <Container fluid>
-        <ToggleButtonGroup type="radio" name="options" defaultValue={NET_WORTH_CHART_TYPE} className="mb-2">
-          <ToggleButton variant="outline-primary" id="tbg-radio-1" value={NET_WORTH_CHART_TYPE} name="Net Worth" onClick={() => setChartType(NET_WORTH_CHART_TYPE)}>
-            Net Worth
-          </ToggleButton>
-          <ToggleButton variant="outline-primary" id="tbg-radio-2" value={NET_INCOME_CHART_TYPE} name="Net Income" onClick={() => setChartType(NET_INCOME_CHART_TYPE)}>
-            Net Income
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <div className="d-flex justify-content-center position-relative mt-3">
+          <ToggleButtonGroup type="radio" name="options" defaultValue={NET_WORTH_CHART_TYPE} className="mb-2">
+            <ToggleButton variant="outline-secondary" id="tbg-radio-1" value={NET_WORTH_CHART_TYPE} onClick={() => setChartType(NET_WORTH_CHART_TYPE)}>
+              Net Worth
+            </ToggleButton>
+            <ToggleButton variant="outline-secondary" id="tbg-radio-2" value={NET_INCOME_CHART_TYPE} onClick={() => setChartType(NET_INCOME_CHART_TYPE)}>
+              Net Income (Beta)
+            </ToggleButton>
+            <ToggleButton variant="outline-secondary" id="tbg-radio-3" value={COMPARE_SCENARIOS_CHART_TYPE} onClick={() => setChartType(COMPARE_SCENARIOS_CHART_TYPE)}>
+              Compare Scenarios
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
         <Row style={{ height: "400px", marginLeft: "-3rem", marginRight: "-3rem" }}>
           {chartType === NET_WORTH_CHART_TYPE && (
-            <ChartComponent data={chartData} />
+            <ChartComponent data={scenarioResults} activeScenarioId={activeScenarioId} />
           )}
           {chartType === NET_INCOME_CHART_TYPE && (
-            <NetIncomeChartComponent data={chartData} />
+            <NetIncomeChartComponent data={scenarioResults} activeScenarioId={activeScenarioId} />
+          )}
+          {chartType === COMPARE_SCENARIOS_CHART_TYPE && (
+            <CompareScenariosChartComponent data={scenarioResults} />
           )}
         </Row>
-        {errorMessage && <Row className="my-3">
-          <Alert variant="danger">{errorMessage}</Alert>
-        </Row>}
+        {
+          errorMessage && <Row className="my-3">
+            <Alert variant="danger">{errorMessage}</Alert>
+          </Row>
+        }
         <Row className="my-3">
           <FormComponent
-            key={formKey}
-            initialValues={values}
-            onUpdate={handleUpdate}
-            onClear={handleClearForm}
+            onSubmit={handleSubmit}
             loading={loading}
+            activeScenarioId={activeScenarioId}
           />
         </Row>
         <Row className="my-5" id="how-it-works">
@@ -147,7 +140,7 @@ const ChartAndFormPage: React.FC = () => {
             <Card.Header as="h2">About Me</Card.Header>
             <Card.Body className="text-start">
               <Card.Text>
-                I'm a software engineer who had some questions about his finances (could I afford a home?
+                I'm a software engineer who had some questions about his values (could I afford a home?
                 how much should I save for retirement?), but didn't want to hire a financial planner.
                 I hope that this tool will mean that you don't have to hire one either.
               </Card.Text>
