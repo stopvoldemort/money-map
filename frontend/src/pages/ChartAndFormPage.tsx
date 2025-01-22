@@ -1,12 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Container, Row, Navbar, Nav, Card, Alert, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import ChartComponent from "../components/results/ChartComponent";
 import FormComponent from "../components/form/FormComponent";
 import { FormValuesType } from "../components/form/types";
-import { initialValues } from "../components/form/initialValues";
-import { personalData } from "../../private/personal_data"
 import NetIncomeChartComponent from "../components/results/NetIncomeChartComponent";
 import { NET_WORTH_CHART_TYPE, NET_INCOME_CHART_TYPE } from "../constants";
 import { ScenarioResults } from "../components/results/shared";
@@ -18,22 +16,12 @@ const ChartAndFormPage: React.FC = () => {
   const [scenarioResults, setScenarioResults] = useState<ScenarioResults[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [formKey, setFormKey] = useState(0);
   const [chartType, setChartType] = useState(NET_WORTH_CHART_TYPE);
-  const { scenarios, activeScenarioId } = useScenarioContext();
-
-
-  console.log(scenarios)
+  const { activeScenarioId } = useScenarioContext();
 
   if (import.meta.env.DEV) {
     console.log(`Using form version ${FORM_VERSION}`)
   }
-
-
-  const values = useMemo(() => {
-    return personalData
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formKey]); // We pass the formKey as a dependency so that changing it triggers a re-render
 
   const mutation = useMutation({
     mutationFn: async (formData: FormValuesType) => {
@@ -62,23 +50,12 @@ const ChartAndFormPage: React.FC = () => {
     },
   });
 
-  const handleUpdate = (formData: FormValuesType) => {
+  const handleSubmit = (formData: FormValuesType) => {
     if (import.meta.env.DEV) {
       console.log("Form Data:", formData);
     }
     mutation.mutate(formData);
   };
-
-  const handleClearForm = () => {
-    setFormKey(prev => prev + 1);
-    handleUpdate(initialValues);
-  };
-
-  useEffect(() => {
-    handleUpdate(values);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
 
   return (
     <>
@@ -120,9 +97,7 @@ const ChartAndFormPage: React.FC = () => {
         }
         <Row className="my-3">
           <FormComponent
-            key={formKey}
-            onUpdate={handleUpdate}
-            onClear={handleClearForm}
+            onSubmit={handleSubmit}
             loading={loading}
             activeScenarioId={activeScenarioId}
           />
