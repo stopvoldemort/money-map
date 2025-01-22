@@ -69,7 +69,7 @@ const ChartAndFormPage: React.FC = () => {
       </Navbar>
       <Row className="my-3">
         <h1>My Money Map</h1>
-        <p>A tool to help you understand your values and plan for the future.</p>
+        <p>A tool to help you understand your finances and plan for the future.</p>
       </Row>
       <Container fluid>
         <div className="d-flex justify-content-center position-relative mt-3">
