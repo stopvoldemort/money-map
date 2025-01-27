@@ -23,14 +23,14 @@ const GettingStartedModal = ({ showModal, setShowModal, onSubmit }: { showModal:
             <ul>
               <li>How much should I save for retirement?</li>
               <li>How much should I save for my kids' education?</li>
-              <li>Can I afford to buy a house?</li>
+              <li>How would buying a house affect when I can retire?</li>
             </ul>
-            Note: MONEY MAP DOES NOT SAVE OR SELL YOUR DATA. This is an open and free tool.
+            <b>MONEY MAP WILL NEVER STORE OR SELL YOUR DATA.</b> This is an open and free tool.
             <br /><br />
-            To get started, it'll help to know a few things about your household, which will allow us to pre-populate the tool with some default values.
+            It'll help to know a few things about your household, in order to fill out the tool with some default values.
             Click "Get started" to answer a couple questions.
             <br /><br />
-            If you'd like to skip these questions, and go straight to the tool, you can do so by clicking "Skip".
+            Or click "Skip" to go straight to the tool.
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={closeModal}>Skip</Button>
