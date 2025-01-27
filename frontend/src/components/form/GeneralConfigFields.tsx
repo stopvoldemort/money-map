@@ -4,7 +4,7 @@ import FieldsContainer from "./FieldsContainer";
 import { YEARS } from "../../constants";
 import NumberInput from "../inputs/NumberInput";
 import PercentInput from "../inputs/PercentInput";
-
+import DollarInput from "../inputs/DollarInput";
 
 const GeneralConfigFields = () => {
   return <>
@@ -28,7 +28,7 @@ const GeneralConfigFields = () => {
       </Row>
       <Row>
         <Col xs={12} md={6} className="my-2">
-          <NumberInput name="config.maximum_bank_account_balance" label="Maximum bank balance" infoText="The maximum balance you can have in your bank account. If you exceed this balance at the end of the year, the excess will be transferred to your investment account." />
+          <DollarInput name="config.maximum_bank_account_balance" label="Maximum bank balance" infoText="The maximum balance you can have in your bank account. If you exceed this balance at the end of the year, the excess will be transferred to your investment account." />
         </Col>
       </Row>
     </FieldsContainer>

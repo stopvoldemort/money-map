@@ -4,6 +4,8 @@ import { initialValues } from "../components/form/initialValues";
 import { FormValuesType } from "../components/form/types";
 import { Scenario, ScenarioContext } from "./scenarioConstants";
 import { useState, ReactNode } from "react";
+import { buildScenario } from "../components/getting_started/scenarioBuilder";
+import { GettingStartedFormValues } from "../components/getting_started/types";
 
 export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [scenarios, setScenarios] = useState<Scenario[]>([{
@@ -15,6 +17,7 @@ export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [blankScenarioCount, setBlankScenarioCount] = useState(1);
   const addScenario = (scenario: Scenario) => {
     setScenarios((prev) => [...prev, scenario]);
+    setActiveScenarioId(scenario.id);
   };
 
   const updateScenario = (id: string, updatedScenario: FormValuesType) => {
@@ -24,6 +27,16 @@ export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }
       )
     );
   };
+
+  // It's hacky to return the new scenarios array, but I need to use them before
+  // the context updates.
+  const addScenarioFromGettingStartedForm = (values: GettingStartedFormValues): Scenario[] => {
+    const scenario = buildScenario(values);
+    const newScenarios = [scenario];
+    setScenarios(newScenarios);
+    setActiveScenarioId(scenario.id);
+    return newScenarios;
+  }
 
   const duplicateScenario = (values: FormValuesType) => {
     const newID = uuidv4();
@@ -69,6 +82,7 @@ export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }
         deleteScenario,
         duplicateScenario,
         newBlankScenario,
+        addScenarioFromGettingStartedForm,
         switchScenario,
       }}
     >

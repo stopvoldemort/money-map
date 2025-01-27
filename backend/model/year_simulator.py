@@ -128,7 +128,7 @@ class YearSimulator:
             Expense("Federal income taxes", federal_income_taxes, year, tax_payment=True),
             Expense("State income taxes", state_income_taxes, year, tax_payment=True),
             Expense("Local income taxes", local_income_taxes, year, tax_payment=True),
-            Expense("Asset taxes", asset_taxes, year, tax_payment=True)
+            Expense("Property/asset taxes", asset_taxes, year, tax_payment=True)
         ])
         annual_expenses = [e for e in expenses if e.year == year]
 

@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import { FormValuesType } from "../components/form/types";
+import { GettingStartedFormValues } from "../components/getting_started/types";
 
 export const ScenarioContext = createContext<ScenarioContextValue | undefined>(undefined);
 
@@ -11,6 +12,7 @@ export interface Scenario {
 interface ScenarioContextValue {
   scenarios: Scenario[];
   deleteScenario: (id: string) => void;
+  addScenarioFromGettingStartedForm: (values: GettingStartedFormValues) => Scenario[];
   duplicateScenario: (values: FormValuesType) => void;
   newBlankScenario: () => void;
   switchScenario: (id: string) => void;
