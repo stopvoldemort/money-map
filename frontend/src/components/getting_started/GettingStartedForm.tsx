@@ -1,6 +1,7 @@
 import { Formik, Form, Field, FieldArray } from "formik";
 import { Button, Col, Modal, Form as RBForm, Row } from "react-bootstrap";
 import { GettingStartedFormValues } from "./types";
+import InfoPopover from "../form/InfoPopover";
 
 const AdultFields = ({ index, personName }: { index: number, personName: string }) => {
   return (
@@ -175,6 +176,7 @@ const GettingStartedForm = ({ closeModal, onSubmit }: { closeModal: () => void, 
               <Col md={4} xs={12}>
                 <RBForm.Group className="mb-3">
                   <RBForm.Label>Investments ($)</RBForm.Label>
+                  <InfoPopover text="How much you have in taxable stocks, bonds, and other investments." />
                   <Field as={RBForm.Control} name="investments" type="number" />
                 </RBForm.Group>
               </Col>
@@ -182,6 +184,7 @@ const GettingStartedForm = ({ closeModal, onSubmit }: { closeModal: () => void, 
               <Col md={4} xs={12}>
                 <RBForm.Group className="mb-3">
                   <RBForm.Label>Retirement ($)</RBForm.Label>
+                  <InfoPopover text="How much you have in retirement accounts." />
                   <Field as={RBForm.Control} name="retirement" type="number" />
                 </RBForm.Group>
               </Col>
@@ -189,7 +192,7 @@ const GettingStartedForm = ({ closeModal, onSubmit }: { closeModal: () => void, 
 
             <Row>
               <RBForm.Group className="mb-3">
-                <RBForm.Label>Current annual spending ($)</RBForm.Label>
+                <RBForm.Label>Current annual spending (exclude taxes and, if applicable, mortgage payments) ($)</RBForm.Label>
                 <Field
                   as={RBForm.Control}
                   name="annualSpending"
