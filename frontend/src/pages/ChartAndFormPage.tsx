@@ -9,13 +9,14 @@ import { NET_WORTH_CHART_TYPE, NET_INCOME_CHART_TYPE, COMPARE_SCENARIOS_CHART_TY
 import { ScenarioResults } from "../components/results/shared";
 import { Scenario, useScenarioContext } from "../context/scenarioConstants";
 import CompareScenariosChartComponent from "../components/results/CompareScenariosChartComponent";
-
+import GettingStartedModal from "../components/getting_started/GettingStartedModal";
 declare const FORM_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
   const [scenarioResults, setScenarioResults] = useState<ScenarioResults[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(true);
   const [chartType, setChartType] = useState(NET_WORTH_CHART_TYPE);
   const { activeScenarioId, scenarios } = useScenarioContext();
 
@@ -67,6 +68,7 @@ const ChartAndFormPage: React.FC = () => {
           <Nav.Link className="mx-2" href="#about-me">About me</Nav.Link>
         </Navbar.Collapse>
       </Navbar>
+      <GettingStartedModal showModal={showModal} setShowModal={setShowModal} />
       <Row className="my-3">
         <h1>My Money Map</h1>
         <p>A tool to help you understand your finances and plan for the future.</p>

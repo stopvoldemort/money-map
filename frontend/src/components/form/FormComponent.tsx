@@ -122,7 +122,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
                 </Button>
               </Col>
               <Col xs={12} md={4}>
-                <Button variant="outline-danger" disabled={!activeScenarioId} onClick={handleDeleteScenario} className="mt-3">
+                <Button variant="outline-danger" disabled={!activeScenarioId || scenarios.length <= 1} onClick={handleDeleteScenario} className="mt-3">
                   Delete scenario
                 </Button>
               </Col>
