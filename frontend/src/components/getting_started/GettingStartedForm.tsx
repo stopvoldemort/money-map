@@ -1,5 +1,6 @@
 import { Formik, Form, Field, FieldArray } from "formik";
 import { Button, Col, Modal, Form as RBForm, Row } from "react-bootstrap";
+import { GettingStartedFormValues } from "./types";
 
 const AdultFields = ({ index, personName }: { index: number, personName: string }) => {
   return (
@@ -61,7 +62,7 @@ const ChildFields = ({ index, handleRemove }: { index: number, handleRemove: () 
   )
 }
 
-const GettingStartedForm = ({ closeModal }: { closeModal: () => void }) => {
+const GettingStartedForm = ({ closeModal, onSubmit }: { closeModal: () => void, onSubmit: (values: GettingStartedFormValues) => void }) => {
   const initialValues = {
     adults: [
       {
@@ -92,8 +93,8 @@ const GettingStartedForm = ({ closeModal }: { closeModal: () => void }) => {
   };
 
   const handleSubmit = (values: typeof initialValues) => {
-    console.log("submit", values);
-    // closeModal();
+    onSubmit(values);
+    closeModal();
   };
 
   return (

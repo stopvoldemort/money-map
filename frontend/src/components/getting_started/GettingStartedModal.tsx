@@ -1,11 +1,12 @@
 import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import GettingStartedForm from "./GettingStartedForm";
+import { GettingStartedFormValues } from "./types";
 
 const INTRO_PAGE = "intro"
 const FORM_PAGE = "form"
 
-const GettingStartedModal = ({ showModal, setShowModal }: { showModal: boolean, setShowModal: (show: boolean) => void }) => {
+const GettingStartedModal = ({ showModal, setShowModal, onSubmit }: { showModal: boolean, setShowModal: (show: boolean) => void, onSubmit: (values: GettingStartedFormValues) => void }) => {
   const [page, setPage] = useState(INTRO_PAGE);
   const closeModal = () => {
     setShowModal(false);
@@ -37,7 +38,7 @@ const GettingStartedModal = ({ showModal, setShowModal }: { showModal: boolean, 
           </Modal.Footer>
         </>
       }
-      {page === FORM_PAGE && <GettingStartedForm closeModal={closeModal} />}
+      {page === FORM_PAGE && <GettingStartedForm closeModal={closeModal} onSubmit={onSubmit} />}
     </Modal>
   )
 }

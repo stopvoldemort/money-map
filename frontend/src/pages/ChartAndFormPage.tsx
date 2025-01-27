@@ -10,6 +10,7 @@ import { ScenarioResults } from "../components/results/shared";
 import { Scenario, useScenarioContext } from "../context/scenarioConstants";
 import CompareScenariosChartComponent from "../components/results/CompareScenariosChartComponent";
 import GettingStartedModal from "../components/getting_started/GettingStartedModal";
+import { GettingStartedFormValues } from "../components/getting_started/types";
 declare const FORM_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
@@ -18,7 +19,7 @@ const ChartAndFormPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(true);
   const [chartType, setChartType] = useState(NET_WORTH_CHART_TYPE);
-  const { activeScenarioId, scenarios } = useScenarioContext();
+  const { activeScenarioId, scenarios, addScenarioFromGettingStartedForm } = useScenarioContext();
 
   if (import.meta.env.DEV) {
     console.log(`Using form version ${FORM_VERSION}`)
@@ -52,11 +53,9 @@ const ChartAndFormPage: React.FC = () => {
   });
 
   const handleSubmit = () => {
-    if (import.meta.env.DEV) {
-      console.log("Submitting scenario data:", scenarios);
-    }
+    console.log("Submitting scenario data:", scenarios)
     mutation.mutate(scenarios);
-  };
+  }
 
   return (
     <>
@@ -68,7 +67,14 @@ const ChartAndFormPage: React.FC = () => {
           <Nav.Link className="mx-2" href="#about-me">About me</Nav.Link>
         </Navbar.Collapse>
       </Navbar>
-      <GettingStartedModal showModal={showModal} setShowModal={setShowModal} />
+      <GettingStartedModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onSubmit={(gettingStartedFormValues: GettingStartedFormValues) => {
+          const newScenarios = addScenarioFromGettingStartedForm(gettingStartedFormValues);
+          mutation.mutate(newScenarios);
+        }}
+      />
       <Row className="my-3">
         <h1>My Money Map</h1>
         <p>A tool to help you understand your finances and plan for the future.</p>
