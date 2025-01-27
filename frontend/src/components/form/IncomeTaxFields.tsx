@@ -13,10 +13,10 @@ const IncomeTaxFields = ({ values }: { values: ConfigFieldsType }) => {
     <FieldsContainer>
       <Row>
         <Col xs={12} md={6} className="my-2">
-          <PercentInput name="config.federal_standard_deduction" label="Federal standard deduction" infoText="The default value is for a married household filing jointly." />
+          <PercentInput name="config.federal_standard_deduction" label="Federal standard deduction" />
         </Col>
       </Row>
-      <CollapsibleDetails label="Federal income tax brackets" infoText="The default values are for a married household filing jointly.">
+      <CollapsibleDetails label="Federal income tax brackets">
         <Row className="p-2 m-2 bg-white rounded border border-outline-secondary">
           <DynamicFields
             name="config.federal_tax_brackets"
@@ -28,10 +28,10 @@ const IncomeTaxFields = ({ values }: { values: ConfigFieldsType }) => {
       </CollapsibleDetails>
       <Row>
         <Col xs={12} md={6} className="my-2">
-          <DollarInput name="config.state_standard_deduction" label="State standard deduction" infoText="The default values are for a married household filing jointly in NY." />
+          <DollarInput name="config.state_standard_deduction" label="State standard deduction" infoText="The default value is for NY." />
         </Col>
       </Row>
-      <CollapsibleDetails label="State income tax brackets" infoText="The default values are for a married household filing jointly in NY.">
+      <CollapsibleDetails label="State income tax brackets" infoText="The default values are for NY.">
         <Row className="p-2 m-2 bg-white rounded border border-outline-secondary">
           <DynamicFields
             name="config.state_tax_brackets"
@@ -43,10 +43,10 @@ const IncomeTaxFields = ({ values }: { values: ConfigFieldsType }) => {
       </CollapsibleDetails>
       <Row>
         <Col xs={12} md={6} className="my-2">
-          <DollarInput name="config.local_standard_deduction" label="Local standard deduction" infoText="The default values are for a married household filing jointly in NYC." />
+          <DollarInput name="config.local_standard_deduction" label="Local standard deduction" infoText="The default value is for NYC." />
         </Col>
       </Row>
-      <CollapsibleDetails label="Local income tax brackets" infoText="The default values are for a married household filing jointly in NYC.">
+      <CollapsibleDetails label="Local income tax brackets" infoText="The default values are for NYC.">
         <Row className="p-2 m-2 bg-white rounded border border-outline-secondary">
           <DynamicFields
             name="config.local_tax_brackets"

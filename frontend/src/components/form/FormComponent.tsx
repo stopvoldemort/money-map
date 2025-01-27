@@ -100,7 +100,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
             <Row>
               <Col xs={12} md={4}>
                 <DropdownButton variant={activeScenarioId ? "outline-success" : "success"} className="mt-3" title={activeScenario ? `Scenario: ${activeScenario.values.name}` : "Create a new scenario"}>
-                  <Dropdown.Header><b>Current scenarios</b></Dropdown.Header>
+                  <Dropdown.Header><b>Select scenario</b></Dropdown.Header>
                   {scenarios.map((scenario: ScenarioFieldsType) => (
                     <Dropdown.Item
                       key={scenario.id}

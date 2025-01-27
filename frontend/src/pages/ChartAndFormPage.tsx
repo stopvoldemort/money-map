@@ -29,6 +29,7 @@ const ChartAndFormPage: React.FC = () => {
     mutationFn: async (scenarios: Scenario[]) => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
       setLoading(true);
+      console.log("submitting scenarios:", scenarios)
       const { data } = await axios.post(
         `${backendUrl}/api/simulations/run`,
         scenarios
@@ -53,7 +54,6 @@ const ChartAndFormPage: React.FC = () => {
   });
 
   const handleSubmit = () => {
-    console.log("Submitting scenario data:", scenarios)
     mutation.mutate(scenarios);
   }
 

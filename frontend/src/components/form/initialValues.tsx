@@ -1,4 +1,15 @@
 import { ACCOUNT_TYPES, INVESTMENT_VEHICLES, YEARS } from "../../constants";
+import {
+  federalStandardDeduction,
+  stateStandardDeduction,
+  localStandardDeduction,
+  federalTaxBrackets,
+  stateTaxBrackets,
+  localTaxBrackets,
+  MARRIED,
+  NYC,
+  NY,
+} from "./taxData";
 
 
 export const initialValues = {
@@ -261,77 +272,11 @@ export const initialValues = {
     unscheduled_debt_interest_rate: 15.5,
     maximum_bank_account_balance: 20000,
     inflation_rate: 2.0,
-    federal_tax_brackets: [
-      {
-        upper_bound: 23200,
-        rate: 10.0,
-      }, {
-        upper_bound: 94300,
-        rate: 12.0,
-      }, {
-        upper_bound: 201050,
-        rate: 22.0,
-      }, {
-        upper_bound: 383900,
-        rate: 24.0,
-      }, {
-        upper_bound: 487450,
-        rate: 32.0,
-      }, {
-        upper_bound: 731200,
-        rate: 35.0,
-      }, {
-        upper_bound: 999999999,
-        rate: 37.0,
-      },
-    ],
-    federal_standard_deduction: 29200,
-    local_tax_brackets: [
-      {
-        upper_bound: 21600,
-        rate: 3.078,
-      }, {
-        upper_bound: 45000,
-        rate: 3.762,
-      }, {
-        upper_bound: 90000,
-        rate: 3.819,
-      }, {
-        upper_bound: 999999999,
-        rate: 3.876,
-      },
-    ],
-    local_standard_deduction: 16050.0,
-    state_standard_deduction: 16050.0,
-    state_tax_brackets: [
-      {
-        upper_bound: 17150,
-        rate: 4.0,
-      }, {
-        upper_bound: 23600,
-        rate: 4.5,
-      }, {
-        upper_bound: 27900,
-        rate: 5.25,
-      }, {
-        upper_bound: 161550,
-        rate: 5.5,
-      }, {
-        upper_bound: 323200,
-        rate: 6.0,
-      }, {
-        upper_bound: 2155350,
-        rate: 6.85,
-      }, {
-        upper_bound: 5000000,
-        rate: 9.65,
-      }, {
-        upper_bound: 25000000,
-        rate: 10.3,
-      }, {
-        upper_bound: 999999999,
-        rate: 10.9,
-      },
-    ],
+    federal_standard_deduction: federalStandardDeduction[MARRIED],
+    federal_tax_brackets: federalTaxBrackets[MARRIED],
+    state_standard_deduction: stateStandardDeduction[NY][MARRIED],
+    state_tax_brackets: stateTaxBrackets[NY][MARRIED],
+    local_standard_deduction: localStandardDeduction[NYC][MARRIED],
+    local_tax_brackets: localTaxBrackets[NYC][MARRIED],
   },
 };
