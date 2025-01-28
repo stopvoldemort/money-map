@@ -75,10 +75,7 @@ class YearSimulator:
 
         # TRANSFERS
         for transfer in annual_transfers:
-            withdrawal, expense = transfer.execute()
-            withdrawals.append(withdrawal)
-            if expense is not None:
-                expenses.append(expense)
+            withdrawals.append(transfer.execute())
 
 
         # CALCULATE TAXES
@@ -95,8 +92,7 @@ class YearSimulator:
         federal_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
-            if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type.federal_income_tax_deductible
+            if transfer.transfer_to.account_type.federal_income_tax_deductible
         )
         federal_income_taxes = tax_calculator.calculate_federal_income_tax(
             federal_tax_eligible_income
@@ -109,8 +105,7 @@ class YearSimulator:
         state_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
-            if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type.state_income_tax_deductible
+            if transfer.transfer_to.account_type.state_income_tax_deductible
         )
         state_income_taxes = tax_calculator.calculate_state_income_tax(state_tax_eligible_income)
 
@@ -121,8 +116,7 @@ class YearSimulator:
         local_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
-            if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type.local_income_tax_deductible
+            if transfer.transfer_to.account_type.local_income_tax_deductible
         )
         local_income_taxes = tax_calculator.calculate_local_income_tax(
             local_tax_eligible_income

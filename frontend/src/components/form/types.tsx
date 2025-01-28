@@ -99,7 +99,6 @@ export interface TransferFieldsType {
   years: number[];
   transfer_from: string;
   transfer_to: string;
-  required: boolean;
 }
 
 export interface AssetPurchaseFieldsType {
