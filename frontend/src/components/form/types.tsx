@@ -60,6 +60,7 @@ export interface OtherIncomeFieldsType {
   name: string;
   amount: number;
   years: number[];
+  deposit_in: string;
   federal_income_tax: boolean;
   state_income_tax: boolean;
   local_income_tax: boolean;

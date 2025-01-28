@@ -104,9 +104,12 @@ class Handler:
 
         for other_income_input in self.data["other_incomes"]:
             years = other_income_input.pop("years", [])
+            deposit_in_key = other_income_input.pop("deposit_in", "")
+            deposit_in = self.get_account_by_type(deposit_in_key)
+
             for year in years:
                 self.incomes.append(
-                    Income(**other_income_input, year=year, deposit_in=bank_account)
+                    Income(**other_income_input, year=year, deposit_in=deposit_in)
                 )
 
         for transfer_input in self.data["transfers"]:
