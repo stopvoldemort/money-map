@@ -13,7 +13,7 @@ import {
 
 
 export const initialValues = {
-  name: "Default scenario",
+  name: "Default",
   expenses: [],
   salaries: [],
   social_security: [],

@@ -78,7 +78,6 @@ TransferFields.initialValues = {
   years: [],
   transfer_from: ACCOUNT_TYPES.BANK.value,
   transfer_to: ACCOUNT_TYPES.RETIREMENT.value,
-  required: false
 };
 
 TransferFields.fieldsKey = "transfers";

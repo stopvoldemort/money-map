@@ -4,6 +4,7 @@ from model.tax_calculator import TaxCalculator
 from model.investment_vehicle import InvestmentVehicle
 from model.account import Account
 from model.expense import Expense
+from model.debt_payment import DebtPayment
 from model.income import Income
 from model.transfer import Transfer
 from model.debt import Debt
@@ -20,6 +21,7 @@ class YearSimulator:
         investment_vehicles: List[InvestmentVehicle],
         accounts: List[Account],
         expenses: List[Expense],
+        debt_payments: List[DebtPayment],
         incomes: List[Income],
         transfers: List[Transfer],
         debts: List[Debt],
@@ -28,6 +30,7 @@ class YearSimulator:
     ) -> Tuple[
         List[Account],
         List[Expense],
+        List[DebtPayment],
         List[Income],
         List[Transfer],
         List[Debt],
@@ -58,18 +61,21 @@ class YearSimulator:
                 expenses.append(expense)
 
         annual_incomes = [income for income in incomes if income.year == year]
+        annual_debt_payments = [debt_payment for debt_payment in debt_payments if debt_payment.year == year]
         annual_transfers = [transfer for transfer in transfers if transfer.year == year]
 
         # DEPOSIT INCOME
         for income in annual_incomes:
             income.deposit_in.deposit(income.amount)
 
+        # CONVERT DEBT PAYMENTS TO EXPENSES
+        for debt_payment in annual_debt_payments:
+            if debt_payment.amount > 0:
+                expenses.append(debt_payment.execute())
+
         # TRANSFERS
         for transfer in annual_transfers:
-            withdrawal, expense = transfer.execute()
-            withdrawals.append(withdrawal)
-            if expense is not None:
-                expenses.append(expense)
+            withdrawals.append(transfer.execute())
 
 
         # CALCULATE TAXES
@@ -86,8 +92,7 @@ class YearSimulator:
         federal_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
-            if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type.federal_income_tax_deductible
+            if transfer.transfer_to.account_type.federal_income_tax_deductible
         )
         federal_income_taxes = tax_calculator.calculate_federal_income_tax(
             federal_tax_eligible_income
@@ -100,8 +105,7 @@ class YearSimulator:
         state_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
-            if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type.state_income_tax_deductible
+            if transfer.transfer_to.account_type.state_income_tax_deductible
         )
         state_income_taxes = tax_calculator.calculate_state_income_tax(state_tax_eligible_income)
 
@@ -112,8 +116,7 @@ class YearSimulator:
         local_tax_eligible_income -= sum(
             transfer.transfered_amount
             for transfer in annual_transfers
-            if isinstance(transfer.transfer_to, Account)
-            and transfer.transfer_to.account_type.local_income_tax_deductible
+            if transfer.transfer_to.account_type.local_income_tax_deductible
         )
         local_income_taxes = tax_calculator.calculate_local_income_tax(
             local_tax_eligible_income
@@ -211,4 +214,4 @@ class YearSimulator:
         for asset in assets:
             asset.apply_annual_growth()
 
-        return accounts, expenses, incomes, transfers, debts, assets
+        return accounts, expenses, debt_payments, incomes, transfers, debts, assets

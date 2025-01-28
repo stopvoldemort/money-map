@@ -91,6 +91,10 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
           handleSubmit();
         }
 
+        const handleScenarioNameChange = (newValue: string) => {
+          conditionallyUpdateScenario({ ...values, name: newValue });
+        }
+
         return (
           <Form onSubmit={(e) => {
             e.preventDefault();
@@ -130,7 +134,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
             {activeScenarioId && (
               <>
                 <Row className="mt-5">
-                  <TextInput name="name" label="Scenario name" maxWidth="400px" />
+                  <TextInput name="name" label="Scenario name" maxWidth="400px" onChange={handleScenarioNameChange} />
                 </Row>
                 <Header title="Current Assets and Liabilities" />
                 <Accordion alwaysOpen>
@@ -191,7 +195,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
                       fieldsComponent={SocialSecurityFields}
                     />
                   </Section>
-                  <Section title="Other income" summary={`(${values.other_incomes.length})`} infoText="Other income expected in the future, like social security.">
+                  <Section title="Other income" summary={`(${values.other_incomes.length})`}>
                     <DynamicFields
                       name={OtherIncomeFields.fieldsKey}
                       values={values.other_incomes}

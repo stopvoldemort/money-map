@@ -20,7 +20,7 @@ def run_simulation():
         scenario_values = scenario_data["values"]
         scenario_results["name"] = scenario_values["name"]
         parsed = Handler(scenario_values)
-        simulation = Simulations(parsed.config).execute(parsed.investment_vehicles, parsed.accounts, parsed.expenses, parsed.incomes, parsed.transfers, parsed.debts, parsed.assets)
+        simulation = Simulations(parsed.config).execute(parsed.investment_vehicles, parsed.accounts, parsed.expenses, parsed.debt_payments, parsed.incomes, parsed.transfers, parsed.debts, parsed.assets)
         scenario_results["year_results"] = simulation.for_frontend()
         scenarios_results.append(scenario_results)
 

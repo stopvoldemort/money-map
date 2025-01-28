@@ -77,7 +77,5 @@ class Account:
                 transfer_to=self.syphon_excess_to,
                 amount=self.balance() - self.maximum_balance,
             )
-            # We don't need to do anything with the expense, since we know there is enough money
-            withdrawal, _expense = transfer.execute()
-            return withdrawal
+            return transfer.execute()
         return None

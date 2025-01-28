@@ -20,10 +20,9 @@ export interface ScenarioYearResults {
   roth_ira: number;
   debt: number;
   expenses: ChartElement[];
+  debt_payments: ChartElement[];
   taxes: ChartElement[];
   incomes: ChartElement[];
-  capital_gains: ChartElement[];
-  debt_interest: ChartElement[];
 }
 
 // Format number to millions

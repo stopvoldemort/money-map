@@ -143,7 +143,9 @@ export const buildScenario = (formValues: GettingStartedFormValues): Scenario =>
 
   setTaxData(scenarioValues, formValues.hasPartner);
 
-  handleOwnsHome(scenarioValues, formValues.home);
+  if (formValues.hasHome) {
+    handleOwnsHome(scenarioValues, formValues.home);
+  }
 
   scenarioValues.config.retirement_withdrawal_year = Math.min(...formValues.adults.map(adultRetirementYear));
 

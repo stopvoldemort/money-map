@@ -25,9 +25,9 @@ const GettingStartedModal = ({ showModal, setShowModal, onSubmit }: { showModal:
               <li>How much should I save for my kids' education?</li>
               <li>How would buying a house affect when I can retire?</li>
             </ul>
-            <b>MONEY MAP WILL NEVER STORE OR SELL YOUR DATA.</b> This is an open and free tool.
+            <b>MONEY MAP WILL NEVER STORE OR SELL YOUR DATA.</b> This is a free tool.
             <br /><br />
-            It'll help to know a few things about your household, in order to fill out the tool with some default values.
+            It'll speed things up to know a few things about your household.
             Click "Get started" to answer a couple questions.
             <br /><br />
             Or click "Skip" to go straight to the tool.
