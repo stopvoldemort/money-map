@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, TooltipProps, Bar, Line } from "recharts";
 import { ChartElement, ScenarioResults, ScenarioYearResults, formatDollars, formatYAxis } from "./shared";
 import { YEARS } from "../../constants";
+import { NameType } from "recharts/types/component/DefaultTooltipContent";
+import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 
 export interface NetIncomeChartData {
@@ -9,21 +11,19 @@ export interface NetIncomeChartData {
   expenses: ChartElement[];
   taxes: ChartElement[];
   incomes: ChartElement[];
-  capital_gains: ChartElement[];
-  debt_interest: ChartElement[];
+  debt_payments: ChartElement[];
   netIncome: number;
   totalExpenses: number;
   totalTaxes: number;
-  totalDebtInterest: number;
+  totalDebtPayments: number;
   totalIncomes: number;
-  totalCapitalGains: number;
 }
 
 const TooltipContent = ({ label, year, total, netIncome, items, color }: { label: string, year: number, total: number, netIncome: number, items: ChartElement[], color: string }) => {
   return (
     <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px' }}>
       <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{year}</p>
-      <p style={{ padding: 0, margin: 0 }}>{`Net Income: ${formatDollars(netIncome)}`}</p>
+      <p style={{ padding: 0, margin: 0 }}>{`Cash Flow: ${formatDollars(netIncome)}`}</p>
       <p style={{
         opacity: 1,
         padding: 0,
@@ -56,7 +56,7 @@ const TooltipContent = ({ label, year, total, netIncome, items, color }: { label
   );
 }
 
-const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<number, string> & { hoveredBar: string | null }) => {
+const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<ValueType, NameType> & { hoveredBar: string | null }) => {
   if (!active || !payload || !payload.length || !hoveredBar) {
     return null;
   }
@@ -73,7 +73,7 @@ const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<number, str
   switch (hoveredBar) {
     case "totalIncomes":
       return (
-        <TooltipContent label="Income" {...rowData} total={rowData.totalIncomes} items={rowData.incomes} color={color} />
+        <TooltipContent label="Available income" {...rowData} total={rowData.totalIncomes} items={rowData.incomes} color={color} />
       );
     case "totalExpenses":
       return (
@@ -83,13 +83,9 @@ const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<number, str
       return (
         <TooltipContent label="Taxes" {...rowData} total={rowData.totalTaxes} items={rowData.taxes} color={color} />
       );
-    case "totalCapitalGains":
+    case "totalDebtPayments":
       return (
-        <TooltipContent label="Capital Gains" {...rowData} total={rowData.totalCapitalGains} items={rowData.capital_gains} color={color} />
-      );
-    case "totalDebtInterest":
-      return (
-        <TooltipContent label="Debt Interest" {...rowData} total={rowData.totalDebtInterest} items={rowData.debt_interest} color={color} />
+        <TooltipContent label="Debt Payments" {...rowData} total={rowData.totalDebtPayments} items={rowData.debt_payments} color={color} />
       );
     default:
       return (
@@ -102,19 +98,17 @@ function prepareNetIncomeChartData(data: ScenarioYearResults[]): NetIncomeChartD
   return data.map((d) => {
     const totalExpenses = d.expenses.reduce((sum, item) => sum + item.value, 0);
     const totalTaxes = d.taxes?.reduce((sum, item) => sum + item.value, 0) || 0;
-    const totalDebtInterest = d.debt_interest?.reduce((sum, item) => sum + item.value, 0) || 0;
+    const totalDebtPayments = d.debt_payments?.reduce((sum, item) => sum + item.value, 0) || 0;
     const totalIncomes = d.incomes.reduce((sum, item) => sum + item.value, 0);
-    const totalCapitalGains = d.capital_gains?.reduce((sum, item) => sum + item.value, 0) || 0;
-    const netIncome = totalIncomes + totalCapitalGains + totalExpenses + totalTaxes + totalDebtInterest;
+    const netIncome = totalIncomes + totalDebtPayments + totalExpenses + totalTaxes;
 
     return {
       ...d,
       netIncome,
       totalExpenses,
       totalTaxes,
-      totalDebtInterest,
+      totalDebtPayments,
       totalIncomes,
-      totalCapitalGains
     };
   });
 }
@@ -173,24 +167,6 @@ const NetIncomeChart = ({ data, activeScenarioId }: { data: ScenarioResults[], a
         />
         <Bar
           stackId="stack"
-          dataKey="totalExpenses"
-          stroke="rgb(255, 0, 0)"
-          fill="rgb(255, 0, 0, 0.2)"
-          strokeWidth={1}
-          onMouseEnter={() => setHoveredBar("totalExpenses")}
-          onMouseLeave={() => setHoveredBar(null)}
-        />
-        <Bar
-          stackId="stack"
-          dataKey="totalTaxes"
-          stroke="rgb(255, 102, 102)"
-          fill="rgb(255, 102, 102, 0.2)"
-          strokeWidth={1}
-          onMouseEnter={() => setHoveredBar("totalTaxes")}
-          onMouseLeave={() => setHoveredBar(null)}
-        />
-        <Bar
-          stackId="stack"
           dataKey="totalIncomes"
           stroke="rgb(0, 128, 0)"
           fill="rgb(0, 128, 0, 0.2)"
@@ -200,20 +176,29 @@ const NetIncomeChart = ({ data, activeScenarioId }: { data: ScenarioResults[], a
         />
         <Bar
           stackId="stack"
-          dataKey="totalCapitalGains"
-          stroke="rgb(102, 204, 102)"
-          fill="rgb(102, 204, 102, 0.2)"
+          dataKey="totalDebtPayments"
+          stroke="rgb(255, 0, 0)"
+          fill="rgb(255, 0, 0, 0.2)"
           strokeWidth={1}
-          onMouseEnter={() => setHoveredBar("totalCapitalGains")}
+          onMouseEnter={() => setHoveredBar("totalDebtPayments")}
           onMouseLeave={() => setHoveredBar(null)}
         />
         <Bar
           stackId="stack"
-          dataKey="totalDebtInterest"
-          stroke="rgb(255, 180, 180)"
-          fill="rgb(255, 180, 180, 0.2)"
+          dataKey="totalTaxes"
+          stroke="rgb(255, 60, 60)"
+          fill="rgb(255, 60, 60, 0.2)"
           strokeWidth={1}
-          onMouseEnter={() => setHoveredBar("totalDebtInterest")}
+          onMouseEnter={() => setHoveredBar("totalTaxes")}
+          onMouseLeave={() => setHoveredBar(null)}
+        />
+        <Bar
+          stackId="stack"
+          dataKey="totalExpenses"
+          stroke="rgb(255, 140, 140)"
+          fill="rgb(255, 140, 140, 0.2)"
+          strokeWidth={1}
+          onMouseEnter={() => setHoveredBar("totalExpenses")}
           onMouseLeave={() => setHoveredBar(null)}
         />
       </ComposedChart>

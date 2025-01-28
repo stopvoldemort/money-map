@@ -6,6 +6,7 @@ class Expense:
         year: int,
         five_two_nine_eligible: bool = False,
         tax_payment: bool = False,
+        debt_payment: bool = False,
     ):
         self.name = name
         self.amount = amount
@@ -13,6 +14,7 @@ class Expense:
         self.year = year
         self.five_two_nine_eligible = five_two_nine_eligible
         self.tax_payment = tax_payment
+        self.debt_payment = debt_payment
 
     def pay(self, payment_amount: float):
         self.amount -= payment_amount

@@ -33,6 +33,7 @@ class Handler:
         self.investment_vehicles = []
         self.accounts = []
         self.expenses = []
+        self.debt_payments = []
         self.incomes = []
         self.transfers = []
         self.debts = []
@@ -69,18 +70,17 @@ class Handler:
             loan_amount = scheduled_debt_input.pop("amount", 0)
             name = scheduled_debt_input.pop("name", "")
             aagr = percentize(scheduled_debt_input.pop("aagr", 0))
-            debt, transfers = ScheduledDebt.generate_debt_and_debt_payments(
+            debt, debt_payments = ScheduledDebt.generate_debt_and_debt_payments(
                 name=name,
                 total_amount=loan_amount,
                 down_payment_proportion=0,
                 annual_interest_rate=aagr,
                 first_year_of_loan=first_year_of_loan,
                 loan_term_years=loan_term_years,
-                pay_from_account=bank_account,
                 inflation_rate=self.config.inflation_rate,
             )
             self.debts.append(debt)
-            self.transfers.extend(transfers)
+            self.debt_payments.extend(debt_payments)
 
         for asset_input in self.data["assets"]:
             aagr = asset_input.pop("aagr", 0)
@@ -95,9 +95,8 @@ class Handler:
                 self.expenses.append(Expense(**expense_input, year=year))
 
         for salary_input in self.data["salaries"]:
-            incomes, transfers = parse_salary_input(salary_input, bank_account, retirement_account, roth_account)
+            incomes = parse_salary_input(salary_input, bank_account, retirement_account, roth_account)
             self.incomes.extend(incomes)
-            self.transfers.extend(transfers)
 
         for social_security_input in self.data["social_security"]:
             incomes = parse_social_security_input(social_security_input, bank_account, self.config.last_year)
@@ -125,15 +124,14 @@ class Handler:
                 )
 
         for house_purchase_input in self.data["house_purchases"]:
-            house_asset, house_debt, house_expenses, house_transfers = parse_house_purchase(
+            house_asset, house_debt, house_expenses, house_debt_payments = parse_house_purchase(
                 house_purchase_input,
-                bank_account,
                 self.config.inflation_rate
             )
             self.assets.append(house_asset)
             self.debts.append(house_debt)
             self.expenses.extend(house_expenses)
-            self.transfers.extend(house_transfers)
+            self.debt_payments.extend(house_debt_payments)
 
     def get_account_by_type(self, account_type):
         for account in self.accounts:

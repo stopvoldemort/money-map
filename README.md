@@ -48,7 +48,4 @@ To deploy the app to GCP:
 - Add HSA accounts
 - Let recurring income, expenses, transfers, etc. increase over time, rather than assume they grow at the rate of inflation
 - Incorporate 401k/IRA minimum required withdrawals
-- Enable users to compare multiple simulations
-- Enable users to see the details of the simulation (each expense, income, etc.)
 - Enable users to save their simulations
-- Sankey diagram showing how money flows from income to expenses and savings
