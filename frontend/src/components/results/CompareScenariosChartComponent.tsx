@@ -1,4 +1,4 @@
-import { CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { formatDollars, formatYAxis, ScenarioResults } from './shared';
 
 const colors = [
@@ -63,7 +63,6 @@ const CompareScenariosChartComponent = ({ data }: { data: ScenarioResults[] }) =
         <XAxis dataKey="year" />
         <YAxis tickFormatter={(value) => formatYAxis(value)} />
         <Tooltip content={<CustomTooltip />} />
-        <Legend />
         {data.map((scenario, index) => (
           <Line
             key={scenario.id}
