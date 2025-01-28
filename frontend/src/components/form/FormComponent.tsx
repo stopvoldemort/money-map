@@ -25,6 +25,7 @@ import { initialValues } from "./initialValues";
 
 interface FormComponentProps {
   onSubmit: (data: FormValuesType) => void;
+  onReset: () => void;
   loading: boolean;
   activeScenarioId: string | null;
 }
@@ -33,7 +34,7 @@ const Header = ({ title }: { title: string }) => (
   <h4 className="mb-3 mt-4 text-start fw-bold display-7">{title}</h4>
 );
 
-const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, activeScenarioId }) => {
+const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, onReset, loading, activeScenarioId }) => {
   const { scenarios, updateScenario, deleteScenario, duplicateScenario, newBlankScenario, switchScenario } = useScenarioContext();
   const activeScenario = scenarios.find((scenario: Scenario) => scenario.id === activeScenarioId);
 
@@ -126,9 +127,10 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
                 </Button>
               </Col>
               <Col xs={12} md={4}>
-                <Button variant="outline-danger" disabled={!activeScenarioId || scenarios.length <= 1} onClick={handleDeleteScenario} className="mt-3">
+                <Button variant="outline-danger" onClick={handleDeleteScenario} className="mt-3">
                   Delete scenario
                 </Button>
+                <Button variant="danger" onClick={onReset} className="mt-3 mx-3">Reset</Button>
               </Col>
             </Row>
             {activeScenarioId && (

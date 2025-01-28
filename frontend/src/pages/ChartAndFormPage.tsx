@@ -57,6 +57,12 @@ const ChartAndFormPage: React.FC = () => {
     mutation.mutate(scenarios);
   }
 
+  const handleReset = () => {
+    setErrorMessage(null);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    setShowModal(true);
+  }
+
   return (
     <>
       <Navbar>
@@ -112,6 +118,7 @@ const ChartAndFormPage: React.FC = () => {
         <Row className="my-3">
           <FormComponent
             onSubmit={handleSubmit}
+            onReset={handleReset}
             loading={loading}
             activeScenarioId={activeScenarioId}
           />

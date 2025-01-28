@@ -19,9 +19,9 @@ export interface NetIncomeChartData {
   totalIncomes: number;
 }
 
-const TooltipContent = ({ label, year, total, netIncome, items, color }: { label: string, year: number, total: number, netIncome: number, items: ChartElement[], color: string }) => {
+const TooltipContent = ({ label, year, total, netIncome, items, color, footer }: { label: string, year: number, total: number, netIncome: number, items: ChartElement[], color: string, footer?: string }) => {
   return (
-    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px' }}>
+    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px', maxWidth: '400px' }}>
       <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{year}</p>
       <p style={{ padding: 0, margin: 0 }}>{`Cash Flow: ${formatDollars(netIncome)}`}</p>
       <p style={{
@@ -52,6 +52,7 @@ const TooltipContent = ({ label, year, total, netIncome, items, color }: { label
           <span className="ms-5">{formatDollars(item.value)}</span>
         </p>
       ))}
+      {footer && <p style={{ fontSize: '12px', color: '#808080', marginTop: '10px' }} className="text-start">{footer}</p>}
     </div>
   );
 }
@@ -73,7 +74,7 @@ const CustomTooltip = ({ active, payload, hoveredBar }: TooltipProps<ValueType, 
   switch (hoveredBar) {
     case "totalIncomes":
       return (
-        <TooltipContent label="Available income" {...rowData} total={rowData.totalIncomes} items={rowData.incomes} color={color} />
+        <TooltipContent label="Income*" {...rowData} total={rowData.totalIncomes} items={rowData.incomes} color={color} footer="*Does not include amounts contributed directly to retirement or other investments." />
       );
     case "totalExpenses":
       return (
