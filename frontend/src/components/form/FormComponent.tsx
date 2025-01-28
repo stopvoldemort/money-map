@@ -191,7 +191,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, loading, active
                       fieldsComponent={SocialSecurityFields}
                     />
                   </Section>
-                  <Section title="Other income" summary={`(${values.other_incomes.length})`} infoText="Other income expected in the future, like social security.">
+                  <Section title="Other income" summary={`(${values.other_incomes.length})`}>
                     <DynamicFields
                       name={OtherIncomeFields.fieldsKey}
                       values={values.other_incomes}
