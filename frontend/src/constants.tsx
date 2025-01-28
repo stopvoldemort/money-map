@@ -1,3 +1,5 @@
+export const FORM_VERSION = "1.0.0";
+
 export const YEARS = {
   START: 2025,
   END: 2070,

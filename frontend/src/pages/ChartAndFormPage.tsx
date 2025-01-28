@@ -11,7 +11,7 @@ import { Scenario, useScenarioContext } from "../context/scenarioConstants";
 import CompareScenariosChartComponent from "../components/results/CompareScenariosChartComponent";
 import GettingStartedModal from "../components/getting_started/GettingStartedModal";
 import { GettingStartedFormValues } from "../components/getting_started/types";
-declare const FORM_VERSION: string;
+declare const GIT_VERSION: string;
 
 const ChartAndFormPage: React.FC = () => {
   const [scenarioResults, setScenarioResults] = useState<ScenarioResults[]>([]);
@@ -22,7 +22,7 @@ const ChartAndFormPage: React.FC = () => {
   const { activeScenarioId, scenarios, addScenarioFromGettingStartedForm } = useScenarioContext();
 
   if (import.meta.env.DEV) {
-    console.log(`Using form version ${FORM_VERSION}`)
+    console.log(`Using form version ${GIT_VERSION}`)
   }
 
   const mutation = useMutation({
@@ -59,7 +59,6 @@ const ChartAndFormPage: React.FC = () => {
 
   const handleReset = () => {
     setErrorMessage(null);
-    window.scrollTo({ top: 0, behavior: 'auto' });
     setShowModal(true);
   }
 

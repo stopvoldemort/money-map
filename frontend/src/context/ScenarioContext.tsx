@@ -3,15 +3,28 @@ import { v4 as uuidv4 } from "uuid";
 import { initialValues } from "../components/form/initialValues";
 import { FormValuesType } from "../components/form/types";
 import { Scenario, ScenarioContext } from "./scenarioConstants";
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { buildScenario } from "../components/getting_started/scenarioBuilder";
 import { GettingStartedFormValues } from "../components/getting_started/types";
+import { FORM_VERSION } from "../constants";
 
 export const ScenarioProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [scenarios, setScenarios] = useState<Scenario[]>([{
-    id: uuidv4(),
-    values: initialValues
-  }]);
+  const [scenarios, setScenarios] = useState<Scenario[]>(() => {
+    if (localStorage.getItem("formVersion") !== FORM_VERSION) {
+      localStorage.clear();
+    }
+    localStorage.setItem("formVersion", FORM_VERSION);
+    const storedScenarios = localStorage.getItem("scenarios");
+    return storedScenarios ? JSON.parse(storedScenarios) : [{
+      id: uuidv4(),
+      values: initialValues
+    }];
+  });
+
+  // Save scenarios to local storage
+  useEffect(() => {
+    localStorage.setItem('scenarios', JSON.stringify(scenarios));
+  }, [scenarios])
 
   const [activeScenarioId, setActiveScenarioId] = useState<string | null>(scenarios[0]?.id);
   const [blankScenarioCount, setBlankScenarioCount] = useState(1);

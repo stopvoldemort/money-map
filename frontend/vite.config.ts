@@ -6,12 +6,12 @@ export default defineConfig(({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd(), "");
   console.log("FRONTEND ENV:", env);
 
-  const formVersion = process.env.VITE_GIT_VERSION || 'dev';
+  const gitVersion = process.env.VITE_GIT_VERSION || 'dev';
 
   return defineConfig({
     plugins: [react()],
     define: {
-      FORM_VERSION: JSON.stringify(formVersion),
+      GIT_VERSION: JSON.stringify(gitVersion),
     },
   });
 });
