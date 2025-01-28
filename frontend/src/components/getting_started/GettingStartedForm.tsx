@@ -268,7 +268,7 @@ const GettingStartedForm = ({ closeModal, onSubmit }: { closeModal: () => void, 
 
           <Modal.Footer>
             <Button variant="secondary" onClick={closeModal}>
-              Skip
+              Cancel
             </Button>
             <Button variant="primary" type="submit">
               Submit

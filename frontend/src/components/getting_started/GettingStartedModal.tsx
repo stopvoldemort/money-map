@@ -27,8 +27,7 @@ const GettingStartedModal = ({ showModal, setShowModal, onSubmit }: { showModal:
             </ul>
             <b>MONEY MAP WILL NEVER STORE OR SELL YOUR DATA.</b> This is a free tool.
             <br /><br />
-            It'll speed things up to know a few things about your household.
-            Click "Get started" to answer a couple questions.
+            Click "Get started" to first answer a couple questions about your household, and Money Map will create a basic scenario based on your answers.
             <br /><br />
             Or click "Skip" to go straight to the tool.
           </Modal.Body>
