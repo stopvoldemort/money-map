@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, TooltipProps, Bar, Line } from "recharts";
 import { ChartElement, ScenarioResults, ScenarioYearResults, formatDollars, formatYAxis } from "./shared";
-import { YEARS } from "../../constants";
 import { NameType } from "recharts/types/component/DefaultTooltipContent";
 import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
@@ -21,9 +20,9 @@ export interface NetIncomeChartData {
 
 const TooltipContent = ({ label, year, total, netIncome, items, color, footer }: { label: string, year: number, total: number, netIncome: number, items: ChartElement[], color: string, footer?: string }) => {
   return (
-    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px', maxWidth: '400px' }}>
+    <div className="custom-tooltip" style={{ backgroundColor: "white", border: "1px solid #ccc", padding: '10px', minWidth: '250px', maxWidth: '350px' }}>
       <p style={{ padding: 0, margin: 0, fontWeight: 'bold' }}>{year}</p>
-      <p style={{ padding: 0, margin: 0 }}>{`Cash Flow: ${formatDollars(netIncome)}`}</p>
+      <p style={{ padding: 0, margin: 0 }}>{`Net Cash Flow: ${formatDollars(netIncome)}`}</p>
       <p style={{
         opacity: 1,
         padding: 0,
@@ -48,7 +47,7 @@ const TooltipContent = ({ label, year, total, netIncome, items, color, footer }:
             justifyContent: 'space-between',
           }}
         >
-          <span>{item.name}</span>
+          <span className="text-start">{item.name}</span>
           <span className="ms-5">{formatDollars(item.value)}</span>
         </p>
       ))}
@@ -114,27 +113,6 @@ function prepareNetIncomeChartData(data: ScenarioYearResults[]): NetIncomeChartD
   });
 }
 
-const CustomizedDot = (props: { cx: number; cy: number; payload: NetIncomeChartData }) => {
-  const { cx, cy, payload } = props;
-  return (
-    <g key={payload.year}>
-      {(payload.year - YEARS.START) % 5 === 0 ? (
-        <>
-          <circle cx={cx} cy={cy} r={4} fill="black" />
-          <text
-            x={cx}
-            y={cy - 10}
-            textAnchor="middle"
-            fill="black"
-          >
-            {formatDollars(payload.netIncome)}
-          </text>
-        </>
-      ) : null}
-    </g>
-  );
-}
-
 const NetIncomeChart = ({ data, activeScenarioId }: { data: ScenarioResults[], activeScenarioId: string | null }) => {
   const [hoveredBar, setHoveredBar] = useState<string | null>(null);
 
@@ -164,7 +142,7 @@ const NetIncomeChart = ({ data, activeScenarioId }: { data: ScenarioResults[], a
           stroke="#000000"
           strokeWidth={2}
           name="Net Worth"
-          dot={CustomizedDot}
+          dot={false}
         />
         <Bar
           stackId="stack"

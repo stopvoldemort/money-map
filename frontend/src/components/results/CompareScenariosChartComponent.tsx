@@ -29,7 +29,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
                 fontWeight: entry.name === 'Net Worth' ? 'bold' : 'normal'
               }}
             >
-              <span>{entry.name}</span>
+              <span className="text-start">{entry.name}</span>
               <span className="ms-5">{formatDollars(entry.value ?? 0)}</span>
             </p>
           )

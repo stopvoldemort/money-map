@@ -239,7 +239,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit, onReset, loadin
                   <Section title="Investment returns">
                     <InvestmentReturnFields />
                   </Section>
-                  <Section title="Income tax rates" infoText="Configure the federal, state, and local income tax brackets and standard deductions. The default values are for a married household filing jointly in New York City.">
+                  <Section title="State and local income taxes" infoText="Configure the state and local income tax brackets and standard deductions. The default values are for someone living in New York, NY.">
                     <IncomeTaxFields values={values.config} />
                   </Section>
                 </Accordion>
