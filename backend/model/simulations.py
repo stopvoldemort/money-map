@@ -61,7 +61,7 @@ class Simulations:
 
             expenses_for_frontend = []
             for expense in expenses:
-                if expense.year == year and not expense.tax_payment and expense.starting_amount > 1:
+                if expense.year == year and not expense.tax_payment and not expense.debt_payment and expense.starting_amount > 1:
                     expenses_for_frontend.append({
                         "name": expense.name,
                         "value": expense.starting_amount * -1

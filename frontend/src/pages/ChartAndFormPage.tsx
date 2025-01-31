@@ -65,7 +65,7 @@ const ChartAndFormPage: React.FC = () => {
   return (
     <>
       <Navbar>
-        <Navbar.Brand><Nav.Link href="/">My Money Map</Nav.Link></Navbar.Brand>
+        <Navbar.Brand><Nav.Link className="mx-2" href="/">My Money Map</Nav.Link></Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav.Link className="mx-2" href="#how-it-works">How it works</Nav.Link>
@@ -99,7 +99,7 @@ const ChartAndFormPage: React.FC = () => {
             </ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <Row style={{ height: "400px", marginLeft: "-3rem", marginRight: "-3rem" }}>
+        <Row style={{ height: "400px" }} className="px-0 mx-0">
           {chartType === NET_WORTH_CHART_TYPE && (
             <ChartComponent data={scenarioResults} activeScenarioId={activeScenarioId} />
           )}
@@ -123,7 +123,7 @@ const ChartAndFormPage: React.FC = () => {
             activeScenarioId={activeScenarioId}
           />
         </Row>
-        <Row className="my-5" id="how-it-works">
+        <Row className="my-5 mx-1" id="how-it-works">
           <Card className="px-0">
             <Card.Header as="h2">How It Works</Card.Header>
             <Card.Body className="text-start">
@@ -147,7 +147,7 @@ const ChartAndFormPage: React.FC = () => {
           </Card>
         </Row>
 
-        <Row className="my-5" id="faq">
+        <Row className="my-5 mx-1" id="faq">
           <Card className="px-0">
             <Card.Header as="h2">FAQ</Card.Header>
             <Card.Body className="text-start">
@@ -187,7 +187,7 @@ const ChartAndFormPage: React.FC = () => {
           </Card>
         </Row >
 
-        <Row className="my-5" id="about-me">
+        <Row className="my-5 mx-1" id="about-me">
           <Card className="px-0">
             <Card.Header as="h2">About Me</Card.Header>
             <Card.Body className="text-start">
