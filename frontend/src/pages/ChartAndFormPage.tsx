@@ -151,38 +151,36 @@ const ChartAndFormPage: React.FC = () => {
           <Card className="px-0">
             <Card.Header as="h2">FAQ</Card.Header>
             <Card.Body className="text-start">
-              <Card.Text>
-                <b>Question: How do I save my data?</b>
-                <br /> Your scenarios are automatically cached in your browser. You can close your browser and come back later, and your scenarios will still be there. You can remove them by clicking the "Reset" button.
-                <br /> <br />
-                The only exception is if the Money Map tool gets modified to the degree that it will no longer work with your saved scenarios. In that case, your cached scenarios will be automatically discarded, and you'll have to re-enter your data. I'll try to make sure that doesn't happen very often.
-                <br /> <br />
-                <b>Question: How does this tool handle inflation?</b>
-                <br />
-                You can ignore inflation when entering your values, unless directed otherwise. My Money Map calculates and displays everything in current dollars. This means, for example, that Money Map will assume that your income and any recurring expenses will grow with inflation.
-                <br /> <br />
-                <b>Question: How does this tool compare to other financial planning tools?</b>
-                <br />
-                There are several other tools out there that can help you project your financial future:
-                <ul>
-                  <li><a href="https://projectionlab.com/" target="_blank" rel="noopener noreferrer">Projection Lab</a></li>
-                  <li><a href="https://maxifiplanner.com/" target="_blank" rel="noopener noreferrer">MaxiFi</a></li>
-                  <li><a href="https://www.boldin.com/" target="_blank" rel="noopener noreferrer">Boldin</a></li>
-                </ul>
-                My Money Map is different in a few ways:
-                <ul>
-                  <li>It's free</li>
-                  <li>It's much simpler than these other tools</li>
-                  <li>It doesn't require you to link your bank or investment accounts</li>
-                </ul>
-                One other wonky difference is that Money Map doesn't rely on probabilistic models (e.g. Monte Carlo simulations) to model things like stock market returns,
-                but instead uses deterministic calculations.
-                In my opinion, trying to assign a probability distribution to our financial future provides a false sense of confidence.
-                How can a model account for the likelihood that you or someone in your family will need expensive medical care?
-                That your profession will be made obsolete by AI?
-                That there will be a global pandemic or a war?
-                It is the official view of Money Map that the best we can do is to inform ourselves about what the outcomes <i>would</i> be, given certain assumptions.
-              </Card.Text>
+              <b>Question: How do I save my data?</b>
+              <br /> Your scenarios are automatically cached in your browser. You can close your browser and come back later, and your scenarios will still be there. You can remove them by clicking the "Reset" button.
+              <br /> <br />
+              The only exception is if the Money Map tool gets modified to the degree that it will no longer work with your saved scenarios. In that case, your cached scenarios will be automatically discarded, and you'll have to re-enter your data. I'll try to make sure that doesn't happen very often.
+              <br /> <br />
+              <b>Question: How does this tool handle inflation?</b>
+              <br />
+              You can ignore inflation when entering your values, unless directed otherwise. My Money Map calculates and displays everything in current dollars. This means, for example, that Money Map will assume that your income and any recurring expenses will grow with inflation.
+              <br /> <br />
+              <b>Question: How does this tool compare to other financial planning tools?</b>
+              <br />
+              There are several other tools out there that can help you project your financial future:
+              <ul>
+                <li><a href="https://projectionlab.com/" target="_blank" rel="noopener noreferrer">Projection Lab</a></li>
+                <li><a href="https://maxifiplanner.com/" target="_blank" rel="noopener noreferrer">MaxiFi</a></li>
+                <li><a href="https://www.boldin.com/" target="_blank" rel="noopener noreferrer">Boldin</a></li>
+              </ul>
+              My Money Map is different in a few ways:
+              <ul>
+                <li>It's free</li>
+                <li>It's much simpler than these other tools</li>
+                <li>It doesn't require you to link your bank or investment accounts</li>
+              </ul>
+              One other wonky difference is that Money Map doesn't rely on probabilistic models (e.g. Monte Carlo simulations) to model things like stock market returns,
+              but instead uses deterministic calculations.
+              In my opinion, trying to assign a probability distribution to our financial future provides a false sense of confidence.
+              How can a model account for the likelihood that you or someone in your family will need expensive medical care?
+              That your profession will be made obsolete by AI?
+              That there will be a global pandemic or a war?
+              It is the official view of Money Map that the best we can do is to inform ourselves about what the outcomes <i>would</i> be, given certain assumptions.
             </Card.Body>
           </Card>
         </Row >

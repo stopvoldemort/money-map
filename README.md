@@ -36,7 +36,6 @@ To deploy the app to GCP:
 
 ### TODO:
 
-- IMPROVE THIS README
 - Net Income Chart:
   - Tooltip:
     - On the net worth chart, order the line items in the tooltip to match the bar segments

@@ -12,6 +12,11 @@ const YearsInput = (props: FieldInputProps<number[]>) => {
 
   // State to keep track of selected years
   const [selectedYears, setSelectedYears] = useState<number[]>(props.value || []);
+
+  useEffect(() => {
+    setSelectedYears(props.value || []);
+  }, [props.value]);
+
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [lastClickedYear, setLastClickedYear] = useState<number | null>(null);
