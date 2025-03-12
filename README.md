@@ -4,7 +4,15 @@ This repo provides a tool for modeling out your financial trajectory, based on y
 
 The deployed version of the tool can be found at [mymoneymap.io](https://mymoneymap.io/).
 
-This is very much a work-in-progress, so bear with me! I made it originally to model out my own financial situation (renter, live in NYC, married with 2 kids), and some of the capabilities for people in different situations are less developed.
+Project your net worth:
+<img width="1172" alt="Screenshot 2025-03-12 at 9 46 20 AM" src="https://github.com/user-attachments/assets/8dbf5ffd-b9f8-4a84-bf7c-850c8e8a83cc" />
+
+Visualize your cash flow:
+<img width="1167" alt="Screenshot 2025-03-12 at 9 45 52 AM" src="https://github.com/user-attachments/assets/7d2f1bb1-6787-4532-bfb4-10f059e78469" />
+
+Compare scenarios:
+<img width="1192" alt="Screenshot 2025-03-12 at 9 45 18 AM" src="https://github.com/user-attachments/assets/156f5d7e-fef7-48b2-aad8-8094ba7b438a" />
+
 
 
 ## DEVELOPMENT:
@@ -33,15 +41,6 @@ To deploy the app to GCP:
 - Build the backend image: `docker build -t $GCP_REGION-docker.pkg.dev/$PROJECT_ID/backend/backend:$TAG --build-arg ENV=production ./backend`
 - Push the backend image: `docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/backend/backend:$TAG`
 - Deploy the backend image: `gcloud run deploy backend-service --image $GCP_REGION-docker.pkg.dev/$PROJECT_ID/backend/backend:$TAG --platform managed --region $GCP_REGION --allow-unauthenticated`
-
-### TODO:
-
-- Net Income Chart:
-  - Tooltip:
-    - On the net worth chart, order the line items in the tooltip to match the bar segments
-  - Fix debt payments:
-    - Model: Separate "debt payments" from "expenses"
-    - Net income should only show "income" vs "expenses", "taxes", and "debt payments"
 
 - Add validation for required fields
 - Add HSA accounts
