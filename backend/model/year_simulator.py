@@ -38,7 +38,6 @@ class YearSimulator:
     ]:
         # SETUP
         withdrawals = []
-        extra_taxes = 0.0
         tax_calculator = TaxCalculator(
             federal_tax_brackets=config.federal_tax_brackets,
             federal_standard_deduction=config.federal_standard_deduction,
@@ -201,7 +200,7 @@ class YearSimulator:
             expenses.append(
                 Expense(
                     f"Extra income taxes for {year}",
-                    extra_taxes,
+                    extra_income_taxes,
                     year + 1,
                     tax_payment=True,
                 )
