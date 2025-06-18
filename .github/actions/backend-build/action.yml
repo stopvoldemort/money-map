@@ -1,0 +1,34 @@
+name: Build Backend
+
+inputs:
+  tag:
+    description: Docker image tag
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+    - name: Build image
+      run: |
+        IMAGE_TAG=${{ inputs.tag && inputs.tag || github.sha }}
+        docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/backend/backend:$IMAGE_TAG \
+          --build-arg ENV=production ./backend
+
+    - name: Push image
+      run: |
+        IMAGE_TAG=${{ inputs.tag && inputs.tag || github.sha }}
+        docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/backend/backend:$IMAGE_TAG

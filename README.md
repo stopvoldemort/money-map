@@ -42,6 +42,21 @@ To deploy the app to GCP:
 - Push the backend image: `docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/backend/backend:$TAG`
 - Deploy the backend image: `gcloud run deploy backend-service --image $GCP_REGION-docker.pkg.dev/$PROJECT_ID/backend/backend:$TAG --platform managed --region $GCP_REGION --allow-unauthenticated`
 
+### Deploying with GitHub Actions
+
+This repository includes reusable GitHub Actions for building and deploying the
+frontend and backend to Cloud Run. In order to use them you must configure the
+following repository secrets:
+
+- `GCP_SA_KEY` – JSON key for a service account with permissions to push images
+  to Artifact Registry and deploy to Cloud Run.
+- `PROJECT_ID` – your Google Cloud project ID.
+- `GCP_REGION` – the region for Artifact Registry and Cloud Run.
+
+Trigger the **Deploy All** workflow from the Actions tab to build and deploy the
+frontend and backend images. Optionally provide a `tag` input; otherwise the
+Git commit SHA is used.
+
 - Add validation for required fields
 - Add HSA accounts
 - Let recurring income, expenses, transfers, etc. increase over time, rather than assume they grow at the rate of inflation

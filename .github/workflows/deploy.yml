@@ -1,0 +1,36 @@
+name: Deploy All
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker image tag'
+        required: false
+
+jobs:
+  build-frontend:
+    uses: ./.github/actions/frontend-build
+    secrets: inherit
+    with:
+      tag: ${{ github.event.inputs.tag }}
+
+  deploy-frontend:
+    needs: build-frontend
+    uses: ./.github/actions/frontend-deploy
+    secrets: inherit
+    with:
+      tag: ${{ github.event.inputs.tag }}
+
+  build-backend:
+    needs: deploy-frontend
+    uses: ./.github/actions/backend-build
+    secrets: inherit
+    with:
+      tag: ${{ github.event.inputs.tag }}
+
+  deploy-backend:
+    needs: build-backend
+    uses: ./.github/actions/backend-deploy
+    secrets: inherit
+    with:
+      tag: ${{ github.event.inputs.tag }}
