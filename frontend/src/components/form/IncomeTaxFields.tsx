@@ -10,6 +10,21 @@ import CollapsibleDetails from "./CollabsibleDetails";
 const IncomeTaxFields = ({ values }: { values: ConfigFieldsType }) => {
   return <>
     <FieldsContainer>
+      <CollapsibleDetails label="Federal" infoText="Default U.S. federal values">
+        <Row>
+          <Col xs={12} md={6} className="my-2">
+            <DollarInput name="config.federal_standard_deduction" label="Standard deduction" />
+          </Col>
+        </Row>
+        <Row className="p-2 m-2 bg-white rounded border border-outline-secondary">
+          <DynamicFields
+            name="config.federal_tax_brackets"
+            values={values.federal_tax_brackets}
+            initialValues={TaxBracketInput.initialValues}
+            fieldsComponent={TaxBracketInput}
+          />
+        </Row>
+      </CollapsibleDetails>
       <CollapsibleDetails label="State" infoText="The default values are for NY.">
         <Row>
           <Col xs={12} md={6} className="my-2">
