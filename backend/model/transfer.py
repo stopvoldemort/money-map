@@ -23,6 +23,7 @@ class Transfer:
         withdrawal_amount = min(self.transfer_from.balance(), self.amount)
         withdrawal = self.transfer_from.withdraw(withdrawal_amount)
         self.transfer_to.deposit(withdrawal_amount)
+        self.transfered_amount = withdrawal_amount
 
         return withdrawal
 

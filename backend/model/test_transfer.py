@@ -12,6 +12,7 @@ class TestTransfer(unittest.TestCase):
         self.assertAlmostEqual(src.balance(), 40.0, places=2)
         self.assertAlmostEqual(dst.balance(), 60.0, places=2)
         self.assertEqual(withdrawal.amount, 60.0)
+        self.assertEqual(transfer.transfered_amount, 60.0)
 
 if __name__ == '__main__':
     unittest.main()
