@@ -24,9 +24,13 @@ class TaxCalculator:
         self.federal_tax_brackets = federal_tax_brackets
         self.federal_standard_deduction = federal_standard_deduction
         self.payroll_tax_brackets = [
+            # 7.65% (Social Security + Medicare) on wages up to the
+            # Social Security wage base
             TaxBracket(0.0765, 0.0, 168600.0),
-            TaxBracket(0.0235, 168601.0, 200000.0),
-            TaxBracket(0.009, 200001.0, float("inf")),
+            # 1.45% Medicare tax on wages above the Social Security cap
+            TaxBracket(0.0145, 168600.0, 200000.0),
+            # Additional 0.9% Medicare tax on wages above $200,000
+            TaxBracket(0.0235, 200000.0, float("inf")),
         ]
         self.payroll_standard_deduction = 0.0
 

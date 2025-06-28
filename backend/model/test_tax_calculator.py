@@ -26,5 +26,18 @@ class TestTaxCalculator(unittest.TestCase):
         tax = self.calc.calculate_federal_income_tax(500)
         self.assertEqual(tax, 0)
 
+    def test_calculate_payroll_tax_under_cap(self):
+        tax = self.calc.calculate_payroll_tax(10000)
+        self.assertAlmostEqual(tax, 765.0, places=2)
+
+    def test_calculate_payroll_tax_above_additional_threshold(self):
+        tax = self.calc.calculate_payroll_tax(210000)
+        expected = (
+            168600 * 0.0765
+            + (200000 - 168600) * 0.0145
+            + (210000 - 200000) * 0.0235
+        )
+        self.assertAlmostEqual(tax, expected, places=2)
+
 if __name__ == '__main__':
     unittest.main()
